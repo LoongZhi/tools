@@ -1,0 +1,11 @@
+/* 
+  Localizable.strings
+  WhatsGod
+
+  Created by imac on 9/21/19.
+  Copyright © 2019 L. All rights reserved.
+*/
+"Album" = "相册";
+"Video" = "视频";
+"Book" = "文件";
+"Settings" = "设置";

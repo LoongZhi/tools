@@ -1,0 +1,904 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		7ADB2B96D8098E500A5FFC40 /* Pods_WhatsGod.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF2C973FF3A6D4A1DC2AA312 /* Pods_WhatsGod.framework */; };
+		88261C9623320A22005CE69D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88261C9523320A22005CE69D /* AppDelegate.swift */; };
+		88261C9B23320A22005CE69D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 88261C9923320A22005CE69D /* Main.storyboard */; };
+		88261C9D23320A23005CE69D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 88261C9C23320A23005CE69D /* Assets.xcassets */; };
+		88261CA023320A23005CE69D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 88261C9E23320A23005CE69D /* LaunchScreen.storyboard */; };
+		88261CAB23320A24005CE69D /* WhatsGodTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88261CAA23320A24005CE69D /* WhatsGodTests.swift */; };
+		88261CB623320A24005CE69D /* WhatsGodUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88261CB523320A24005CE69D /* WhatsGodUITests.swift */; };
+		88261CC623320D18005CE69D /* LZBaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88261CC523320D18005CE69D /* LZBaseViewController.swift */; };
+		88261CCA23320D7B005CE69D /* LZMainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88261CC923320D7B005CE69D /* LZMainViewController.swift */; };
+		883AB3A1233E21A6007E0D4B /* LZAlbumCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 883AB3A0233E21A6007E0D4B /* LZAlbumCollectionViewCell.swift */; };
+		88613A09233636250089C402 /* LZBaseNavController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88613A08233636240089C402 /* LZBaseNavController.swift */; };
+		88613A10233639990089C402 /* BubbleTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88613A0C233639990089C402 /* BubbleTabBar.swift */; };
+		88613A11233639990089C402 /* .gitkeep in Resources */ = {isa = PBXBuildFile; fileRef = 88613A0D233639990089C402 /* .gitkeep */; };
+		88613A12233639990089C402 /* BubbleTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88613A0E233639990089C402 /* BubbleTabBarController.swift */; };
+		88613A13233639990089C402 /* CBTabBarButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88613A0F233639990089C402 /* CBTabBarButton.swift */; };
+		88613A15233646850089C402 /* LZBaseTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88613A14233646850089C402 /* LZBaseTabBarController.swift */; };
+		88613A1A233647A70089C402 /* LZAlbumViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88613A19233647A70089C402 /* LZAlbumViewController.swift */; };
+		88613A1D233647E10089C402 /* LZVideoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88613A1C233647E10089C402 /* LZVideoViewController.swift */; };
+		88613A20233647FB0089C402 /* LZNoteBookViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88613A1F233647FB0089C402 /* LZNoteBookViewController.swift */; };
+		88613A24233648800089C402 /* LZSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88613A23233648800089C402 /* LZSettingsViewController.swift */; };
+		88613A2823364C570089C402 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 88613A2A23364C570089C402 /* Localizable.strings */; };
+		88613A2D233651E90089C402 /* LZMacro.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88613A2C233651E90089C402 /* LZMacro.swift */; };
+		88BD9B3C233B9BB40098B8FB /* LZRealmTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88BD9B3B233B9BB40098B8FB /* LZRealmTool.swift */; };
+		88BD9B42233BA5690098B8FB /* LZAlbumModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88BD9B41233BA5690098B8FB /* LZAlbumModel.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		88261CA723320A24005CE69D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 88261C8A23320A22005CE69D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 88261C9123320A22005CE69D;
+			remoteInfo = WhatsGod;
+		};
+		88261CB223320A24005CE69D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 88261C8A23320A22005CE69D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 88261C9123320A22005CE69D;
+			remoteInfo = WhatsGod;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		237F0DF970AA48B3BF36B833 /* Pods-WhatsGod.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WhatsGod.debug.xcconfig"; path = "Target Support Files/Pods-WhatsGod/Pods-WhatsGod.debug.xcconfig"; sourceTree = "<group>"; };
+		88261C9223320A22005CE69D /* WhatsGod.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WhatsGod.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		88261C9523320A22005CE69D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		88261C9A23320A22005CE69D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		88261C9C23320A23005CE69D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		88261C9F23320A23005CE69D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		88261CA123320A23005CE69D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		88261CA623320A24005CE69D /* WhatsGodTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WhatsGodTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		88261CAA23320A24005CE69D /* WhatsGodTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhatsGodTests.swift; sourceTree = "<group>"; };
+		88261CAC23320A24005CE69D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		88261CB123320A24005CE69D /* WhatsGodUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WhatsGodUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		88261CB523320A24005CE69D /* WhatsGodUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhatsGodUITests.swift; sourceTree = "<group>"; };
+		88261CB723320A24005CE69D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		88261CC523320D18005CE69D /* LZBaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LZBaseViewController.swift; sourceTree = "<group>"; };
+		88261CC923320D7B005CE69D /* LZMainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LZMainViewController.swift; sourceTree = "<group>"; };
+		883AB395233C94D5007E0D4B /* WhatsGod-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "WhatsGod-Bridging-Header.h"; sourceTree = "<group>"; };
+		883AB3A0233E21A6007E0D4B /* LZAlbumCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LZAlbumCollectionViewCell.swift; sourceTree = "<group>"; };
+		88613A08233636240089C402 /* LZBaseNavController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LZBaseNavController.swift; sourceTree = "<group>"; };
+		88613A0C233639990089C402 /* BubbleTabBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BubbleTabBar.swift; sourceTree = "<group>"; };
+		88613A0D233639990089C402 /* .gitkeep */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
+		88613A0E233639990089C402 /* BubbleTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BubbleTabBarController.swift; sourceTree = "<group>"; };
+		88613A0F233639990089C402 /* CBTabBarButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CBTabBarButton.swift; sourceTree = "<group>"; };
+		88613A14233646850089C402 /* LZBaseTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LZBaseTabBarController.swift; sourceTree = "<group>"; };
+		88613A19233647A70089C402 /* LZAlbumViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LZAlbumViewController.swift; sourceTree = "<group>"; };
+		88613A1C233647E10089C402 /* LZVideoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LZVideoViewController.swift; sourceTree = "<group>"; };
+		88613A1F233647FB0089C402 /* LZNoteBookViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LZNoteBookViewController.swift; sourceTree = "<group>"; };
+		88613A23233648800089C402 /* LZSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LZSettingsViewController.swift; sourceTree = "<group>"; };
+		88613A2923364C570089C402 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		88613A2B23364CC10089C402 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		88613A2C233651E90089C402 /* LZMacro.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LZMacro.swift; sourceTree = "<group>"; };
+		88BD9B3B233B9BB40098B8FB /* LZRealmTool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LZRealmTool.swift; sourceTree = "<group>"; };
+		88BD9B41233BA5690098B8FB /* LZAlbumModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LZAlbumModel.swift; sourceTree = "<group>"; };
+		A3B36E7AAAC40A7011A032FB /* Pods-WhatsGod.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WhatsGod.release.xcconfig"; path = "Target Support Files/Pods-WhatsGod/Pods-WhatsGod.release.xcconfig"; sourceTree = "<group>"; };
+		CF2C973FF3A6D4A1DC2AA312 /* Pods_WhatsGod.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WhatsGod.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		88261C8F23320A22005CE69D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7ADB2B96D8098E500A5FFC40 /* Pods_WhatsGod.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		88261CA323320A24005CE69D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		88261CAE23320A24005CE69D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		88261C8923320A22005CE69D = {
+			isa = PBXGroup;
+			children = (
+				88261C9423320A22005CE69D /* WhatsGod */,
+				88261CA923320A24005CE69D /* WhatsGodTests */,
+				88261CB423320A24005CE69D /* WhatsGodUITests */,
+				88261C9323320A22005CE69D /* Products */,
+				FEDA1169D2B8654BD6F3467D /* Pods */,
+				E36028FE62406BCC38019636 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		88261C9323320A22005CE69D /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				88261C9223320A22005CE69D /* WhatsGod.app */,
+				88261CA623320A24005CE69D /* WhatsGodTests.xctest */,
+				88261CB123320A24005CE69D /* WhatsGodUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		88261C9423320A22005CE69D /* WhatsGod */ = {
+			isa = PBXGroup;
+			children = (
+				883AB394233C94B7007E0D4B /* ObjectC */,
+				88BD9B3D233B9C160098B8FB /* DBFIleData */,
+				88613A2523364C030089C402 /* File */,
+				88613A21233648420089C402 /* Settings */,
+				88613A0A2336397E0089C402 /* Tools */,
+				88613A072336313E0089C402 /* NoteBook */,
+				88613A062336310C0089C402 /* Video */,
+				88613A05233630810089C402 /* Album */,
+				88261CC423320CF4005CE69D /* Base */,
+				88261CC323320B7A005CE69D /* Photo */,
+				88261C9523320A22005CE69D /* AppDelegate.swift */,
+				88261C9923320A22005CE69D /* Main.storyboard */,
+				88261C9C23320A23005CE69D /* Assets.xcassets */,
+				88261C9E23320A23005CE69D /* LaunchScreen.storyboard */,
+				88261CA123320A23005CE69D /* Info.plist */,
+				88261CC923320D7B005CE69D /* LZMainViewController.swift */,
+			);
+			path = WhatsGod;
+			sourceTree = "<group>";
+		};
+		88261CA923320A24005CE69D /* WhatsGodTests */ = {
+			isa = PBXGroup;
+			children = (
+				88261CAA23320A24005CE69D /* WhatsGodTests.swift */,
+				88261CAC23320A24005CE69D /* Info.plist */,
+			);
+			path = WhatsGodTests;
+			sourceTree = "<group>";
+		};
+		88261CB423320A24005CE69D /* WhatsGodUITests */ = {
+			isa = PBXGroup;
+			children = (
+				88261CB523320A24005CE69D /* WhatsGodUITests.swift */,
+				88261CB723320A24005CE69D /* Info.plist */,
+			);
+			path = WhatsGodUITests;
+			sourceTree = "<group>";
+		};
+		88261CC323320B7A005CE69D /* Photo */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Photo;
+			sourceTree = "<group>";
+		};
+		88261CC423320CF4005CE69D /* Base */ = {
+			isa = PBXGroup;
+			children = (
+				88261CC523320D18005CE69D /* LZBaseViewController.swift */,
+				88613A08233636240089C402 /* LZBaseNavController.swift */,
+				88613A14233646850089C402 /* LZBaseTabBarController.swift */,
+				88613A2C233651E90089C402 /* LZMacro.swift */,
+			);
+			path = Base;
+			sourceTree = "<group>";
+		};
+		883AB394233C94B7007E0D4B /* ObjectC */ = {
+			isa = PBXGroup;
+			children = (
+				883AB395233C94D5007E0D4B /* WhatsGod-Bridging-Header.h */,
+			);
+			path = ObjectC;
+			sourceTree = "<group>";
+		};
+		883AB39B233E2157007E0D4B /* View */ = {
+			isa = PBXGroup;
+			children = (
+				883AB3A0233E21A6007E0D4B /* LZAlbumCollectionViewCell.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		88613A05233630810089C402 /* Album */ = {
+			isa = PBXGroup;
+			children = (
+				883AB39B233E2157007E0D4B /* View */,
+				88613A18233647900089C402 /* Controller */,
+			);
+			path = Album;
+			sourceTree = "<group>";
+		};
+		88613A062336310C0089C402 /* Video */ = {
+			isa = PBXGroup;
+			children = (
+				88613A1B233647B20089C402 /* Controller */,
+			);
+			path = Video;
+			sourceTree = "<group>";
+		};
+		88613A072336313E0089C402 /* NoteBook */ = {
+			isa = PBXGroup;
+			children = (
+				88613A1E233647E80089C402 /* Controller */,
+			);
+			path = NoteBook;
+			sourceTree = "<group>";
+		};
+		88613A0A2336397E0089C402 /* Tools */ = {
+			isa = PBXGroup;
+			children = (
+				88BD9B3A233B9B840098B8FB /* DB */,
+				88613A0B233639990089C402 /* Classes */,
+			);
+			path = Tools;
+			sourceTree = "<group>";
+		};
+		88613A0B233639990089C402 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				88613A0C233639990089C402 /* BubbleTabBar.swift */,
+				88613A0D233639990089C402 /* .gitkeep */,
+				88613A0E233639990089C402 /* BubbleTabBarController.swift */,
+				88613A0F233639990089C402 /* CBTabBarButton.swift */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
+		88613A18233647900089C402 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				88613A19233647A70089C402 /* LZAlbumViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		88613A1B233647B20089C402 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				88613A1C233647E10089C402 /* LZVideoViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		88613A1E233647E80089C402 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				88613A1F233647FB0089C402 /* LZNoteBookViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		88613A21233648420089C402 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				88613A222336485A0089C402 /* Controller */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		88613A222336485A0089C402 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				88613A23233648800089C402 /* LZSettingsViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		88613A2523364C030089C402 /* File */ = {
+			isa = PBXGroup;
+			children = (
+				88613A2A23364C570089C402 /* Localizable.strings */,
+			);
+			path = File;
+			sourceTree = "<group>";
+		};
+		88BD9B3A233B9B840098B8FB /* DB */ = {
+			isa = PBXGroup;
+			children = (
+				88BD9B3B233B9BB40098B8FB /* LZRealmTool.swift */,
+			);
+			path = DB;
+			sourceTree = "<group>";
+		};
+		88BD9B3D233B9C160098B8FB /* DBFIleData */ = {
+			isa = PBXGroup;
+			children = (
+				88BD9B3E233B9C3D0098B8FB /* AlbumModel */,
+			);
+			path = DBFIleData;
+			sourceTree = "<group>";
+		};
+		88BD9B3E233B9C3D0098B8FB /* AlbumModel */ = {
+			isa = PBXGroup;
+			children = (
+				88BD9B41233BA5690098B8FB /* LZAlbumModel.swift */,
+			);
+			path = AlbumModel;
+			sourceTree = "<group>";
+		};
+		E36028FE62406BCC38019636 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				CF2C973FF3A6D4A1DC2AA312 /* Pods_WhatsGod.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		FEDA1169D2B8654BD6F3467D /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				237F0DF970AA48B3BF36B833 /* Pods-WhatsGod.debug.xcconfig */,
+				A3B36E7AAAC40A7011A032FB /* Pods-WhatsGod.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		88261C9123320A22005CE69D /* WhatsGod */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 88261CBA23320A24005CE69D /* Build configuration list for PBXNativeTarget "WhatsGod" */;
+			buildPhases = (
+				13FDEA85F8E1C776B9F6996F /* [CP] Check Pods Manifest.lock */,
+				88261C8E23320A22005CE69D /* Sources */,
+				88261C8F23320A22005CE69D /* Frameworks */,
+				88261C9023320A22005CE69D /* Resources */,
+				D9AAE2D9D19AE8ADB716AEF0 /* [CP] Embed Pods Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = WhatsGod;
+			productName = WhatsGod;
+			productReference = 88261C9223320A22005CE69D /* WhatsGod.app */;
+			productType = "com.apple.product-type.application";
+		};
+		88261CA523320A24005CE69D /* WhatsGodTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 88261CBD23320A24005CE69D /* Build configuration list for PBXNativeTarget "WhatsGodTests" */;
+			buildPhases = (
+				88261CA223320A24005CE69D /* Sources */,
+				88261CA323320A24005CE69D /* Frameworks */,
+				88261CA423320A24005CE69D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				88261CA823320A24005CE69D /* PBXTargetDependency */,
+			);
+			name = WhatsGodTests;
+			productName = WhatsGodTests;
+			productReference = 88261CA623320A24005CE69D /* WhatsGodTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		88261CB023320A24005CE69D /* WhatsGodUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 88261CC023320A24005CE69D /* Build configuration list for PBXNativeTarget "WhatsGodUITests" */;
+			buildPhases = (
+				88261CAD23320A24005CE69D /* Sources */,
+				88261CAE23320A24005CE69D /* Frameworks */,
+				88261CAF23320A24005CE69D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				88261CB323320A24005CE69D /* PBXTargetDependency */,
+			);
+			name = WhatsGodUITests;
+			productName = WhatsGodUITests;
+			productReference = 88261CB123320A24005CE69D /* WhatsGodUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		88261C8A23320A22005CE69D /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				CLASSPREFIX = LZ;
+				LastSwiftUpdateCheck = 1010;
+				LastUpgradeCheck = 1010;
+				ORGANIZATIONNAME = L;
+				TargetAttributes = {
+					88261C9123320A22005CE69D = {
+						CreatedOnToolsVersion = 10.1;
+						LastSwiftMigration = 1010;
+					};
+					88261CA523320A24005CE69D = {
+						CreatedOnToolsVersion = 10.1;
+						TestTargetID = 88261C9123320A22005CE69D;
+					};
+					88261CB023320A24005CE69D = {
+						CreatedOnToolsVersion = 10.1;
+						TestTargetID = 88261C9123320A22005CE69D;
+					};
+				};
+			};
+			buildConfigurationList = 88261C8D23320A22005CE69D /* Build configuration list for PBXProject "WhatsGod" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+				"zh-Hans",
+			);
+			mainGroup = 88261C8923320A22005CE69D;
+			productRefGroup = 88261C9323320A22005CE69D /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				88261C9123320A22005CE69D /* WhatsGod */,
+				88261CA523320A24005CE69D /* WhatsGodTests */,
+				88261CB023320A24005CE69D /* WhatsGodUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		88261C9023320A22005CE69D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				88613A2823364C570089C402 /* Localizable.strings in Resources */,
+				88261CA023320A23005CE69D /* LaunchScreen.storyboard in Resources */,
+				88261C9D23320A23005CE69D /* Assets.xcassets in Resources */,
+				88261C9B23320A22005CE69D /* Main.storyboard in Resources */,
+				88613A11233639990089C402 /* .gitkeep in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		88261CA423320A24005CE69D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		88261CAF23320A24005CE69D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		13FDEA85F8E1C776B9F6996F /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-WhatsGod-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		D9AAE2D9D19AE8ADB716AEF0 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-WhatsGod/Pods-WhatsGod-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/ComplimentaryGradientView/ComplimentaryGradientView.framework",
+				"${BUILT_PRODUCTS_DIR}/CryptoSwift/CryptoSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/FWPopupView/FWPopupView.framework",
+				"${BUILT_PRODUCTS_DIR}/LYEmptyView/LYEmptyView.framework",
+				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
+				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ComplimentaryGradientView.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CryptoSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FWPopupView.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/LYEmptyView.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-WhatsGod/Pods-WhatsGod-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		88261C8E23320A22005CE69D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				88613A15233646850089C402 /* LZBaseTabBarController.swift in Sources */,
+				88613A13233639990089C402 /* CBTabBarButton.swift in Sources */,
+				88BD9B42233BA5690098B8FB /* LZAlbumModel.swift in Sources */,
+				88261C9623320A22005CE69D /* AppDelegate.swift in Sources */,
+				88613A24233648800089C402 /* LZSettingsViewController.swift in Sources */,
+				88613A12233639990089C402 /* BubbleTabBarController.swift in Sources */,
+				88261CCA23320D7B005CE69D /* LZMainViewController.swift in Sources */,
+				88613A20233647FB0089C402 /* LZNoteBookViewController.swift in Sources */,
+				883AB3A1233E21A6007E0D4B /* LZAlbumCollectionViewCell.swift in Sources */,
+				88613A09233636250089C402 /* LZBaseNavController.swift in Sources */,
+				88613A1A233647A70089C402 /* LZAlbumViewController.swift in Sources */,
+				88BD9B3C233B9BB40098B8FB /* LZRealmTool.swift in Sources */,
+				88613A10233639990089C402 /* BubbleTabBar.swift in Sources */,
+				88613A1D233647E10089C402 /* LZVideoViewController.swift in Sources */,
+				88613A2D233651E90089C402 /* LZMacro.swift in Sources */,
+				88261CC623320D18005CE69D /* LZBaseViewController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		88261CA223320A24005CE69D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				88261CAB23320A24005CE69D /* WhatsGodTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		88261CAD23320A24005CE69D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				88261CB623320A24005CE69D /* WhatsGodUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		88261CA823320A24005CE69D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 88261C9123320A22005CE69D /* WhatsGod */;
+			targetProxy = 88261CA723320A24005CE69D /* PBXContainerItemProxy */;
+		};
+		88261CB323320A24005CE69D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 88261C9123320A22005CE69D /* WhatsGod */;
+			targetProxy = 88261CB223320A24005CE69D /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		88261C9923320A22005CE69D /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				88261C9A23320A22005CE69D /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		88261C9E23320A23005CE69D /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				88261C9F23320A23005CE69D /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		88613A2A23364C570089C402 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				88613A2923364C570089C402 /* en */,
+				88613A2B23364CC10089C402 /* zh-Hans */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		88261CB823320A24005CE69D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		88261CB923320A24005CE69D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		88261CBB23320A24005CE69D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 237F0DF970AA48B3BF36B833 /* Pods-WhatsGod.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = ST2ZGD9TBQ;
+				INFOPLIST_FILE = WhatsGod/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = z.WhatsGod123;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "WhatsGod/ObjectC/WhatsGod-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		88261CBC23320A24005CE69D /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = A3B36E7AAAC40A7011A032FB /* Pods-WhatsGod.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = ST2ZGD9TBQ;
+				INFOPLIST_FILE = WhatsGod/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = z.WhatsGod123;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "WhatsGod/ObjectC/WhatsGod-Bridging-Header.h";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		88261CBE23320A24005CE69D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = WhatsGodTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = z.WhatsGodTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/WhatsGod.app/WhatsGod";
+			};
+			name = Debug;
+		};
+		88261CBF23320A24005CE69D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = WhatsGodTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = z.WhatsGodTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/WhatsGod.app/WhatsGod";
+			};
+			name = Release;
+		};
+		88261CC123320A24005CE69D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = WhatsGodUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = z.WhatsGodUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = WhatsGod;
+			};
+			name = Debug;
+		};
+		88261CC223320A24005CE69D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = WhatsGodUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = z.WhatsGodUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = WhatsGod;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		88261C8D23320A22005CE69D /* Build configuration list for PBXProject "WhatsGod" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				88261CB823320A24005CE69D /* Debug */,
+				88261CB923320A24005CE69D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		88261CBA23320A24005CE69D /* Build configuration list for PBXNativeTarget "WhatsGod" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				88261CBB23320A24005CE69D /* Debug */,
+				88261CBC23320A24005CE69D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		88261CBD23320A24005CE69D /* Build configuration list for PBXNativeTarget "WhatsGodTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				88261CBE23320A24005CE69D /* Debug */,
+				88261CBF23320A24005CE69D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		88261CC023320A24005CE69D /* Build configuration list for PBXNativeTarget "WhatsGodUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				88261CC123320A24005CE69D /* Debug */,
+				88261CC223320A24005CE69D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 88261C8A23320A22005CE69D /* Project object */;
+}

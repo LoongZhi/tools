@@ -1,0 +1,25 @@
+# Uncomment the next line to define a global platform for your project
+# platform :ios, '9.0'
+
+target 'WhatsGod' do
+  # Comment the next line if you're not using Swift and don't want to use dynamic frameworks
+  use_frameworks!
+
+  pod 'RealmSwift'
+  
+  pod 'LYEmptyView'
+  
+  pod 'SnapKit', '~> 4.0.0'
+  # Pods for WhatsGod
+  
+  pod 'FWPopupView'
+
+
+#  pod 'NVActivityIndicatorView' 
+  pod 'CryptoSwift'
+  
+  pod 'ComplimentaryGradientView'
+
+  pod 'Translucid', '~> 0.0.2'
+
+end

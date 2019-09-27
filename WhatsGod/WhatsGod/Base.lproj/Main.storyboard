@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="QiQ-JD-Tv1">
+    <device id="retina5_9" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Tab Bar Controller-->
+        <scene sceneID="PBI-mT-mtO">
+            <objects>
+                <tabBarController id="QiQ-JD-Tv1" sceneMemberID="viewController">
+                    <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="9te-Yw-QIw">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="49"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </tabBar>
+                    <connections>
+                        <segue destination="hh9-ze-dgD" kind="relationship" relationship="viewControllers" id="NVM-tM-UKr"/>
+                        <segue destination="Qmv-pw-tIk" kind="relationship" relationship="viewControllers" id="kVj-Ky-9ja"/>
+                        <segue destination="mzX-M9-UCJ" kind="relationship" relationship="viewControllers" id="EtX-oV-Y9D"/>
+                    </connections>
+                </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="5T8-Ar-hfA" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="25" y="-615"/>
+        </scene>
+        <!--Home-->
+        <scene sceneID="vVN-kz-IpA">
+            <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="m8o-vq-xAn" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <viewController id="au4-Bb-bzG" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="oIw-YG-xP3">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="UhZ-dB-CxN"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Home" image="dashboard" id="8s8-Ck-oNG" customClass="CBTabBarItem" customModule="WhatsGod" customModuleProvider="target">
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="color" keyPath="tintColor">
+                                <color key="value" red="0.30984933040000001" green="0.40000000000000002" blue="0.76830357140000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </tabBarItem>
+                    <toolbarItems/>
+                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
+                </viewController>
+            </objects>
+            <point key="canvasLocation" x="1350" y="-638"/>
+        </scene>
+        <!--Item-->
+        <scene sceneID="MCe-0r-9ux">
+            <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="zc4-0N-Zok" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <viewController id="Qmv-pw-tIk" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="EOv-Mu-0lP">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="gQX-3m-xsu"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Item" image="dashboard" id="DeD-s7-zqQ" customClass="CBTabBarItem" customModule="WhatsGod" customModuleProvider="target">
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="color" keyPath="tintColor">
+                                <color key="value" red="0.111139533" green="0.56823377929999996" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </tabBarItem>
+                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
+                </viewController>
+            </objects>
+            <point key="canvasLocation" x="1350" y="32"/>
+        </scene>
+        <!--Item-->
+        <scene sceneID="aoZ-HW-6Je">
+            <objects>
+                <viewController id="mzX-M9-UCJ" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="82r-el-AGa">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="hcb-3J-hAk"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Item" image="dashboard" id="K0X-hi-eaB" customClass="CBTabBarItem" customModule="WhatsGod" customModuleProvider="target">
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="color" keyPath="tintColor">
+                                <color key="value" red="1" green="0.40000000000000002" blue="0.38823529410000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </tabBarItem>
+                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="fOC-md-wD4" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1350" y="695"/>
+        </scene>
+        <!--Home-->
+        <scene sceneID="whq-VL-8k1">
+            <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="tqD-kU-nN3" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <viewController id="hh9-ze-dgD" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="203-tD-ktC">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="Xb9-ky-Dzb"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Home" image="dashboard" id="5KW-eW-QsZ" customClass="CBTabBarItem" customModule="WhatsGod" customModuleProvider="target"/>
+                    <toolbarItems/>
+                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
+                </viewController>
+            </objects>
+            <point key="canvasLocation" x="1350" y="-638"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="dashboard" width="14" height="13"/>
+    </resources>
+</document>
