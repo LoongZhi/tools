@@ -39,19 +39,30 @@ class LZAlbumViewController: LZBaseViewController,UICollectionViewDelegate,UICol
         let itme = UIBarButtonItem.init(title: LanguageStrins(string: "New"), style: .done, target: self, action: #selector(rightItmeEvent));
         self.navigationItem.rightBarButtonItem = itme;
         
+       
+//        self.collectionView.register(UINib.init(nibName: "IMCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "cell")
+        self.collectionView.register(LZAlbumCollectionViewCell.classForCoder(), forCellWithReuseIdentifier: "LZAlbumCollectionViewCell")
+        self.view.addSubview(self.collectionView)
+        
+        self.getDataSource()
+    }
+    
+    private func getDataSource(){
+        
+        if self.dataSource.count != 0 {
+            self.dataSource.removeAll()
+        }
         let models = realm.objects(LZAlbumModel.self)
         for albumModel in models {
             self.dataSource.append(albumModel)
         }
-//        self.collectionView.register(UINib.init(nibName: "IMCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "cell")
-        self.collectionView.register(LZAlbumCollectionViewCell.classForCoder(), forCellWithReuseIdentifier: "LZAlbumCollectionViewCell")
-        self.view.addSubview(self.collectionView)
+        self.collectionView .reloadData()
     }
-    
     @objc private  func rightItmeEvent(){
         
         let item = FWPopupItem.init(title: LanguageStrins(string: "OK"), itemType: FWItemType.highlight, isCancel: false, canAutoHide: true) { (view, number, str) in
             
+      
             if (str != nil){
                 let albumModel = LZAlbumModel()
                 albumModel.finderName = str ?? ""
@@ -59,12 +70,14 @@ class LZAlbumViewController: LZBaseViewController,UICollectionViewDelegate,UICol
                 
                 try! self.realm.write {
                     self.realm.add(albumModel)
+                    self.getDataSource()
                 }
             }
         };
-        let alertView = FWAlertView.alert(title: LanguageStrins(string: "New Folders"), detail: LanguageStrins(string: "New folders are stored in photographs"), inputPlaceholder: LanguageStrins(string: "Please enter the filename"), keyboardType: UIKeyboardType.default, isSecureTextEntry: true, items: [item]);
+        let alertView = FWAlertView.alert(title: LanguageStrins(string: "New Folders"), detail: LanguageStrins(string: "New folders are stored in photographs"), inputPlaceholder: LanguageStrins(string: "Please enter the filename"), keyboardType: UIKeyboardType.namePhonePad, isSecureTextEntry: true, items: [item]);
         alertView.show()
         
+    
         
     }
 
