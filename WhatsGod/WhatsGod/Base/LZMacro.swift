@@ -8,9 +8,35 @@
 
 import Foundation
 
+//数据库对象
+ let realm = LZRealmTool.lz_realm
+
+private func blankof<T>(type:T.Type) -> T {
+    let ptr = UnsafeMutablePointer<T>.allocate(capacity: MemoryLayout<T>.size)
+    let val = ptr.pointee
+    ptr.deinitialize(count: 0)
+    return val
+}
+// 获取总内存大小
+func totalRAM() -> Int64 {
+    var fs = blankof(type: statfs.self)
+    if statfs("/var",&fs) >= 0{
+        return Int64(UInt64(fs.f_bsize) * fs.f_blocks)
+    }
+    return -1
+}
+
+// 获取当前可用内存
+func availableRAM() -> Int64 {
+    var fs = blankof(type: statfs.self)
+    if statfs("/var",&fs) >= 0{
+        return Int64(UInt64(fs.f_bsize) * fs.f_bavail)
+    }
+    return -1
+}
 
 //语言本地化
-func LanguageStrins(string:String) ->String{
+public func LanguageStrins(string:String) ->String{
     return NSLocalizedString(string, comment: "")
 }
 

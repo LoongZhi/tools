@@ -13,7 +13,7 @@ class LZAlbumViewController: LZBaseViewController,UICollectionViewDelegate,UICol
     
 
 
-    let realm = LZRealmTool.lz_realm
+   
     private lazy var collectionView:UICollectionView = {
         let layout = UICollectionViewFlowLayout.init()
         layout.itemSize = CGSize.init(width: SCREEN_WIDTH / 4, height: 80)
@@ -68,8 +68,8 @@ class LZAlbumViewController: LZBaseViewController,UICollectionViewDelegate,UICol
                 albumModel.finderName = str ?? ""
                 albumModel.createDate = Date().timeIntervalSince1970
                 
-                try! self.realm.write {
-                    self.realm.add(albumModel)
+                try! realm.write {
+                    realm.add(albumModel)
                     self.getDataSource()
                 }
             }
