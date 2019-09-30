@@ -40,7 +40,6 @@ class LZAlbumViewController: LZBaseViewController,UICollectionViewDelegate,UICol
         self.navigationItem.rightBarButtonItem = itme;
         
        
-//        self.collectionView.register(UINib.init(nibName: "IMCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "cell")
         self.collectionView.register(LZAlbumCollectionViewCell.classForCoder(), forCellWithReuseIdentifier: "LZAlbumCollectionViewCell")
         self.view.addSubview(self.collectionView)
         
@@ -58,24 +57,39 @@ class LZAlbumViewController: LZBaseViewController,UICollectionViewDelegate,UICol
         }
         self.collectionView .reloadData()
     }
-    @objc private  func rightItmeEvent(){
+    @objc  override func rightItmeEvent(){
         
-        let item = FWPopupItem.init(title: LanguageStrins(string: "OK"), itemType: FWItemType.highlight, isCancel: false, canAutoHide: true) { (view, number, str) in
+        let menu = FWMenuView.menu(itemTitles: [LanguageStrins(string: "New Folders"),LanguageStrins(string: "New Folders")], itemBlock: { (FWPopupView, Int, String) in
             
-      
-            if (str != nil){
-                let albumModel = LZAlbumModel()
-                albumModel.finderName = str ?? ""
-                albumModel.createDate = Date().timeIntervalSince1970
+            switch (Int) {
+            case 0:
+                let item = FWPopupItem.init(title: LanguageStrins(string: "OK"), itemType: FWItemType.highlight, isCancel: false, canAutoHide: true) { (view, number, str) in
+                    
+                    
+                    if (str != nil){
+                        let albumModel = LZAlbumModel()
+                        albumModel.finderName = str ?? ""
+                        albumModel.createDate = Date().timeIntervalSince1970
+                        
+                        try! realm.write {
+                            realm.add(albumModel)
+                            self.getDataSource()
+                        }
+                    }
+                };
+                let alertView = FWAlertView.alert(title: LanguageStrins(string: "New Folders"), detail: LanguageStrins(string: "New folders are stored in photographs"), inputPlaceholder: LanguageStrins(string: "Please enter the filename"), keyboardType: UIKeyboardType.namePhonePad, isSecureTextEntry: true, items: [item]);
+                alertView.show()
+
+                break;
                 
-                try! realm.write {
-                    realm.add(albumModel)
-                    self.getDataSource()
-                }
+            default:
+                break;
             }
-        };
-        let alertView = FWAlertView.alert(title: LanguageStrins(string: "New Folders"), detail: LanguageStrins(string: "New folders are stored in photographs"), inputPlaceholder: LanguageStrins(string: "Please enter the filename"), keyboardType: UIKeyboardType.namePhonePad, isSecureTextEntry: true, items: [item]);
-        alertView.show()
+        }, property: nil)
+        
+        menu.show()
+        
+        
         
     
         
@@ -98,6 +112,16 @@ class LZAlbumViewController: LZBaseViewController,UICollectionViewDelegate,UICol
         cell.loadData(model: self.dataSource[indexPath.row] as! LZAlbumModel)
         return cell
     }
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let model = self.dataSource[indexPath.row] as! LZAlbumModel
+        
+        let vc = LZAlbumDetailsViewController()
+        if model.images.count != 0{
+            vc.dataSource.append(model.images)
+        }
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+   
 
 }
 

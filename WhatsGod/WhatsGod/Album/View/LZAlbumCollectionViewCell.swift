@@ -14,6 +14,7 @@ class LZAlbumCollectionViewCell: UICollectionViewCell {
         btn.setImage(UIImage.init(named: "Folder_64px"), for: .normal)
         btn.titleLabel?.font = UIFont.systemFont(ofSize: 15)
         btn.setTitleColor(UIColor.black, for: .normal)
+        btn.isUserInteractionEnabled = false;
         return btn
     }()
     
@@ -29,7 +30,7 @@ class LZAlbumCollectionViewCell: UICollectionViewCell {
     
    private func loadUI() {
         self.contentView .addSubview(imgBtn)
-        
+    
         imgBtn.snp.makeConstraints { (make) in
             make.left.right.top.bottom.equalTo(0)
         }

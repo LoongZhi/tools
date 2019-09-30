@@ -45,6 +45,9 @@ class LZBaseViewController: UIViewController {
             
         }
     }
+    @objc func rightItmeEvent(){
+        
+    }
     /*
     // MARK: - Navigation
 
