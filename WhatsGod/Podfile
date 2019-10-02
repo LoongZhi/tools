@@ -1,5 +1,19 @@
 # Uncomment the next line to define a global platform for your project
-# platform :ios, '9.0'
+ platform :ios, '9.0'
+post_install do |installer|
+    # 需要指定编译版本的第三方的名称
+    myTargets = ['Translucid']
+    
+    installer.pods_project.targets.each do |target|
+        if myTargets.include? target.name
+            target.build_configurations.each do |config|
+                config.build_settings['SWIFT_VERSION'] = '4.0'
+            end
+        end
+    end
+end
+
+use_frameworks!
 
 target 'WhatsGod' do
   # Comment the next line if you're not using Swift and don't want to use dynamic frameworks
@@ -20,6 +34,8 @@ target 'WhatsGod' do
   
   pod 'ComplimentaryGradientView'
 
-  pod 'Translucid', '~> 0.0.2'
+#  pod 'Translucid', '~> 0.0.2'
+  
+  pod 'DKImagePickerController'
 
 end

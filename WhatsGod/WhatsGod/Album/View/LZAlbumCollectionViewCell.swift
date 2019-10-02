@@ -9,12 +9,25 @@
 import UIKit
 
 class LZAlbumCollectionViewCell: UICollectionViewCell {
-    lazy var imgBtn:UIButton = {
+    lazy var img:UIImageView = {
+        let imgView = UIImageView.init()
+        imgView.image = Img(url: "Folder_64px")
+        imgView.isUserInteractionEnabled = false;
+        return imgView
+    }()
+    lazy var title:UILabel = {
+        let label = UILabel.init()
+        label.textAlignment = .center
+        label.font = UIFont.systemFont(ofSize: 14)
+        return label
+    }()
+    lazy var delBtn:UIButton = {
         let btn = UIButton.init()
-        btn.setImage(UIImage.init(named: "Folder_64px"), for: .normal)
+        
         btn.titleLabel?.font = UIFont.systemFont(ofSize: 15)
         btn.setTitleColor(UIColor.black, for: .normal)
-        btn.isUserInteractionEnabled = false;
+        btn.setImage(Img(url: "danseshixintubiao-"), for: .normal)
+        
         return btn
     }()
     
@@ -29,22 +42,39 @@ class LZAlbumCollectionViewCell: UICollectionViewCell {
     }
     
    private func loadUI() {
-        self.contentView .addSubview(imgBtn)
+        self.contentView.addSubview(self.img)
+        self.contentView.addSubview(self.delBtn)
+        self.contentView.addSubview(self.title)
     
-        imgBtn.snp.makeConstraints { (make) in
-            make.left.right.top.bottom.equalTo(0)
+        img.snp.makeConstraints { (make) in
+            make.top.equalTo(self.contentView).offset(5)
+            make.centerY.centerX.equalTo(self.contentView)
+            make.width.equalTo(60)
+            make.bottom.equalTo(self.title).offset(-10)
+            
+        }
+ 
+    
+    
+    self.title.snp.makeConstraints { (make) in
+        make.bottom.right.left.equalTo(0)
+        make.height.equalTo(20)
+    }
+        self.delBtn.snp.makeConstraints { (make) in
+            make.width.equalTo(25)
+            make.height.equalTo(25)
+            make.top.equalTo(5)
+            make.right.equalTo(-10)
         }
     }
     
+    
     public func loadData(model:LZAlbumModel){
         
-        self.imgBtn.setTitle(model.finderName, for: .normal)
-        
-        let imageSize = self.imgBtn.imageView?.frame.size
-        let titleSize = self.imgBtn.titleLabel?.frame.size
-        
-        self.imgBtn.titleEdgeInsets = UIEdgeInsets.init(top: 8, left: -imageSize!.width, bottom: -imageSize!.height - 15, right: 0)
-        self.imgBtn.imageEdgeInsets = UIEdgeInsets.init(top: -titleSize!.height + 40, left: 0, bottom: 0, right: -titleSize!.width)
+//        self.imgBtn.setTitle(model.finderName, for: .normal)
+        self.delBtn.isHidden = model.isHidden
+        self.title.text = model.finderName
+      
     }
     
 }

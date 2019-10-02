@@ -28,6 +28,8 @@ class LZAlbumDetailsCell: UICollectionViewCell {
     }
     
     private func loadUI() {
+        
+      
         self.contentView .addSubview(imageView)
         imageView.snp.makeConstraints { (make) in
             make.left.right.top.bottom.equalTo(0)

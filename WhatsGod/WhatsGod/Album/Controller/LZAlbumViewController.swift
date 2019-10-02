@@ -12,8 +12,11 @@ class LZAlbumViewController: LZBaseViewController,UICollectionViewDelegate,UICol
    
     
 
-
-   
+    var  menuView:FWMenuView? = nil
+    var  isHidden:Bool = true
+    let images = [UIImage(named: "right_menu_multichat_white"),
+                  UIImage(named: "right_menu_addFri_white"),]
+ 
     private lazy var collectionView:UICollectionView = {
         let layout = UICollectionViewFlowLayout.init()
         layout.itemSize = CGSize.init(width: SCREEN_WIDTH / 4, height: 80)
@@ -26,6 +29,8 @@ class LZAlbumViewController: LZBaseViewController,UICollectionViewDelegate,UICol
         collection.backgroundColor = UIColor.white
         return collection;
     }()
+    
+//    let menuView
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -33,10 +38,18 @@ class LZAlbumViewController: LZBaseViewController,UICollectionViewDelegate,UICol
         
         readyView()
         
+        if self.dataSource.count != 0{
+            let model:LZAlbumModel = self.dataSource.first as! LZAlbumModel
+            if !model.isHidden{
+                let itme = UIBarButtonItem.init(title: LanguageStrins(string: "Completed"), style: .done, target: self, action: #selector(self.leftItmeEvent))
+                self.navigationItem.leftBarButtonItem = itme
+                self.isHidden = false
+            }
+        }
     }
     private func readyView(){
         
-        let itme = UIBarButtonItem.init(title: LanguageStrins(string: "New"), style: .done, target: self, action: #selector(rightItmeEvent));
+        let itme = UIBarButtonItem.init(image: Img(url: "mqz_nav_add"), style: .done, target: self, action:  #selector(rightItmeEvent));
         self.navigationItem.rightBarButtonItem = itme;
         
        
@@ -44,6 +57,58 @@ class LZAlbumViewController: LZBaseViewController,UICollectionViewDelegate,UICol
         self.view.addSubview(self.collectionView)
         
         self.getDataSource()
+        
+        let vProperty = FWMenuViewProperty()
+        vProperty.popupCustomAlignment = .topRight
+        vProperty.popupAnimationType = .scale
+        vProperty.maskViewColor = UIColor(white: 0, alpha: 0.2)
+        vProperty.touchWildToHide = "1"
+        vProperty.popupViewEdgeInsets = UIEdgeInsets(top:lzNavigationHeight, left: 0, bottom: 0, right: 8)
+        vProperty.topBottomMargin = 0
+        vProperty.animationDuration = 0.3
+        vProperty.popupArrowStyle = .round
+        vProperty.popupArrowVertexScaleX = 1
+        vProperty.backgroundColor = kPV_RGBA(r: 64, g: 63, b: 66, a: 1)
+        vProperty.splitColor = kPV_RGBA(r: 64, g: 63, b: 66, a: 1)
+        vProperty.separatorColor = kPV_RGBA(r: 91, g: 91, b: 93, a: 1)
+        vProperty.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white, NSAttributedString.Key.backgroundColor: UIColor.clear, NSAttributedString.Key.font: UIFont.systemFont(ofSize: 15.0)]
+        vProperty.separatorInset = UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 15)
+        
+        
+        self.menuView = FWMenuView.menu(itemTitles: [LanguageStrins(string: "New"),LanguageStrins(string: "Edit")], itemImageNames:images as! [UIImage], itemBlock: { (popupView, index, title) in
+            print("Menu：点击了第\(index)个按钮")
+            
+            switch (index) {
+            case 0:
+                let item = FWPopupItem.init(title: LanguageStrins(string: "OK"), itemType: FWItemType.highlight, isCancel: false, canAutoHide: true) { (view, number, str) in
+                
+                };
+                
+                let alertView = FWAlertView.alert(title: LanguageStrins(string: "New Folders"), detail: LanguageStrins(string: "New folders are stored in photographs"), inputPlaceholder: LanguageStrins(string: "Please enter the filename"), keyboardType: UIKeyboardType.namePhonePad, isSecureTextEntry: false, items: [item]);
+                alertView.show()
+                alertView.inputBlock = { (text:String) in
+                    if (text != nil){
+                        let albumModel = LZAlbumModel()
+                        albumModel.finderName = text
+                        albumModel.createDate = Date().timeIntervalSince1970
+                        
+                        try! realm.write {
+                            realm.add(albumModel)
+                            self.getDataSource()
+                        }
+                    }
+                }
+                break;
+            case 1:
+                let itme = UIBarButtonItem.init(title: LanguageStrins(string: "Completed"), style: .done, target: self, action: #selector(self.leftItmeEvent))
+                self.navigationItem.leftBarButtonItem = itme
+                self.isHidden = false
+                self.setHidden(hidden: self.isHidden)
+                break;
+            default:
+                break;
+            }
+        }, property: vProperty)
     }
     
     private func getDataSource(){
@@ -57,44 +122,51 @@ class LZAlbumViewController: LZBaseViewController,UICollectionViewDelegate,UICol
         }
         self.collectionView .reloadData()
     }
-    @objc  override func rightItmeEvent(){
+    override func rightItmeEvent(){
         
-        let menu = FWMenuView.menu(itemTitles: [LanguageStrins(string: "New Folders"),LanguageStrins(string: "New Folders")], itemBlock: { (FWPopupView, Int, String) in
-            
-            switch (Int) {
-            case 0:
-                let item = FWPopupItem.init(title: LanguageStrins(string: "OK"), itemType: FWItemType.highlight, isCancel: false, canAutoHide: true) { (view, number, str) in
-                    
-                    
-                    if (str != nil){
-                        let albumModel = LZAlbumModel()
-                        albumModel.finderName = str ?? ""
-                        albumModel.createDate = Date().timeIntervalSince1970
-                        
-                        try! realm.write {
-                            realm.add(albumModel)
-                            self.getDataSource()
-                        }
-                    }
-                };
-                let alertView = FWAlertView.alert(title: LanguageStrins(string: "New Folders"), detail: LanguageStrins(string: "New folders are stored in photographs"), inputPlaceholder: LanguageStrins(string: "Please enter the filename"), keyboardType: UIKeyboardType.namePhonePad, isSecureTextEntry: true, items: [item]);
-                alertView.show()
+        
+        self.menuView?.show()
 
-                break;
-                
-            default:
-                break;
-            }
-        }, property: nil)
-        
-        menu.show()
-        
-        
-        
-    
-        
     }
-
+    
+    override func leftItmeEvent() {
+        self.isHidden = true
+        self.setHidden(hidden: self.isHidden)
+        self.navigationItem.leftBarButtonItem = nil
+    }
+    
+    private func setHidden(hidden:Bool){
+        
+        if self.dataSource.count == 0 {
+            return
+        }
+        for (index,value) in self.dataSource.enumerated() {
+            let model:LZAlbumModel = value as! LZAlbumModel
+            
+            try! realm.write {
+                model.isHidden = hidden
+                self.dataSource[index] = model
+            }
+            
+        }
+        
+        self.collectionView.reloadData()
+    }
+    
+    @objc func delBtn(btn:UIButton){
+        
+        let alert = FWAlertView.alert(title: LanguageStrins(string: "Tips"), detail: LanguageStrins(string: "Whether you delete the folder"), confirmBlock: { (view, number, str) in
+            if self.dataSource.count != 0{
+                try! realm.write {
+                    realm.delete(self.dataSource[btn.tag] as! LZAlbumModel)
+                }
+                self.collectionView.reloadData()
+            }
+        }) { (view, number, str) in
+            
+        }
+        alert.show()
+    }
   
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
@@ -110,6 +182,8 @@ class LZAlbumViewController: LZBaseViewController,UICollectionViewDelegate,UICol
         let cell:LZAlbumCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! LZAlbumCollectionViewCell
         
         cell.loadData(model: self.dataSource[indexPath.row] as! LZAlbumModel)
+        cell.delBtn.tag = indexPath.row
+        cell.delBtn.addTarget(self, action: #selector(delBtn(btn:)), for: .touchUpInside)
         return cell
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {

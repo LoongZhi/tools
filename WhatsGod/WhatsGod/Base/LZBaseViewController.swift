@@ -48,6 +48,28 @@ class LZBaseViewController: UIViewController {
     @objc func rightItmeEvent(){
         
     }
+    @objc  func leftItmeEvent(){
+        
+    }
+    
+    // 相机权限
+
+    func isRightCamera() -> Bool {
+
+        let authStatus = AVCaptureDevice.authorizationStatus(forMediaType: AVMediaTypeVideo)
+
+        return authStatus != .restricted && authStatus != .denied
+
+    }
+
+    // 相册权限
+    func isRightPhoto() -> Bool {
+
+        let authStatus = ALAssetsLibrary.authorizationStatus()
+
+        return authStatus != .restricted && authStatus != .denied
+
+    }
     /*
     // MARK: - Navigation
 

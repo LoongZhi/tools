@@ -11,6 +11,7 @@ import Foundation
 //数据库对象
  let realm = LZRealmTool.lz_realm
 
+
 private func blankof<T>(type:T.Type) -> T {
     let ptr = UnsafeMutablePointer<T>.allocate(capacity: MemoryLayout<T>.size)
     let val = ptr.pointee
@@ -35,6 +36,10 @@ func availableRAM() -> Int64 {
     return -1
 }
 
+//获取UImage
+func Img(url:String) -> UIImage{
+    return UIImage.init(named: url) ?? UIImage.init()
+}
 //语言本地化
 public func LanguageStrins(string:String) ->String{
     return NSLocalizedString(string, comment: "")
