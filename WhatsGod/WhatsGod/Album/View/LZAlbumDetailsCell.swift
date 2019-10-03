@@ -11,13 +11,14 @@ import UIKit
 class LZAlbumDetailsCell: UICollectionViewCell {
     lazy var selectBtn:UIButton = {
         let btn = UIButton.init()
-        btn.backgroundColor = UIColor.orange
+        btn.setImage(Img(url: "xuanze"), for: .normal)
+        btn.setImage(Img(url: "xuanze-2"), for: .selected)
         return btn
     }()
     
     lazy var imageView:UIImageView = {
         let image = UIImageView.init()
-        image.backgroundColor = UIColor.orange
+      
         return image
     }()
     

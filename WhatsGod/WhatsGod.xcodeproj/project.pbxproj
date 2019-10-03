@@ -18,6 +18,7 @@
 		88261CB623320A24005CE69D /* WhatsGodUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88261CB523320A24005CE69D /* WhatsGodUITests.swift */; };
 		88261CC623320D18005CE69D /* LZBaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88261CC523320D18005CE69D /* LZBaseViewController.swift */; };
 		88261CCA23320D7B005CE69D /* LZMainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88261CC923320D7B005CE69D /* LZMainViewController.swift */; };
+		882A81CE23462F4200A97ADC /* ExtensionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 882A81CD23462F4200A97ADC /* ExtensionView.swift */; };
 		883AB3A1233E21A6007E0D4B /* LZAlbumCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 883AB3A0233E21A6007E0D4B /* LZAlbumCollectionViewCell.swift */; };
 		88613A09233636250089C402 /* LZBaseNavController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88613A08233636240089C402 /* LZBaseNavController.swift */; };
 		88613A10233639990089C402 /* BubbleTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88613A0C233639990089C402 /* BubbleTabBar.swift */; };
@@ -70,6 +71,7 @@
 		88261CB723320A24005CE69D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		88261CC523320D18005CE69D /* LZBaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LZBaseViewController.swift; sourceTree = "<group>"; };
 		88261CC923320D7B005CE69D /* LZMainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LZMainViewController.swift; sourceTree = "<group>"; };
+		882A81CD23462F4200A97ADC /* ExtensionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionView.swift; sourceTree = "<group>"; };
 		883AB395233C94D5007E0D4B /* WhatsGod-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "WhatsGod-Bridging-Header.h"; sourceTree = "<group>"; };
 		883AB3A0233E21A6007E0D4B /* LZAlbumCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LZAlbumCollectionViewCell.swift; sourceTree = "<group>"; };
 		88613A08233636240089C402 /* LZBaseNavController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LZBaseNavController.swift; sourceTree = "<group>"; };
@@ -198,6 +200,14 @@
 			path = Base;
 			sourceTree = "<group>";
 		};
+		882A81CC23462EE800A97ADC /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				882A81CD23462F4200A97ADC /* ExtensionView.swift */,
+			);
+			path = Extension;
+			sourceTree = "<group>";
+		};
 		883AB394233C94B7007E0D4B /* ObjectC */ = {
 			isa = PBXGroup;
 			children = (
@@ -243,6 +253,7 @@
 		88613A0A2336397E0089C402 /* Tools */ = {
 			isa = PBXGroup;
 			children = (
+				882A81CC23462EE800A97ADC /* Extension */,
 				88BD9B3A233B9B840098B8FB /* DB */,
 				88613A0B233639990089C402 /* Classes */,
 			);
@@ -574,6 +585,7 @@
 				88613A09233636250089C402 /* LZBaseNavController.swift in Sources */,
 				88613A1A233647A70089C402 /* LZAlbumViewController.swift in Sources */,
 				88BD9B3C233B9BB40098B8FB /* LZRealmTool.swift in Sources */,
+				882A81CE23462F4200A97ADC /* ExtensionView.swift in Sources */,
 				88613A10233639990089C402 /* BubbleTabBar.swift in Sources */,
 				88613A1D233647E10089C402 /* LZVideoViewController.swift in Sources */,
 				88613A2D233651E90089C402 /* LZMacro.swift in Sources */,

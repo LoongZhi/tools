@@ -8,6 +8,7 @@
 
 import UIKit
 import LYEmptyView
+
 class LZBaseViewController: UIViewController {
 
     public var dataSource = [Any]()
@@ -52,24 +53,16 @@ class LZBaseViewController: UIViewController {
         
     }
     
-    // 相机权限
-
-    func isRightCamera() -> Bool {
-
-        let authStatus = AVCaptureDevice.authorizationStatus(forMediaType: AVMediaTypeVideo)
-
-        return authStatus != .restricted && authStatus != .denied
-
+    override var hidesBottomBarWhenPushed: Bool {
+            get {
+                return navigationController?.topViewController != self
+            }
+            set {
+                super.hidesBottomBarWhenPushed = newValue
+            }
     }
 
-    // 相册权限
-    func isRightPhoto() -> Bool {
 
-        let authStatus = ALAssetsLibrary.authorizationStatus()
-
-        return authStatus != .restricted && authStatus != .denied
-
-    }
     /*
     // MARK: - Navigation
 

@@ -8,6 +8,7 @@
 
 import UIKit
 import FWPopupView
+
 class LZAlbumViewController: LZBaseViewController,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout {
    
     
@@ -134,7 +135,7 @@ class LZAlbumViewController: LZBaseViewController,UICollectionViewDelegate,UICol
         self.setHidden(hidden: self.isHidden)
         self.navigationItem.leftBarButtonItem = nil
     }
-    
+   
     private func setHidden(hidden:Bool){
         
         if self.dataSource.count == 0 {
@@ -190,9 +191,7 @@ class LZAlbumViewController: LZBaseViewController,UICollectionViewDelegate,UICol
         let model = self.dataSource[indexPath.row] as! LZAlbumModel
         
         let vc = LZAlbumDetailsViewController()
-        if model.images.count != 0{
-            vc.dataSource.append(model.images)
-        }
+        vc.folderModel = model
         self.navigationController?.pushViewController(vc, animated: true)
     }
    
