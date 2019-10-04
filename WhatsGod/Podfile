@@ -28,6 +28,7 @@ target 'WhatsGod' do
   
   pod 'FWPopupView'
 
+  pod 'Hue'
 
 #  pod 'NVActivityIndicatorView' 
   pod 'CryptoSwift'
@@ -37,5 +38,11 @@ target 'WhatsGod' do
 #  pod 'Translucid', '~> 0.0.2'
   
   pod 'DKImagePickerController'
+  
+   pod 'IBAnimatable'
+   
+   pod 'Chrysan'
+   
+   pod 'IQKeyboardManagerSwift'
 
 end

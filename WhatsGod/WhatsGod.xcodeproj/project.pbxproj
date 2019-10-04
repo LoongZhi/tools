@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		7ADB2B96D8098E500A5FFC40 /* Pods_WhatsGod.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF2C973FF3A6D4A1DC2AA312 /* Pods_WhatsGod.framework */; };
+		8821799723477C4E002C32B1 /* ExtensionString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8821799623477C4E002C32B1 /* ExtensionString.swift */; };
 		8822C32A233F8FDC00E09741 /* LZAlbumDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8822C329233F8FDC00E09741 /* LZAlbumDetailsViewController.swift */; };
 		8822C32C233F908400E09741 /* LZAlbumDetailsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8822C32B233F908400E09741 /* LZAlbumDetailsCell.swift */; };
 		88261C9623320A22005CE69D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88261C9523320A22005CE69D /* AppDelegate.swift */; };
@@ -55,6 +56,7 @@
 
 /* Begin PBXFileReference section */
 		237F0DF970AA48B3BF36B833 /* Pods-WhatsGod.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WhatsGod.debug.xcconfig"; path = "Target Support Files/Pods-WhatsGod/Pods-WhatsGod.debug.xcconfig"; sourceTree = "<group>"; };
+		8821799623477C4E002C32B1 /* ExtensionString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionString.swift; sourceTree = "<group>"; };
 		8822C329233F8FDC00E09741 /* LZAlbumDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LZAlbumDetailsViewController.swift; sourceTree = "<group>"; };
 		8822C32B233F908400E09741 /* LZAlbumDetailsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LZAlbumDetailsCell.swift; sourceTree = "<group>"; };
 		88261C9223320A22005CE69D /* WhatsGod.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WhatsGod.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -204,6 +206,7 @@
 			isa = PBXGroup;
 			children = (
 				882A81CD23462F4200A97ADC /* ExtensionView.swift */,
+				8821799623477C4E002C32B1 /* ExtensionString.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -526,6 +529,7 @@
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-WhatsGod/Pods-WhatsGod-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Chrysan/Chrysan.framework",
 				"${BUILT_PRODUCTS_DIR}/ComplimentaryGradientView/ComplimentaryGradientView.framework",
 				"${BUILT_PRODUCTS_DIR}/CropViewController/CropViewController.framework",
 				"${BUILT_PRODUCTS_DIR}/CryptoSwift/CryptoSwift.framework",
@@ -534,6 +538,9 @@
 				"${BUILT_PRODUCTS_DIR}/DKPhotoGallery/DKPhotoGallery.framework",
 				"${BUILT_PRODUCTS_DIR}/FLAnimatedImage/FLAnimatedImage.framework",
 				"${BUILT_PRODUCTS_DIR}/FWPopupView/FWPopupView.framework",
+				"${BUILT_PRODUCTS_DIR}/Hue/Hue.framework",
+				"${BUILT_PRODUCTS_DIR}/IBAnimatable/IBAnimatable.framework",
+				"${BUILT_PRODUCTS_DIR}/IQKeyboardManagerSwift/IQKeyboardManagerSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/LYEmptyView/LYEmptyView.framework",
 				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
 				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
@@ -545,6 +552,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Chrysan.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ComplimentaryGradientView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CropViewController.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CryptoSwift.framework",
@@ -553,6 +561,9 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DKPhotoGallery.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FLAnimatedImage.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FWPopupView.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Hue.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/IBAnimatable.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/IQKeyboardManagerSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/LYEmptyView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
@@ -572,6 +583,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8821799723477C4E002C32B1 /* ExtensionString.swift in Sources */,
 				88613A15233646850089C402 /* LZBaseTabBarController.swift in Sources */,
 				8822C32A233F8FDC00E09741 /* LZAlbumDetailsViewController.swift in Sources */,
 				88613A13233639990089C402 /* CBTabBarButton.swift in Sources */,

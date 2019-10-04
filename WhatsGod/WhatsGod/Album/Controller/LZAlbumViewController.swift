@@ -88,7 +88,14 @@ class LZAlbumViewController: LZBaseViewController,UICollectionViewDelegate,UICol
                 let alertView = FWAlertView.alert(title: LanguageStrins(string: "New Folders"), detail: LanguageStrins(string: "New folders are stored in photographs"), inputPlaceholder: LanguageStrins(string: "Please enter the filename"), keyboardType: UIKeyboardType.namePhonePad, isSecureTextEntry: false, items: [item]);
                 alertView.show()
                 alertView.inputBlock = { (text:String) in
-                    if (text != nil){
+                    
+                    if text.isStringNull() {
+                       
+                        self.chrysan.show(.plain, message:LanguageStrins(string: "Please enter the filename"), hideDelay: 2)
+                       
+                        return
+                    }
+                   
                         let albumModel = LZAlbumModel()
                         albumModel.finderName = text
                         albumModel.createDate = Date().timeIntervalSince1970
@@ -97,7 +104,7 @@ class LZAlbumViewController: LZBaseViewController,UICollectionViewDelegate,UICol
                             realm.add(albumModel)
                             self.getDataSource()
                         }
-                    }
+                    
                 }
                 break;
             case 1:

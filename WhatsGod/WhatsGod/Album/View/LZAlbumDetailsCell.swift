@@ -46,6 +46,7 @@ class LZAlbumDetailsCell: UICollectionViewCell {
     public func loadData(model:LZAlbumImageModel){
         self.imageView.image = UIImage.init(data: model.image)
         self.selectBtn.isSelected = model.isSelect
+        self.selectBtn.isHidden = model.isHidden
     }
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")

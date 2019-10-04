@@ -8,7 +8,8 @@
 
 import UIKit
 import LYEmptyView
-
+import IQKeyboardManagerSwift
+import Chrysan
 class LZBaseViewController: UIViewController {
 
     public var dataSource = [Any]()
@@ -21,7 +22,7 @@ class LZBaseViewController: UIViewController {
     
     func create() -> Void {
         self.view.backgroundColor = UIColor.white
-        NotificationCenter.default.addObserver(self, selector: #selector(transormView(not:)), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
+//        NotificationCenter.default.addObserver(self, selector: #selector(transormView(not:)), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -30,22 +31,22 @@ class LZBaseViewController: UIViewController {
         }
     }
     
-   @objc func transormView(not:Notification) {
-    
-        let keyboardBeginBouns:NSValue = not.userInfo?[UIResponder.keyboardFrameBeginUserInfoKey] as! NSValue
-        let beginRect = keyboardBeginBouns.cgRectValue
-        let keyBoardEndBounds:NSValue = not.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as! NSValue
-        let endRect = keyBoardEndBounds.cgRectValue
-    
-        let deltaY = endRect.origin.y-beginRect.origin.y
-    
-        print(deltaY)
-    
-        UIView.animate(withDuration: 0.25) {
-            self.view.frame = CGRect.init(x: self.view.frame.origin.x, y: self.view.frame.origin.y+deltaY, width: self.view.frame.size.width, height: self.view.frame.size.height)
-            
-        }
-    }
+//   @objc func transormView(not:Notification) {
+//
+//        let keyboardBeginBouns:NSValue = not.userInfo?[UIResponder.keyboardFrameBeginUserInfoKey] as! NSValue
+//        let beginRect = keyboardBeginBouns.cgRectValue
+//        let keyBoardEndBounds:NSValue = not.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as! NSValue
+//        let endRect = keyBoardEndBounds.cgRectValue
+//
+//        let deltaY = endRect.origin.y-beginRect.origin.y
+//
+//        print(deltaY)
+//
+//        UIView.animate(withDuration: 0.25) {
+//            self.view.frame = CGRect.init(x: self.view.frame.origin.x, y: self.view.frame.origin.y+deltaY, width: self.view.frame.size.width, height: self.view.frame.size.height)
+//
+//        }
+//    }
     @objc func rightItmeEvent(){
         
     }

@@ -8,6 +8,7 @@
 
 import UIKit
 import RealmSwift
+import IQKeyboardManagerSwift
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
@@ -21,6 +22,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         let tabBarController = LZBaseTabBarController()
         self.window?.rootViewController = tabBarController;
+        
+        IQKeyboardManager.shared.enable = true
         // Override point for customization after application launch.
         configRealm()
         return true

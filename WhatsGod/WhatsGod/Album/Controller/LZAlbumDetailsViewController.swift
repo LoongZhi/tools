@@ -20,6 +20,7 @@ class LZAlbumDetailsViewController: LZBaseViewController,UICollectionViewDelegat
     let images = [UIImage(named: "right_menu_multichat_white"),
                   UIImage(named: "right_menu_addFri_white"),]
     var indexs:Array = Array<Int>()
+    
     public var folderModel:LZAlbumModel? = nil
     
     private lazy var collectionView:UICollectionView = {
@@ -44,19 +45,28 @@ class LZAlbumDetailsViewController: LZBaseViewController,UICollectionViewDelegat
         view.backgroundColor = UIColor.white
 //        view.layer.borderWidth = 0.5
 //        view.layer.borderColor = UIColor.gray.cgColor
-        view.topBorder(width: 20, borderColor: UIColor.orange)
+        
         return view;
     }()
     private lazy var allBtn:UIButton = {
         let btn = UIButton.init()
         btn.setImage(Img(url: "xuanze"), for: .normal)
         btn.setImage(Img(url: "xuanze-2"), for: .selected)
+        btn.addTarget(self, action: #selector(allEvent(btn:)), for: .touchUpInside)
         return btn
     }()
     private lazy var delBtn:UIButton = {
         let btn = UIButton.init()
         btn.setTitle(LanguageStrins(string: "delete"), for: .normal)
+        btn.backgroundColor = UIColor.red
+        btn.addTarget(self, action: #selector(delTouch), for: .touchUpInside)
         return btn
+    }()
+    private lazy var allLabel:UILabel = {
+        let label = UILabel.init()
+        label.text = LanguageStrins(string: "all")
+        label.font = UIFont.systemFont(ofSize: 20)
+        return label
     }()
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -66,32 +76,52 @@ class LZAlbumDetailsViewController: LZBaseViewController,UICollectionViewDelegat
     }
     private func readyView(){
         
+        self.view.addSubview(self.collectionView)
         self.view.addSubview(self.bottomView)
-        self.bottomView.snp.makeConstraints { (make) in
-            make.right.left.equalTo(0)
-            make.height.equalTo(49)
-            make.bottom.equalTo(-lzBottomSafeHeight)
-        }
-     
-        self.bottomView.addSubview(self.allBtn)
-        self.allBtn.snp.makeConstraints { (make) in
-            make.left.equalTo(self.bottomView).offset(15)
-            make.centerX.equalTo(self.bottomView).offset(0)
-            make.width.equalTo(50)
+        
+          self.bottomView.snp.makeConstraints { (make) in
+              make.right.left.equalTo(0)
+              make.height.equalTo(49)
+              make.bottom.equalTo(-lzBottomSafeHeight)
+          }
+         
+          self.bottomView.topBorder(width: 0.3, borderColor: UIColor.gray)
+          
+          self.bottomView.addSubview(self.allBtn)
+          self.allBtn.snp.makeConstraints { (make) in
+              make.left.equalTo(15)
+              make.top.equalTo(12)
+              make.width.height.equalTo(20)
+             
+          }
+          
+          self.bottomView.addSubview(self.allLabel)
+          self.allLabel.snp.makeConstraints { (make) in
+              make.left.equalTo(self.allBtn.snp.right).offset(10)
+              make.top.equalTo(8)
+              make.width.equalTo(80)
+              make.height.equalTo(25)
+          }
+        self.bottomView.addSubview(self.delBtn)
+        self.delBtn.snp.makeConstraints { (make) in
+            make.right.equalTo(-15)
+            make.top.equalTo(7)
+            make.width.equalTo(80)
             make.height.equalTo(35)
         }
+        self.delBtn.setRoundCorners(corners: .allCorners, with: 5)
         
         let itme = UIBarButtonItem.init(image: Img(url: "mqz_nav_add"), style: .done, target: self, action:  #selector(rightItmeEvent));
         self.navigationItem.rightBarButtonItem = itme;
         
         
         self.collectionView.register(LZAlbumDetailsCell.classForCoder(), forCellWithReuseIdentifier: "LZAlbumDetailsCell")
-//        self.view.addSubview(self.collectionView)
-//
-//        self.collectionView.snp.makeConstraints { (make) in
-//            make.top.right.left.equalTo(0)
-//            make.bottom.equalTo(self.bottomView).offset(5)
-//        }
+        
+
+        self.collectionView.snp.makeConstraints { (make) in
+            make.top.right.left.equalTo(0)
+            make.bottom.equalTo(self.bottomView.snp.top).offset(0)
+        }
         
         self.getDataSource()
         
@@ -123,6 +153,8 @@ class LZAlbumDetailsViewController: LZBaseViewController,UICollectionViewDelegat
                         PHCachingImageManager.default().requestImage(for: model.originalAsset!, targetSize: CGSize.zero, contentMode: .aspectFit, options: nil) { (result: UIImage?, dictionry: Dictionary?) in
                             let imageModel = LZAlbumImageModel.init()
                             imageModel.image = (result?.jpegData(compressionQuality: 1))!
+                            imageModel.isHidden = self.isHidden
+                            
                             try! realm.write {
                                 self.folderModel?.images.append(imageModel)
                             }
@@ -142,12 +174,15 @@ class LZAlbumDetailsViewController: LZBaseViewController,UICollectionViewDelegat
                 let itme = UIBarButtonItem.init(title: LanguageStrins(string: "Completed"), style: .done, target: self, action: #selector(self.leftItmeEvent))
                 self.navigationItem.leftBarButtonItem = itme
                 self.isHidden = false
-              
+                self.setHidden(hidden: self.isHidden)
                 break;
             default:
                 break;
             }
         }, property: vProperty)
+        
+        
+        self.setHidden(hidden: self.isHidden)
     }
     
     private func getDataSource(){
@@ -188,7 +223,29 @@ class LZAlbumDetailsViewController: LZBaseViewController,UICollectionViewDelegat
         }
          
     }
-    
+    override func leftItmeEvent() {
+           self.isHidden = true
+           self.setHidden(hidden: self.isHidden)
+           self.navigationItem.leftBarButtonItem = nil
+       }
+    private func setHidden(hidden:Bool){
+           
+           if self.dataSource.count == 0 {
+               return
+           }
+           for (index,value) in self.dataSource.enumerated() {
+               let model:LZAlbumImageModel = value as! LZAlbumImageModel
+               
+               try! realm.write {
+                   model.isHidden = hidden
+                   self.dataSource[index] = model
+               }
+               
+           }
+            
+           self.bottomView.isHidden = hidden
+           self.collectionView.reloadData()
+       }
     // 相机权限
        func isRightCamera() -> Bool {
 
@@ -206,19 +263,63 @@ class LZAlbumDetailsViewController: LZBaseViewController,UICollectionViewDelegat
 
        }
 
+    @objc func allEvent(btn:UIButton) -> Void {
+        btn.isSelected = !btn.isSelected
+        
+        self.indexs.removeAll()
+        if btn.isSelected {
+            for (index,_) in self.dataSource.enumerated() {
+                self.indexs.append(index)
+                try! realm.write {
+                    let model:LZAlbumImageModel =  self.dataSource[index] as! LZAlbumImageModel
+                    model.isSelect = true
+                }
+            }
+        }else{
+            for (index,_) in self.dataSource.enumerated() {
+              
+                try! realm.write {
+                    let model:LZAlbumImageModel =  self.dataSource[index] as! LZAlbumImageModel
+                    model.isSelect = false
+                }
+            }
+        }
+        
+        self.collectionView.reloadData()
+    }
     @objc func touchBtn(btn:UIButton) -> Void {
         if self.dataSource.count != 0 {
             btn.isSelected = !btn.isSelected
             if btn.isSelected {
                 self.indexs.append(btn.tag)
+                
             }else{
                 self.indexs = self.indexs.filter{$0 != btn.tag}
             }
-//            try! realm.write {
-//                self.folderModel?.images.remove(at: btn.tag)
-//            }
-//            self.dataSource.remove(at: btn.tag)
+             
+            try! realm.write {
+               let model:LZAlbumImageModel =  self.dataSource[btn.tag] as! LZAlbumImageModel
+                model.isSelect = btn.isSelected
+            }
+            self.collectionView.reloadData()
+            
+            
         }
+    }
+    
+    @objc func delTouch(){
+        
+        if self.indexs.count != 0 {
+            for (index,itme) in self.indexs.enumerated() {
+                try! realm.write {
+                    self.dataSource.remove(at: itme)
+                    self.folderModel?.images.remove(at: itme)
+                    self.indexs.remove(at: index)
+                }
+            }
+        }
+        
+        self.collectionView.reloadData()
     }
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
