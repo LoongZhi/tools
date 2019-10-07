@@ -44,5 +44,7 @@ target 'WhatsGod' do
    pod 'Chrysan'
    
    pod 'IQKeyboardManagerSwift'
+   
+   pod 'SSZipArchive'
 
 end

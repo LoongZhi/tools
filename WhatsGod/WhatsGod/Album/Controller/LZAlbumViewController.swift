@@ -48,7 +48,7 @@ class LZAlbumViewController: LZBaseViewController,UICollectionViewDelegate,UICol
             }
         }
     }
-    private func readyView(){
+    @objc override func readyView(){
         
         let itme = UIBarButtonItem.init(image: Img(url: "mqz_nav_add"), style: .done, target: self, action:  #selector(rightItmeEvent));
         self.navigationItem.rightBarButtonItem = itme;
@@ -75,37 +75,47 @@ class LZAlbumViewController: LZBaseViewController,UICollectionViewDelegate,UICol
         vProperty.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white, NSAttributedString.Key.backgroundColor: UIColor.clear, NSAttributedString.Key.font: UIFont.systemFont(ofSize: 15.0)]
         vProperty.separatorInset = UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 15)
         
-        
+       
         self.menuView = FWMenuView.menu(itemTitles: [LanguageStrins(string: "New"),LanguageStrins(string: "Edit")], itemImageNames:images as! [UIImage], itemBlock: { (popupView, index, title) in
             print("Menu：点击了第\(index)个按钮")
             
             switch (index) {
             case 0:
-                let item = FWPopupItem.init(title: LanguageStrins(string: "OK"), itemType: FWItemType.highlight, isCancel: false, canAutoHide: true) { (view, number, str) in
-                
-                };
-                
-                let alertView = FWAlertView.alert(title: LanguageStrins(string: "New Folders"), detail: LanguageStrins(string: "New folders are stored in photographs"), inputPlaceholder: LanguageStrins(string: "Please enter the filename"), keyboardType: UIKeyboardType.namePhonePad, isSecureTextEntry: false, items: [item]);
-                alertView.show()
-                alertView.inputBlock = { (text:String) in
-                    
-                    if text.isStringNull() {
-                       
-                        self.chrysan.show(.plain, message:LanguageStrins(string: "Please enter the filename"), hideDelay: 2)
-                       
-                        return
-                    }
-                   
-                        let albumModel = LZAlbumModel()
-                        albumModel.finderName = text
-                        albumModel.createDate = Date().timeIntervalSince1970
-                        
-                        try! realm.write {
-                            realm.add(albumModel)
-                            self.getDataSource()
-                        }
-                    
-                }
+       
+                       let alertController = UIAlertController(title: LanguageStrins(string: "New Folders"),message:LanguageStrins(string: "Please enter the filename"),preferredStyle: .alert)
+
+                           // 建立兩個輸入框
+                       alertController.addTextField {
+                               (textField: UITextField!) -> Void in
+                               textField.placeholder = LanguageStrins(string: "Please enter the filename")
+                       }
+                let cancelAction = UIAlertAction(title: LanguageStrins(string: "Cancel"),style: .cancel,handler: nil)
+                          alertController.addAction(cancelAction)
+
+                          // 建立[登入]按鈕
+                          let okAction = UIAlertAction(title: LanguageStrins(string: "OK"),style: UIAlertAction.Style.default) {
+                              (action: UIAlertAction!) -> Void in
+                            let acc:UITextField =
+                                (alertController.textFields?.first)!
+                                  as UITextField
+                                if acc.text!.isStringNull() {
+                                        
+                                    self.chrysan.show(.plain, message:LanguageStrins(string: "Please enter the filename"), hideDelay: HIDE_DELAY)
+                                                                                                           
+                                    return
+                                                        
+                                }
+                                                    
+                                let albumModel = LZAlbumModel()
+                                albumModel.finderName = acc.text!
+                                albumModel.createDate = Date().timeIntervalSince1970
+                                try! realm.write {
+                                  realm.add(albumModel)
+                                  self.getDataSource()
+                                }
+                            }
+                          alertController.addAction(okAction)
+                          self.present(alertController,animated: true,completion: nil)
                 break;
             case 1:
                 let itme = UIBarButtonItem.init(title: LanguageStrins(string: "Completed"), style: .done, target: self, action: #selector(self.leftItmeEvent))
@@ -154,6 +164,7 @@ class LZAlbumViewController: LZBaseViewController,UICollectionViewDelegate,UICol
             try! realm.write {
                 model.isHidden = hidden
                 self.dataSource[index] = model
+                
             }
             
         }
@@ -166,9 +177,12 @@ class LZAlbumViewController: LZBaseViewController,UICollectionViewDelegate,UICol
         let alert = FWAlertView.alert(title: LanguageStrins(string: "Tips"), detail: LanguageStrins(string: "Whether you delete the folder"), confirmBlock: { (view, number, str) in
             if self.dataSource.count != 0{
                 try! realm.write {
-                    realm.delete(self.dataSource[btn.tag] as! LZAlbumModel)
+                    let model:LZAlbumModel = self.dataSource[btn.tag] as! LZAlbumModel
+                    realm.delete(model)
+                    self.getDataSource()
+                    self.collectionView.reloadData()
                 }
-                self.collectionView.reloadData()
+               
             }
         }) { (view, number, str) in
             

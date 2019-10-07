@@ -71,6 +71,7 @@ PODS:
     - FLAnimatedImage (>= 1.0.11)
     - SDWebImage/Core (~> 5.0)
   - SnapKit (4.0.1)
+  - SSZipArchive (2.2.2)
 
 DEPENDENCIES:
   - Chrysan
@@ -84,6 +85,7 @@ DEPENDENCIES:
   - LYEmptyView
   - RealmSwift
   - SnapKit (~> 4.0.0)
+  - SSZipArchive
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
@@ -105,6 +107,7 @@ SPEC REPOS:
     - SDWebImage
     - SDWebImageFLPlugin
     - SnapKit
+    - SSZipArchive
 
 SPEC CHECKSUMS:
   Chrysan: 6bf6682adb2db76f7f5c103930a8c6670f54eebe
@@ -125,7 +128,8 @@ SPEC CHECKSUMS:
   SDWebImage: 96d7f03415ccb28d299d765f93557ff8a617abd8
   SDWebImageFLPlugin: cf3f4ae49f249dd785129346fd61bbc8433a88cf
   SnapKit: 0de968a9fec17499afa29683b05d0c775b6d1c29
+  SSZipArchive: fa16b8cc4cdeceb698e5e5d9f67e9558532fbf23
 
-PODFILE CHECKSUM: 3d53572c9ee59b525b3c72b068b150542efb73a1
+PODFILE CHECKSUM: cffd7585f78cb49c354d5155307c7b9e478589bc
 
 COCOAPODS: 1.6.1

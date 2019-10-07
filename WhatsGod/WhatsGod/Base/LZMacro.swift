@@ -45,6 +45,10 @@ public func LanguageStrins(string:String) ->String{
     return NSLocalizedString(string, comment: "")
 }
 
+//压缩文件路径
+let ZIPPATH = "zipfile.zip"
+//提示显示时间
+let HIDE_DELAY:Double = 2.0
 //定义屏幕宽高
 let SCREEN_WIDTH = UIScreen.main.bounds.size.width
 let SCREEN_HEIGHT = UIScreen.main.bounds.size.height

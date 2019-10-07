@@ -13,18 +13,28 @@ import Chrysan
 class LZBaseViewController: UIViewController {
 
     public var dataSource = [Any]()
+    lazy public var tableView:UITableView = {
+        let view = UITableView.init()
+        view.tableFooterView = UIView.init()
+        view.dataSource = (self as! UITableViewDataSource)
+        view.delegate = (self as! UITableViewDelegate)
+        return view
+    }()
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
         create()
+        readyView()
     }
     
     func create() -> Void {
         self.view.backgroundColor = UIColor.white
 //        NotificationCenter.default.addObserver(self, selector: #selector(transormView(not:)), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
     }
-    
+    @objc func readyView(){
+        
+    }
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         for  view in self.view.subviews {
             view.resignFirstResponder()

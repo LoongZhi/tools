@@ -19,8 +19,8 @@ class LZAlbumDetailsViewController: LZBaseViewController,UICollectionViewDelegat
     var  isHidden:Bool = true
     let images = [UIImage(named: "right_menu_multichat_white"),
                   UIImage(named: "right_menu_addFri_white"),]
-    var indexs:Array = Array<Int>()
-    
+//    var indexs:Array = Array<Int>()
+    var exCount = 0
     public var folderModel:LZAlbumModel? = nil
     
     private lazy var collectionView:UICollectionView = {
@@ -62,6 +62,13 @@ class LZAlbumDetailsViewController: LZBaseViewController,UICollectionViewDelegat
         btn.addTarget(self, action: #selector(delTouch), for: .touchUpInside)
         return btn
     }()
+    private lazy var exploitBtn:UIButton = {
+           let btn = UIButton.init()
+           btn.setTitle(LanguageStrins(string: "Exploit"), for: .normal)
+           btn.backgroundColor = UIColor.red
+           btn.addTarget(self, action: #selector(exploitTouch), for: .touchUpInside)
+           return btn
+    }()
     private lazy var allLabel:UILabel = {
         let label = UILabel.init()
         label.text = LanguageStrins(string: "all")
@@ -71,10 +78,13 @@ class LZAlbumDetailsViewController: LZBaseViewController,UICollectionViewDelegat
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        
+        
         // Do any additional setup after loading the view.
         readyView()
     }
-    private func readyView(){
+    
+    @objc override func readyView(){
         
         self.view.addSubview(self.collectionView)
         self.view.addSubview(self.bottomView)
@@ -110,6 +120,15 @@ class LZAlbumDetailsViewController: LZBaseViewController,UICollectionViewDelegat
             make.height.equalTo(35)
         }
         self.delBtn.setRoundCorners(corners: .allCorners, with: 5)
+        
+        self.bottomView.addSubview(self.exploitBtn)
+        self.exploitBtn.snp.makeConstraints { (make) in
+            make.right.equalTo(-110)
+            make.top.equalTo(7)
+            make.width.equalTo(80)
+            make.height.equalTo(35)
+        }
+        self.exploitBtn.setRoundCorners(corners: .allCorners, with: 5)
         
         let itme = UIBarButtonItem.init(image: Img(url: "mqz_nav_add"), style: .done, target: self, action:  #selector(rightItmeEvent));
         self.navigationItem.rightBarButtonItem = itme;
@@ -183,6 +202,12 @@ class LZAlbumDetailsViewController: LZBaseViewController,UICollectionViewDelegat
         
         
         self.setHidden(hidden: self.isHidden)
+        for item in self.dataSource {
+            let model:LZAlbumImageModel = item as! LZAlbumImageModel
+            try! realm.write {
+                model.isSelect = false
+            }
+        }
     }
     
     private func getDataSource(){
@@ -229,7 +254,8 @@ class LZAlbumDetailsViewController: LZBaseViewController,UICollectionViewDelegat
            self.navigationItem.leftBarButtonItem = nil
        }
     private func setHidden(hidden:Bool){
-           
+         
+           self.bottomView.isHidden = hidden
            if self.dataSource.count == 0 {
                return
            }
@@ -243,7 +269,7 @@ class LZAlbumDetailsViewController: LZBaseViewController,UICollectionViewDelegat
                
            }
             
-           self.bottomView.isHidden = hidden
+          
            self.collectionView.reloadData()
        }
     // 相机权限
@@ -266,20 +292,20 @@ class LZAlbumDetailsViewController: LZBaseViewController,UICollectionViewDelegat
     @objc func allEvent(btn:UIButton) -> Void {
         btn.isSelected = !btn.isSelected
         
-        self.indexs.removeAll()
+    
         if btn.isSelected {
-            for (index,_) in self.dataSource.enumerated() {
-                self.indexs.append(index)
+            for itme in self.dataSource{
+            
                 try! realm.write {
-                    let model:LZAlbumImageModel =  self.dataSource[index] as! LZAlbumImageModel
+                    let model:LZAlbumImageModel =  itme as! LZAlbumImageModel
                     model.isSelect = true
                 }
             }
         }else{
-            for (index,_) in self.dataSource.enumerated() {
+            for itme in self.dataSource {
               
                 try! realm.write {
-                    let model:LZAlbumImageModel =  self.dataSource[index] as! LZAlbumImageModel
+                    let model:LZAlbumImageModel =  itme as! LZAlbumImageModel
                     model.isSelect = false
                 }
             }
@@ -290,13 +316,6 @@ class LZAlbumDetailsViewController: LZBaseViewController,UICollectionViewDelegat
     @objc func touchBtn(btn:UIButton) -> Void {
         if self.dataSource.count != 0 {
             btn.isSelected = !btn.isSelected
-            if btn.isSelected {
-                self.indexs.append(btn.tag)
-                
-            }else{
-                self.indexs = self.indexs.filter{$0 != btn.tag}
-            }
-             
             try! realm.write {
                let model:LZAlbumImageModel =  self.dataSource[btn.tag] as! LZAlbumImageModel
                 model.isSelect = btn.isSelected
@@ -309,17 +328,75 @@ class LZAlbumDetailsViewController: LZBaseViewController,UICollectionViewDelegat
     
     @objc func delTouch(){
         
-        if self.indexs.count != 0 {
-            for (index,itme) in self.indexs.enumerated() {
-                try! realm.write {
-                    self.dataSource.remove(at: itme)
-                    self.folderModel?.images.remove(at: itme)
-                    self.indexs.remove(at: index)
+        
+        let alert = FWAlertView.alert(title: LanguageStrins(string: "Tips"), detail: LanguageStrins(string: "Remove photos?"), confirmBlock: { (view, num, str) in
+            
+            var isbool = true
+            for (index,itme) in self.dataSource.enumerated(){
+                 let model:LZAlbumImageModel = itme as! LZAlbumImageModel
+                if model.isSelect {
+                    self.folderModel?.images.remove(at: index)
+                    isbool = false
                 }
             }
+            self.getDataSource()
+            if isbool{
+                self.chrysan.show(.plain, message:LanguageStrins(string: "Please select the photograph to be deleted"), hideDelay: HIDE_DELAY)
+            }
+//            if self.indexs.count != 0 {
+//                for (index,itme) in self.indexs.enumerated() {
+//                    try! realm.write {
+//                        self.dataSource.remove(at: itme)
+//                        self.folderModel?.images.remove(at: itme)
+//                        self.indexs.remove(at: index)
+//                    }
+//                }
+//
+//            }else{
+//                 self.chrysan.show(.plain, message:LanguageStrins(string: "Please select the photograph to be deleted"), hideDelay: HIDE_DELAY)
+//            }
+        }) { (view, num, str) in
+            
         }
         
+        alert.show()
         self.collectionView.reloadData()
+    }
+    @objc func exploitTouch(){
+      
+        
+        let alert = FWAlertView.alert(title: LanguageStrins(string: "Tips"), detail: LanguageStrins(string: "Export the photos to the album"), confirmBlock: { (view, num, str) in
+            
+                var isbool = true
+                for (index,itme) in self.dataSource.enumerated(){
+                    let model:LZAlbumImageModel = itme as! LZAlbumImageModel
+                    if model.isSelect {
+                        UIImageWriteToSavedPhotosAlbum(UIImage.init(data: model.image)!, self, #selector(self.image(image:didFinishSavingWithError:contextInfo:)), nil)
+                        isbool = false
+                    }
+                }
+              
+                if isbool{
+                     self.chrysan.show(.plain, message:LanguageStrins(string: "Please select the photograph you need to export"), hideDelay: HIDE_DELAY)
+                }
+
+        }) { (view, num, str) in
+                   
+        }
+        alert.show()
+    }
+    @objc private func image(image : UIImage, didFinishSavingWithError error : NSError?, contextInfo : AnyObject) {
+           var showInfo = ""
+           if error != nil {
+               showInfo = "保存失败"
+           } else {
+               showInfo = "保存成功"
+           }
+//        self.exCount += 1
+//        if self.exCount == self.indexs.count {
+//            self.chrysan.show(.plain, message:LanguageStrins(string: "Save success"), hideDelay: HIDE_DELAY)
+//        }
+        print(showInfo)
     }
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
