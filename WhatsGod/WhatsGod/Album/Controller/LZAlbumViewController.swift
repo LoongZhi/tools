@@ -84,7 +84,7 @@ class LZAlbumViewController: LZBaseViewController,UICollectionViewDelegate,UICol
        
                        let alertController = UIAlertController(title: LanguageStrins(string: "New Folders"),message:LanguageStrins(string: "Please enter the filename"),preferredStyle: .alert)
 
-                           // 建立兩個輸入框
+                           // 輸入框
                        alertController.addTextField {
                                (textField: UITextField!) -> Void in
                                textField.placeholder = LanguageStrins(string: "Please enter the filename")
@@ -92,7 +92,7 @@ class LZAlbumViewController: LZBaseViewController,UICollectionViewDelegate,UICol
                 let cancelAction = UIAlertAction(title: LanguageStrins(string: "Cancel"),style: .cancel,handler: nil)
                           alertController.addAction(cancelAction)
 
-                          // 建立[登入]按鈕
+                      
                           let okAction = UIAlertAction(title: LanguageStrins(string: "OK"),style: UIAlertAction.Style.default) {
                               (action: UIAlertAction!) -> Void in
                             let acc:UITextField =
@@ -109,6 +109,8 @@ class LZAlbumViewController: LZBaseViewController,UICollectionViewDelegate,UICol
                                 let albumModel = LZAlbumModel()
                                 albumModel.finderName = acc.text!
                                 albumModel.createDate = Date().timeIntervalSince1970
+                                albumModel.path = LZFileManager.createAlbumsSubFolder(SubPath: acc.text! + String(format: "%.0f", albumModel.createDate))
+                               
                                 try! realm.write {
                                   realm.add(albumModel)
                                   self.getDataSource()
@@ -178,9 +180,16 @@ class LZAlbumViewController: LZBaseViewController,UICollectionViewDelegate,UICol
             if self.dataSource.count != 0{
                 try! realm.write {
                     let model:LZAlbumModel = self.dataSource[btn.tag] as! LZAlbumModel
-                    realm.delete(model)
-                    self.getDataSource()
-                    self.collectionView.reloadData()
+                    if LZFileManager.deleteFile(filePath: model.path){
+                        realm.delete(model)
+                        self.getDataSource()
+                        self.collectionView.reloadData()
+                        self.chrysan.show(.plain, message:LanguageStrins(string: "Delete success."), hideDelay: HIDE_DELAY)
+                    }else{
+                         self.chrysan.show(.plain, message:LanguageStrins(string: "Delete failure."), hideDelay: HIDE_DELAY)
+                    }
+                    
+                   
                 }
                
             }

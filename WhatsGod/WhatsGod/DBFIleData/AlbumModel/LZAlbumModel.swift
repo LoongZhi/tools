@@ -12,6 +12,7 @@ class LZAlbumModel: Object {
     
     @objc dynamic var createDate:Double = 0.0
     @objc dynamic var finderName = ""
+    @objc dynamic var path = ""
     @objc dynamic var finderPass = false
     @objc dynamic var isHidden = true
     let images = List<LZAlbumImageModel>()
@@ -19,8 +20,7 @@ class LZAlbumModel: Object {
 }
 
 class LZAlbumImageModel: Object {
-    
-    @objc dynamic var image = Data()
+    @objc dynamic var path = ""
     @objc dynamic var imageDes = ""
     @objc dynamic var isHidden = true
     @objc dynamic var isSelect = false

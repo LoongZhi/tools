@@ -46,5 +46,7 @@ target 'WhatsGod' do
    pod 'IQKeyboardManagerSwift'
    
    pod 'SSZipArchive'
+   
+   pod 'JXPhotoBrowser'
 
 end

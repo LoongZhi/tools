@@ -13,6 +13,7 @@ import AVFoundation
 import AVKit
 import AssetsLibrary
 import Photos
+import JXPhotoBrowser
 class LZAlbumDetailsViewController: LZBaseViewController,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout {
 
     var  menuView:FWMenuView? = nil
@@ -22,10 +23,10 @@ class LZAlbumDetailsViewController: LZBaseViewController,UICollectionViewDelegat
 //    var indexs:Array = Array<Int>()
     var exCount = 0
     public var folderModel:LZAlbumModel? = nil
-    
+    private var imageDataArr = NSArray()
     private lazy var collectionView:UICollectionView = {
         let layout = UICollectionViewFlowLayout.init()
-        layout.itemSize = CGSize.init(width: SCREEN_WIDTH / 4, height: 80)
+        layout.itemSize = CGSize.init(width: SCREEN_WIDTH / 3, height: SCREEN_WIDTH / 3)
         layout.minimumLineSpacing = 10
         layout.minimumInteritemSpacing = 0
         layout.sectionInset = UIEdgeInsets.init(top: 0, left: 0, bottom: 0, right: 0)
@@ -75,6 +76,7 @@ class LZAlbumDetailsViewController: LZBaseViewController,UICollectionViewDelegat
         label.font = UIFont.systemFont(ofSize: 20)
         return label
     }()
+  
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -169,14 +171,20 @@ class LZAlbumDetailsViewController: LZBaseViewController,UICollectionViewDelegat
                 self.pickerController.didSelectAssets = { (assets) in
                     for (index,itme) in assets.enumerated() {
                         let model:DKAsset = itme
-                        PHCachingImageManager.default().requestImage(for: model.originalAsset!, targetSize: CGSize.zero, contentMode: .aspectFit, options: nil) { (result: UIImage?, dictionry: Dictionary?) in
-                            let imageModel = LZAlbumImageModel.init()
-                            imageModel.image = (result?.jpegData(compressionQuality: 1))!
-                            imageModel.isHidden = self.isHidden
+                        PHCachingImageManager.default().requestImage(for: model.originalAsset!, targetSize: self.view.bounds.size, contentMode: .aspectFit, options: nil) { (result: UIImage?, dictionry: Dictionary?) in
                             
-                            try! realm.write {
-                                self.folderModel?.images.append(imageModel)
+                            let path = self.folderModel!.path + "/image" + String(format: "%d",Date().timeIntervalSince1970)
+                            
+                            if LZFileManager.writeFile(filePath: path, data: (result?.pngData())!){
+                                let imageModel = LZAlbumImageModel.init()
+//                                imageModel.image = (result?.pngData())!//(result?.jpegData(compressionQuality: 2))!
+                                imageModel.isHidden = self.isHidden
+                                imageModel.path = path
+                                try! realm.write {
+                                    self.folderModel?.images.append(imageModel)
+                                }
                             }
+                            
                        
                     }
                     
@@ -215,12 +223,14 @@ class LZAlbumDetailsViewController: LZBaseViewController,UICollectionViewDelegat
         if self.dataSource.count != 0 {
             self.dataSource.removeAll()
         }
+     
         if folderModel!.images.count != 0{
             
             for image in folderModel!.images {
                 self.dataSource.append(image)
             }
         }
+      
         self.collectionView .reloadData()
     }
     override func rightItmeEvent() {
@@ -335,26 +345,20 @@ class LZAlbumDetailsViewController: LZBaseViewController,UICollectionViewDelegat
             for (index,itme) in self.dataSource.enumerated(){
                  let model:LZAlbumImageModel = itme as! LZAlbumImageModel
                 if model.isSelect {
-                    self.folderModel?.images.remove(at: index)
+                    LZFileManager.deleteFile(filePath: model.path)
+                    try! realm.write {
+                         self.folderModel?.images.remove(at: index)
+                    }
                     isbool = false
                 }
             }
             self.getDataSource()
             if isbool{
                 self.chrysan.show(.plain, message:LanguageStrins(string: "Please select the photograph to be deleted"), hideDelay: HIDE_DELAY)
+            }else{
+                 self.chrysan.show(.plain, message:LanguageStrins(string: "Delete success."), hideDelay: HIDE_DELAY)
             }
-//            if self.indexs.count != 0 {
-//                for (index,itme) in self.indexs.enumerated() {
-//                    try! realm.write {
-//                        self.dataSource.remove(at: itme)
-//                        self.folderModel?.images.remove(at: itme)
-//                        self.indexs.remove(at: index)
-//                    }
-//                }
-//
-//            }else{
-//                 self.chrysan.show(.plain, message:LanguageStrins(string: "Please select the photograph to be deleted"), hideDelay: HIDE_DELAY)
-//            }
+
         }) { (view, num, str) in
             
         }
@@ -364,26 +368,29 @@ class LZAlbumDetailsViewController: LZBaseViewController,UICollectionViewDelegat
     }
     @objc func exploitTouch(){
       
-        
+       
         let alert = FWAlertView.alert(title: LanguageStrins(string: "Tips"), detail: LanguageStrins(string: "Export the photos to the album"), confirmBlock: { (view, num, str) in
             
                 var isbool = true
                 for (index,itme) in self.dataSource.enumerated(){
                     let model:LZAlbumImageModel = itme as! LZAlbumImageModel
                     if model.isSelect {
-                        UIImageWriteToSavedPhotosAlbum(UIImage.init(data: model.image)!, self, #selector(self.image(image:didFinishSavingWithError:contextInfo:)), nil)
+                        UIImageWriteToSavedPhotosAlbum(UIImage.init(data: LZFileManager.getFile(filePath: model.path))!, self, #selector(self.image(image:didFinishSavingWithError:contextInfo:)), nil)
                         isbool = false
                     }
                 }
               
                 if isbool{
                      self.chrysan.show(.plain, message:LanguageStrins(string: "Please select the photograph you need to export"), hideDelay: HIDE_DELAY)
+                }else{
+                     self.chrysan.show(.plain, message:LanguageStrins(string: "Save success"), hideDelay: HIDE_DELAY)
                 }
 
         }) { (view, num, str) in
                    
         }
         alert.show()
+       
     }
     @objc private func image(image : UIImage, didFinishSavingWithError error : NSError?, contextInfo : AnyObject) {
            var showInfo = ""
@@ -392,10 +399,6 @@ class LZAlbumDetailsViewController: LZBaseViewController,UICollectionViewDelegat
            } else {
                showInfo = "保存成功"
            }
-//        self.exCount += 1
-//        if self.exCount == self.indexs.count {
-//            self.chrysan.show(.plain, message:LanguageStrins(string: "Save success"), hideDelay: HIDE_DELAY)
-//        }
         print(showInfo)
     }
     func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -414,6 +417,19 @@ class LZAlbumDetailsViewController: LZBaseViewController,UICollectionViewDelegat
         cell.selectBtn.tag = indexPath.item
         cell.selectBtn.addTarget(self, action:#selector(touchBtn(btn:)) , for: .touchUpInside)
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        let localData = JXLocalDataSource(numberOfItems: { () -> Int in
+                   return self.dataSource.count
+               }, localImage: { (index) -> UIImage? in
+                   let data:LZAlbumImageModel = self.dataSource[index] as! LZAlbumImageModel
+                let image = UIImage.init(data: LZFileManager.getFile(filePath: data.path))
+                   return image
+        })
+        
+        JXPhotoBrowser(dataSource: localData).show(pageIndex: indexPath.item)
     }
 
     /*

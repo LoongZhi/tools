@@ -44,7 +44,7 @@ class LZAlbumDetailsCell: UICollectionViewCell {
         }
     }
     public func loadData(model:LZAlbumImageModel){
-        self.imageView.image = UIImage.init(data: model.image)
+        self.imageView.image = UIImage.init(data: LZFileManager.getFile(filePath: model.path))
         self.selectBtn.isSelected = model.isSelect
         self.selectBtn.isHidden = model.isHidden
     }

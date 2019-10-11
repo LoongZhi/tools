@@ -46,6 +46,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 print("Realm 数据库配置失败：\(error.localizedDescription)")
             }
         }
+        
+        //创建文件目录
+        LZFileManager.createAlbumsFolder()
+        LZFileManager.createVideoFolder()
     }
     
     func applicationWillResignActive(_ application: UIApplication) {

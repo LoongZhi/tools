@@ -58,6 +58,13 @@ PODS:
   - Hue (5.0.0)
   - IBAnimatable (6.0.0)
   - IQKeyboardManagerSwift (6.4.2)
+  - JXPhotoBrowser (2.1.4):
+    - JXPhotoBrowser/Kingfisher (= 2.1.4)
+  - JXPhotoBrowser/Core (2.1.4)
+  - JXPhotoBrowser/Kingfisher (2.1.4):
+    - JXPhotoBrowser/Core
+    - Kingfisher
+  - Kingfisher (4.10.1)
   - LYEmptyView (1.3.1)
   - Realm (3.18.0):
     - Realm/Headers (= 3.18.0)
@@ -82,6 +89,7 @@ DEPENDENCIES:
   - Hue
   - IBAnimatable
   - IQKeyboardManagerSwift
+  - JXPhotoBrowser
   - LYEmptyView
   - RealmSwift
   - SnapKit (~> 4.0.0)
@@ -101,6 +109,8 @@ SPEC REPOS:
     - Hue
     - IBAnimatable
     - IQKeyboardManagerSwift
+    - JXPhotoBrowser
+    - Kingfisher
     - LYEmptyView
     - Realm
     - RealmSwift
@@ -122,6 +132,8 @@ SPEC CHECKSUMS:
   Hue: c129cb67be7d093a82bbbc30ce8a96757bf6f37a
   IBAnimatable: d49f9fee0c401b5b08d31b77256b77fb067e0e92
   IQKeyboardManagerSwift: 79a3ec200dfb41cb66a89b8575417b5378107c5d
+  JXPhotoBrowser: 12f72156f34bc7f49e2d22bb20259b0f1b5c2076
+  Kingfisher: c148cd7b47ebde9989f6bc7c27dcaa79d81279a0
   LYEmptyView: b6d418cfa38b78df0cf243f9a9c25ccbdc399922
   Realm: 7b3d04740facf45e958a514b466a32b04f1113d6
   RealmSwift: c817b5f374668cf08f649afb05f55d92a787649c
@@ -130,6 +142,6 @@ SPEC CHECKSUMS:
   SnapKit: 0de968a9fec17499afa29683b05d0c775b6d1c29
   SSZipArchive: fa16b8cc4cdeceb698e5e5d9f67e9558532fbf23
 
-PODFILE CHECKSUM: cffd7585f78cb49c354d5155307c7b9e478589bc
+PODFILE CHECKSUM: 6ff03df60b680844b5caf7709ad0f547c8785a68
 
 COCOAPODS: 1.6.1

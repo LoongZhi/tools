@@ -26,3 +26,5 @@
 "Please select the photograph you need to export" = "Please select the photograph you need to export";
 "Export the photos to the album" = "Export the photos to the album";
 "Save success" = "Save success";
+"Delete success." = "Delete success.";
+"Delete failure." = "Delete failure.";

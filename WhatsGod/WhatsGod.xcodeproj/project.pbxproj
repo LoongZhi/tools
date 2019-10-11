@@ -20,6 +20,7 @@
 		88261CB623320A24005CE69D /* WhatsGodUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88261CB523320A24005CE69D /* WhatsGodUITests.swift */; };
 		88261CC623320D18005CE69D /* LZBaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88261CC523320D18005CE69D /* LZBaseViewController.swift */; };
 		88261CCA23320D7B005CE69D /* LZMainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88261CC923320D7B005CE69D /* LZMainViewController.swift */; };
+		88262D6023509D3B006A305C /* LZFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88262D5F23509D3B006A305C /* LZFileManager.swift */; };
 		882A81CE23462F4200A97ADC /* ExtensionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 882A81CD23462F4200A97ADC /* ExtensionView.swift */; };
 		883AB3A1233E21A6007E0D4B /* LZAlbumCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 883AB3A0233E21A6007E0D4B /* LZAlbumCollectionViewCell.swift */; };
 		88613A09233636250089C402 /* LZBaseNavController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88613A08233636240089C402 /* LZBaseNavController.swift */; };
@@ -75,6 +76,7 @@
 		88261CB723320A24005CE69D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		88261CC523320D18005CE69D /* LZBaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LZBaseViewController.swift; sourceTree = "<group>"; };
 		88261CC923320D7B005CE69D /* LZMainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LZMainViewController.swift; sourceTree = "<group>"; };
+		88262D5F23509D3B006A305C /* LZFileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LZFileManager.swift; sourceTree = "<group>"; };
 		882A81CD23462F4200A97ADC /* ExtensionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionView.swift; sourceTree = "<group>"; };
 		883AB395233C94D5007E0D4B /* WhatsGod-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "WhatsGod-Bridging-Header.h"; sourceTree = "<group>"; };
 		883AB3A0233E21A6007E0D4B /* LZAlbumCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LZAlbumCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -346,6 +348,7 @@
 			isa = PBXGroup;
 			children = (
 				88BD9B3E233B9C3D0098B8FB /* AlbumModel */,
+				88262D5F23509D3B006A305C /* LZFileManager.swift */,
 			);
 			path = DBFIleData;
 			sourceTree = "<group>";
@@ -552,6 +555,8 @@
 				"${BUILT_PRODUCTS_DIR}/Hue/Hue.framework",
 				"${BUILT_PRODUCTS_DIR}/IBAnimatable/IBAnimatable.framework",
 				"${BUILT_PRODUCTS_DIR}/IQKeyboardManagerSwift/IQKeyboardManagerSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/JXPhotoBrowser/JXPhotoBrowser.framework",
+				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
 				"${BUILT_PRODUCTS_DIR}/LYEmptyView/LYEmptyView.framework",
 				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
 				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
@@ -576,6 +581,8 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Hue.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/IBAnimatable.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/IQKeyboardManagerSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/JXPhotoBrowser.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/LYEmptyView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
@@ -601,6 +608,7 @@
 				8822C32A233F8FDC00E09741 /* LZAlbumDetailsViewController.swift in Sources */,
 				88613A13233639990089C402 /* CBTabBarButton.swift in Sources */,
 				88BD9B42233BA5690098B8FB /* LZAlbumModel.swift in Sources */,
+				88262D6023509D3B006A305C /* LZFileManager.swift in Sources */,
 				88261C9623320A22005CE69D /* AppDelegate.swift in Sources */,
 				88613A24233648800089C402 /* LZSettingsViewController.swift in Sources */,
 				88613A12233639990089C402 /* BubbleTabBarController.swift in Sources */,
