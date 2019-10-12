@@ -7,9 +7,8 @@
 //
 
 import UIKit
-
 let navFont:CGFloat = 18.0
-class LZBaseNavController: UINavigationController {
+class LZBaseNavController: UINavigationController,UINavigationControllerDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -19,7 +18,7 @@ class LZBaseNavController: UINavigationController {
         
 //        navigationBar.setBackgroundImage(LZBaseNavController.resizableImage(imageName: "header_bg_message", edgeInsets: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)), for: .default)
         navigationBar.isTranslucent = false
-        
+       
         self.extendedLayoutIncludesOpaqueBars = true
         self.edgesForExtendedLayout = []
         // Do any additional setup after loading the view.
@@ -36,6 +35,21 @@ class LZBaseNavController: UINavigationController {
         let imageH = image!.size.height
         
         return image?.resizableImage(withCapInsets: UIEdgeInsets(top: imageH * edgeInsets.top, left: imageW * edgeInsets.left, bottom: imageH * edgeInsets.bottom, right: imageW * edgeInsets.right), resizingMode: .stretch)
+    }
+    
+    func navigationController(_ navigationController: UINavigationController, animationControllerFor operation: UINavigationController.Operation,
+        from fromVC: UIViewController, to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        
+        
+            let animator = CKWaveCollectionViewAnimator()
+            animator.animationDuration = 0.7
+            
+        if operation != UINavigationController.Operation.push {
+                
+                animator.reversed = true
+            }
+            
+            return animator
     }
     /*
     // MARK: - Navigation

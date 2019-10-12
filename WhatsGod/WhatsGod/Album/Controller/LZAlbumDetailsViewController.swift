@@ -171,13 +171,13 @@ class LZAlbumDetailsViewController: LZBaseViewController,UICollectionViewDelegat
                 self.pickerController.didSelectAssets = { (assets) in
                     for (index,itme) in assets.enumerated() {
                         let model:DKAsset = itme
-                        PHCachingImageManager.default().requestImage(for: model.originalAsset!, targetSize: self.view.bounds.size, contentMode: .aspectFit, options: nil) { (result: UIImage?, dictionry: Dictionary?) in
+                        PHCachingImageManager.default().requestImage(for: model.originalAsset!, targetSize: PHImageManagerMaximumSize, contentMode: .default, options: nil) { (result: UIImage?, dictionry: Dictionary?) in
                             
-                            let path = self.folderModel!.path + "/image" + String(format: "%d",Date().timeIntervalSince1970)
+                            let path = self.folderModel!.path + "/image" + String(format: "%d.dat",Date().timeIntervalSince1970)
                             
-                            if LZFileManager.writeFile(filePath: path, data: (result?.pngData())!){
+                            if LZFileManager.writeImageFile(filePath: path, data:(result?.jpegData(compressionQuality: 1))!){
                                 let imageModel = LZAlbumImageModel.init()
-//                                imageModel.image = (result?.pngData())!//(result?.jpegData(compressionQuality: 2))!
+//                                imageModel.image = (result?.pngData())!//
                                 imageModel.isHidden = self.isHidden
                                 imageModel.path = path
                                 try! realm.write {
@@ -185,12 +185,12 @@ class LZAlbumDetailsViewController: LZBaseViewController,UICollectionViewDelegat
                                 }
                             }
                             
-                       
+                            if index == assets.count - 1{
+                                 self.getDataSource()
+                            }
                     }
                     
-                    if assets.count != 0 {
-                        self.getDataSource()
-                    }
+                   
                    
                     }
                     
@@ -342,12 +342,15 @@ class LZAlbumDetailsViewController: LZBaseViewController,UICollectionViewDelegat
         let alert = FWAlertView.alert(title: LanguageStrins(string: "Tips"), detail: LanguageStrins(string: "Remove photos?"), confirmBlock: { (view, num, str) in
             
             var isbool = true
+            
             for (index,itme) in self.dataSource.enumerated(){
                  let model:LZAlbumImageModel = itme as! LZAlbumImageModel
                 if model.isSelect {
-                    LZFileManager.deleteFile(filePath: model.path)
+                    LZFileManager.deleteImageFile(filePath: model.path)
                     try! realm.write {
-                         self.folderModel?.images.remove(at: index)
+                        let indexNum1:Int? =  self.folderModel?.images.index(of: model)
+                        self.folderModel?.images.remove(at: indexNum1!)
+                        
                     }
                     isbool = false
                 }
@@ -375,7 +378,7 @@ class LZAlbumDetailsViewController: LZBaseViewController,UICollectionViewDelegat
                 for (index,itme) in self.dataSource.enumerated(){
                     let model:LZAlbumImageModel = itme as! LZAlbumImageModel
                     if model.isSelect {
-                        UIImageWriteToSavedPhotosAlbum(UIImage.init(data: LZFileManager.getFile(filePath: model.path))!, self, #selector(self.image(image:didFinishSavingWithError:contextInfo:)), nil)
+                        UIImageWriteToSavedPhotosAlbum(UIImage.init(data: LZFileManager.getImageFile(filePath: model.path))!, self, #selector(self.image(image:didFinishSavingWithError:contextInfo:)), nil)
                         isbool = false
                     }
                 }
@@ -425,7 +428,7 @@ class LZAlbumDetailsViewController: LZBaseViewController,UICollectionViewDelegat
                    return self.dataSource.count
                }, localImage: { (index) -> UIImage? in
                    let data:LZAlbumImageModel = self.dataSource[index] as! LZAlbumImageModel
-                let image = UIImage.init(data: LZFileManager.getFile(filePath: data.path))
+                let image = UIImage.init(data: LZFileManager.getImageFile(filePath: data.path))
                    return image
         })
         

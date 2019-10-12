@@ -180,7 +180,7 @@ class LZAlbumViewController: LZBaseViewController,UICollectionViewDelegate,UICol
             if self.dataSource.count != 0{
                 try! realm.write {
                     let model:LZAlbumModel = self.dataSource[btn.tag] as! LZAlbumModel
-                    if LZFileManager.deleteFile(filePath: model.path){
+                    if LZFileManager.deleteImageFile(filePath: model.path){
                         realm.delete(model)
                         self.getDataSource()
                         self.collectionView.reloadData()

@@ -18,7 +18,7 @@ class LZAlbumDetailsCell: UICollectionViewCell {
     
     lazy var imageView:UIImageView = {
         let image = UIImageView.init()
-      
+        image.layer.masksToBounds = true
         return image
     }()
     
@@ -44,7 +44,8 @@ class LZAlbumDetailsCell: UICollectionViewCell {
         }
     }
     public func loadData(model:LZAlbumImageModel){
-        self.imageView.image = UIImage.init(data: LZFileManager.getFile(filePath: model.path))
+        self.imageView.image = UIImage.init(data: LZFileManager.getImageFile(filePath: model.path))
+        self.imageView.contentMode = .scaleAspectFill
         self.selectBtn.isSelected = model.isSelect
         self.selectBtn.isHidden = model.isHidden
     }

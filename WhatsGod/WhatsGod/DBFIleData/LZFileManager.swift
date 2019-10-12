@@ -33,7 +33,7 @@ class LZFileManager: NSObject {
 
                                                                attributes: nil)
                    print("Create Sub folder success")
-            return albumsFolder + SubPath
+            return SubPath
         }
         return ""
     }
@@ -57,37 +57,68 @@ class LZFileManager: NSObject {
 
                                                           attributes: nil)
               print("Create sub folder success")
-             return albumsFolder + SubPath
+             return SubPath
           }
         return ""
     }
     
     //写入文件
-    public class func writeFile(filePath:String, data:Data) -> Bool{
-        if (!rootFileManager.fileExists(atPath: filePath)){
-            try? data.write(to: URL(fileURLWithPath: filePath))
+    public class func writeImageFile(filePath:String, data:Data) -> Bool{
+        if (!rootFileManager.fileExists(atPath: albumsFolder + filePath)){
+            try? data.write(to: URL(fileURLWithPath: albumsFolder + filePath))
             return true
         }
         return false
     }
     //删除文件
-    public class func deleteFile(filePath:String) -> Bool{
-        if (rootFileManager.fileExists(atPath: filePath)) {
-            try! rootFileManager.removeItem(atPath: filePath)
+    public class func deleteImageFile(filePath:String) -> Bool{
+        if (rootFileManager.fileExists(atPath:albumsFolder + filePath)) {
+            try! rootFileManager.removeItem(atPath: albumsFolder + filePath)
             return true
         }
         return false
     }
     
     //读取文件
-    public class func getFile(filePath:String) -> Data{
+    public class func getImageFile(filePath:String) -> Data{
         
-        if (rootFileManager.fileExists(atPath: filePath)) {
+        if (rootFileManager.fileExists(atPath: albumsFolder + filePath)) {
             
             
-            return rootFileManager.contents(atPath: filePath)!
+            return rootFileManager.contents(atPath: albumsFolder + filePath)!
         }
         
         return Data.init()
     }
+    
+      //写入文件
+        public class func writeVideoFile(filePath:String, data:Data) -> Bool{
+            if (!rootFileManager.fileExists(atPath: videoFolder + filePath)){
+                try? data.write(to: URL(fileURLWithPath: videoFolder + filePath))
+                return true
+            }
+            return false
+        }
+        //删除文件
+        public class func deleteViodeFile(filePath:String) -> Bool{
+            if (rootFileManager.fileExists(atPath:videoFolder + filePath)) {
+                try! rootFileManager.removeItem(atPath: videoFolder + filePath)
+                return true
+            }
+            return false
+        }
+        
+        //读取文件
+        public class func getViodeFile(filePath:String) -> Data{
+            
+            if (rootFileManager.fileExists(atPath: videoFolder + filePath)) {
+                
+                
+                return rootFileManager.contents(atPath: videoFolder + filePath)!
+            }
+            
+            return Data.init()
+        }
+    
+    
 }

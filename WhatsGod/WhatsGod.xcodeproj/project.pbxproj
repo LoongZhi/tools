@@ -22,6 +22,12 @@
 		88261CCA23320D7B005CE69D /* LZMainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88261CC923320D7B005CE69D /* LZMainViewController.swift */; };
 		88262D6023509D3B006A305C /* LZFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88262D5F23509D3B006A305C /* LZFileManager.swift */; };
 		882A81CE23462F4200A97ADC /* ExtensionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 882A81CD23462F4200A97ADC /* ExtensionView.swift */; };
+		883A46BB23520224004A9DDC /* UIViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 883A46B723520224004A9DDC /* UIViewControllerExtension.swift */; };
+		883A46BC23520224004A9DDC /* UIApplicationExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 883A46B823520224004A9DDC /* UIApplicationExtension.swift */; };
+		883A46BD23520224004A9DDC /* UICollectionViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 883A46B923520224004A9DDC /* UICollectionViewExtension.swift */; };
+		883A46BE23520224004A9DDC /* UICollectionViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 883A46BA23520224004A9DDC /* UICollectionViewControllerExtension.swift */; };
+		883A46C12352062E004A9DDC /* CKWaveCollectionViewAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 883A46BF2352062E004A9DDC /* CKWaveCollectionViewAnimator.swift */; };
+		883A46C22352062E004A9DDC /* NavigationControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 883A46C02352062E004A9DDC /* NavigationControllerDelegate.swift */; };
 		883AB3A1233E21A6007E0D4B /* LZAlbumCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 883AB3A0233E21A6007E0D4B /* LZAlbumCollectionViewCell.swift */; };
 		88613A09233636250089C402 /* LZBaseNavController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88613A08233636240089C402 /* LZBaseNavController.swift */; };
 		88613A10233639990089C402 /* BubbleTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88613A0C233639990089C402 /* BubbleTabBar.swift */; };
@@ -78,6 +84,12 @@
 		88261CC923320D7B005CE69D /* LZMainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LZMainViewController.swift; sourceTree = "<group>"; };
 		88262D5F23509D3B006A305C /* LZFileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LZFileManager.swift; sourceTree = "<group>"; };
 		882A81CD23462F4200A97ADC /* ExtensionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionView.swift; sourceTree = "<group>"; };
+		883A46B723520224004A9DDC /* UIViewControllerExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewControllerExtension.swift; sourceTree = "<group>"; };
+		883A46B823520224004A9DDC /* UIApplicationExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIApplicationExtension.swift; sourceTree = "<group>"; };
+		883A46B923520224004A9DDC /* UICollectionViewExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UICollectionViewExtension.swift; sourceTree = "<group>"; };
+		883A46BA23520224004A9DDC /* UICollectionViewControllerExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UICollectionViewControllerExtension.swift; sourceTree = "<group>"; };
+		883A46BF2352062E004A9DDC /* CKWaveCollectionViewAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CKWaveCollectionViewAnimator.swift; sourceTree = "<group>"; };
+		883A46C02352062E004A9DDC /* NavigationControllerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationControllerDelegate.swift; sourceTree = "<group>"; };
 		883AB395233C94D5007E0D4B /* WhatsGod-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "WhatsGod-Bridging-Header.h"; sourceTree = "<group>"; };
 		883AB3A0233E21A6007E0D4B /* LZAlbumCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LZAlbumCollectionViewCell.swift; sourceTree = "<group>"; };
 		88613A08233636240089C402 /* LZBaseNavController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LZBaseNavController.swift; sourceTree = "<group>"; };
@@ -217,10 +229,24 @@
 		882A81CC23462EE800A97ADC /* Extension */ = {
 			isa = PBXGroup;
 			children = (
+				883A46B6235201F6004A9DDC /* CollectExtension */,
 				882A81CD23462F4200A97ADC /* ExtensionView.swift */,
 				8821799623477C4E002C32B1 /* ExtensionString.swift */,
 			);
 			path = Extension;
+			sourceTree = "<group>";
+		};
+		883A46B6235201F6004A9DDC /* CollectExtension */ = {
+			isa = PBXGroup;
+			children = (
+				883A46BF2352062E004A9DDC /* CKWaveCollectionViewAnimator.swift */,
+				883A46C02352062E004A9DDC /* NavigationControllerDelegate.swift */,
+				883A46B823520224004A9DDC /* UIApplicationExtension.swift */,
+				883A46BA23520224004A9DDC /* UICollectionViewControllerExtension.swift */,
+				883A46B923520224004A9DDC /* UICollectionViewExtension.swift */,
+				883A46B723520224004A9DDC /* UIViewControllerExtension.swift */,
+			);
+			path = CollectExtension;
 			sourceTree = "<group>";
 		};
 		883AB394233C94B7007E0D4B /* ObjectC */ = {
@@ -609,9 +635,13 @@
 				88613A13233639990089C402 /* CBTabBarButton.swift in Sources */,
 				88BD9B42233BA5690098B8FB /* LZAlbumModel.swift in Sources */,
 				88262D6023509D3B006A305C /* LZFileManager.swift in Sources */,
+				883A46BC23520224004A9DDC /* UIApplicationExtension.swift in Sources */,
 				88261C9623320A22005CE69D /* AppDelegate.swift in Sources */,
+				883A46BE23520224004A9DDC /* UICollectionViewControllerExtension.swift in Sources */,
+				883A46BB23520224004A9DDC /* UIViewControllerExtension.swift in Sources */,
 				88613A24233648800089C402 /* LZSettingsViewController.swift in Sources */,
 				88613A12233639990089C402 /* BubbleTabBarController.swift in Sources */,
+				883A46C22352062E004A9DDC /* NavigationControllerDelegate.swift in Sources */,
 				88261CCA23320D7B005CE69D /* LZMainViewController.swift in Sources */,
 				88613A20233647FB0089C402 /* LZNoteBookViewController.swift in Sources */,
 				881433FA2348AFCF00A11E2C /* LZSettingsCell.swift in Sources */,
@@ -620,6 +650,8 @@
 				88613A1A233647A70089C402 /* LZAlbumViewController.swift in Sources */,
 				88BD9B3C233B9BB40098B8FB /* LZRealmTool.swift in Sources */,
 				882A81CE23462F4200A97ADC /* ExtensionView.swift in Sources */,
+				883A46C12352062E004A9DDC /* CKWaveCollectionViewAnimator.swift in Sources */,
+				883A46BD23520224004A9DDC /* UICollectionViewExtension.swift in Sources */,
 				88613A10233639990089C402 /* BubbleTabBar.swift in Sources */,
 				88613A1D233647E10089C402 /* LZVideoViewController.swift in Sources */,
 				88613A2D233651E90089C402 /* LZMacro.swift in Sources */,
