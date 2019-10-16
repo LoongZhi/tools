@@ -52,6 +52,10 @@ class LZFileManager: NSObject {
     
     //创建视频子文件夹
     public class func createVideoSubFolder(SubPath:String) -> String{
+        
+        if SubPath == "" {
+            return ""
+        }
           if (!rootFileManager.fileExists(atPath: videoFolder + SubPath)){
               try! rootFileManager.createDirectory(at: NSURL.fileURL(withPath: videoFolder + SubPath), withIntermediateDirectories: true,
 
@@ -64,6 +68,9 @@ class LZFileManager: NSObject {
     
     //写入文件
     public class func writeImageFile(filePath:String, data:Data) -> Bool{
+        if filePath == "" {
+            return false
+        }
         if (!rootFileManager.fileExists(atPath: albumsFolder + filePath)){
             try? data.write(to: URL(fileURLWithPath: albumsFolder + filePath))
             return true
@@ -72,6 +79,9 @@ class LZFileManager: NSObject {
     }
     //删除文件
     public class func deleteImageFile(filePath:String) -> Bool{
+        if filePath == "" {
+            return false
+        }
         if (rootFileManager.fileExists(atPath:albumsFolder + filePath)) {
             try! rootFileManager.removeItem(atPath: albumsFolder + filePath)
             return true
@@ -91,16 +101,23 @@ class LZFileManager: NSObject {
         return Data.init()
     }
     
-      //写入文件
+      //写入视频文件
         public class func writeVideoFile(filePath:String, data:Data) -> Bool{
+            
+            if filePath == "" {
+                return false
+            }
             if (!rootFileManager.fileExists(atPath: videoFolder + filePath)){
                 try? data.write(to: URL(fileURLWithPath: videoFolder + filePath))
                 return true
             }
             return false
         }
-        //删除文件
+        //删除视频文件
         public class func deleteViodeFile(filePath:String) -> Bool{
+            if filePath == "" {
+                return false
+            }
             if (rootFileManager.fileExists(atPath:videoFolder + filePath)) {
                 try! rootFileManager.removeItem(atPath: videoFolder + filePath)
                 return true
@@ -108,15 +125,18 @@ class LZFileManager: NSObject {
             return false
         }
         
-        //读取文件
+        //读取视频文件
         public class func getViodeFile(filePath:String) -> Data{
             
+            if filePath == "" {
+                 return Data.init()
+            }
             if (rootFileManager.fileExists(atPath: videoFolder + filePath)) {
                 
                 
                 return rootFileManager.contents(atPath: videoFolder + filePath)!
             }
-            
+
             return Data.init()
         }
     

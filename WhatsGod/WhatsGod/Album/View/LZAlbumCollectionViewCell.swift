@@ -69,11 +69,18 @@ class LZAlbumCollectionViewCell: UICollectionViewCell {
     }
     
     
-    public func loadData(model:LZAlbumModel){
+    public func loadData(model:AnyObject){
         
-//        self.imgBtn.setTitle(model.finderName, for: .normal)
-        self.delBtn.isHidden = model.isHidden
-        self.title.text = model.finderName
+        
+        if model.isKind(of: LZAlbumModel.self) == true {
+            self.delBtn.isHidden = (model as! LZAlbumModel).isHidden
+            self.title.text = (model as! LZAlbumModel).finderName
+        }else{
+            self.delBtn.isHidden = (model as! LZVideoFolderModel).isHidden
+            self.title.text = (model as! LZVideoFolderModel).finderName
+        }
+
+       
       
     }
     

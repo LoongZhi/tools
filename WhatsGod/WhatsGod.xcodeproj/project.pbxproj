@@ -10,6 +10,7 @@
 		7ADB2B96D8098E500A5FFC40 /* Pods_WhatsGod.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF2C973FF3A6D4A1DC2AA312 /* Pods_WhatsGod.framework */; };
 		881433FA2348AFCF00A11E2C /* LZSettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 881433F92348AFCF00A11E2C /* LZSettingsCell.swift */; };
 		8821799723477C4E002C32B1 /* ExtensionString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8821799623477C4E002C32B1 /* ExtensionString.swift */; };
+		88223C822355A19400163FD2 /* LZVideoDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88223C812355A19400163FD2 /* LZVideoDetailViewController.swift */; };
 		8822C32A233F8FDC00E09741 /* LZAlbumDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8822C329233F8FDC00E09741 /* LZAlbumDetailsViewController.swift */; };
 		8822C32C233F908400E09741 /* LZAlbumDetailsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8822C32B233F908400E09741 /* LZAlbumDetailsCell.swift */; };
 		88261C9623320A22005CE69D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88261C9523320A22005CE69D /* AppDelegate.swift */; };
@@ -21,6 +22,7 @@
 		88261CC623320D18005CE69D /* LZBaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88261CC523320D18005CE69D /* LZBaseViewController.swift */; };
 		88261CCA23320D7B005CE69D /* LZMainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88261CC923320D7B005CE69D /* LZMainViewController.swift */; };
 		88262D6023509D3B006A305C /* LZFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88262D5F23509D3B006A305C /* LZFileManager.swift */; };
+		8826C7CE23545BBF00C40B6A /* LZVideoFolderModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8826C7CD23545BBF00C40B6A /* LZVideoFolderModel.swift */; };
 		882A81CE23462F4200A97ADC /* ExtensionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 882A81CD23462F4200A97ADC /* ExtensionView.swift */; };
 		883A46BB23520224004A9DDC /* UIViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 883A46B723520224004A9DDC /* UIViewControllerExtension.swift */; };
 		883A46BC23520224004A9DDC /* UIApplicationExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 883A46B823520224004A9DDC /* UIApplicationExtension.swift */; };
@@ -66,6 +68,7 @@
 		237F0DF970AA48B3BF36B833 /* Pods-WhatsGod.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WhatsGod.debug.xcconfig"; path = "Target Support Files/Pods-WhatsGod/Pods-WhatsGod.debug.xcconfig"; sourceTree = "<group>"; };
 		881433F92348AFCF00A11E2C /* LZSettingsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LZSettingsCell.swift; sourceTree = "<group>"; };
 		8821799623477C4E002C32B1 /* ExtensionString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionString.swift; sourceTree = "<group>"; };
+		88223C812355A19400163FD2 /* LZVideoDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LZVideoDetailViewController.swift; sourceTree = "<group>"; };
 		8822C329233F8FDC00E09741 /* LZAlbumDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LZAlbumDetailsViewController.swift; sourceTree = "<group>"; };
 		8822C32B233F908400E09741 /* LZAlbumDetailsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LZAlbumDetailsCell.swift; sourceTree = "<group>"; };
 		88261C9223320A22005CE69D /* WhatsGod.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WhatsGod.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -83,6 +86,7 @@
 		88261CC523320D18005CE69D /* LZBaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LZBaseViewController.swift; sourceTree = "<group>"; };
 		88261CC923320D7B005CE69D /* LZMainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LZMainViewController.swift; sourceTree = "<group>"; };
 		88262D5F23509D3B006A305C /* LZFileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LZFileManager.swift; sourceTree = "<group>"; };
+		8826C7CD23545BBF00C40B6A /* LZVideoFolderModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LZVideoFolderModel.swift; sourceTree = "<group>"; };
 		882A81CD23462F4200A97ADC /* ExtensionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionView.swift; sourceTree = "<group>"; };
 		883A46B723520224004A9DDC /* UIViewControllerExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewControllerExtension.swift; sourceTree = "<group>"; };
 		883A46B823520224004A9DDC /* UIApplicationExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIApplicationExtension.swift; sourceTree = "<group>"; };
@@ -226,6 +230,14 @@
 			path = Base;
 			sourceTree = "<group>";
 		};
+		8826C7CA23545B2500C40B6A /* VideoModel */ = {
+			isa = PBXGroup;
+			children = (
+				8826C7CD23545BBF00C40B6A /* LZVideoFolderModel.swift */,
+			);
+			path = VideoModel;
+			sourceTree = "<group>";
+		};
 		882A81CC23462EE800A97ADC /* Extension */ = {
 			isa = PBXGroup;
 			children = (
@@ -325,6 +337,7 @@
 			isa = PBXGroup;
 			children = (
 				88613A1C233647E10089C402 /* LZVideoViewController.swift */,
+				88223C812355A19400163FD2 /* LZVideoDetailViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -373,6 +386,7 @@
 		88BD9B3D233B9C160098B8FB /* DBFIleData */ = {
 			isa = PBXGroup;
 			children = (
+				8826C7CA23545B2500C40B6A /* VideoModel */,
 				88BD9B3E233B9C3D0098B8FB /* AlbumModel */,
 				88262D5F23509D3B006A305C /* LZFileManager.swift */,
 			);
@@ -584,6 +598,7 @@
 				"${BUILT_PRODUCTS_DIR}/JXPhotoBrowser/JXPhotoBrowser.framework",
 				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
 				"${BUILT_PRODUCTS_DIR}/LYEmptyView/LYEmptyView.framework",
+				"${BUILT_PRODUCTS_DIR}/MobilePlayer/MobilePlayer.framework",
 				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
 				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
@@ -610,6 +625,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/JXPhotoBrowser.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/LYEmptyView.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MobilePlayer.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
@@ -646,7 +662,9 @@
 				88613A20233647FB0089C402 /* LZNoteBookViewController.swift in Sources */,
 				881433FA2348AFCF00A11E2C /* LZSettingsCell.swift in Sources */,
 				883AB3A1233E21A6007E0D4B /* LZAlbumCollectionViewCell.swift in Sources */,
+				8826C7CE23545BBF00C40B6A /* LZVideoFolderModel.swift in Sources */,
 				88613A09233636250089C402 /* LZBaseNavController.swift in Sources */,
+				88223C822355A19400163FD2 /* LZVideoDetailViewController.swift in Sources */,
 				88613A1A233647A70089C402 /* LZAlbumViewController.swift in Sources */,
 				88BD9B3C233B9BB40098B8FB /* LZRealmTool.swift in Sources */,
 				882A81CE23462F4200A97ADC /* ExtensionView.swift in Sources */,

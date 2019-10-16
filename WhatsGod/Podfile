@@ -30,7 +30,7 @@ target 'WhatsGod' do
 
   pod 'Hue'
 
-#  pod 'NVActivityIndicatorView' 
+#  pod 'NVActivityIndicatorView'
   pod 'CryptoSwift'
   
   pod 'ComplimentaryGradientView'
@@ -49,5 +49,5 @@ target 'WhatsGod' do
    
    pod 'JXPhotoBrowser'
    
-
+   pod "MobilePlayer"
 end

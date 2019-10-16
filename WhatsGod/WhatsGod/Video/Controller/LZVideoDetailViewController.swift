@@ -1,8 +1,8 @@
 //
-//  LZAlbumDetailsViewController.swift
+//  LZVideoDetailViewController.swift
 //  WhatsGod
 //
-//  Created by imac on 9/28/19.
+//  Created by imac on 10/15/19.
 //  Copyright © 2019 L. All rights reserved.
 //
 
@@ -14,7 +14,8 @@ import AVKit
 import AssetsLibrary
 import Photos
 import JXPhotoBrowser
-class LZAlbumDetailsViewController: LZBaseViewController,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout {
+import MobilePlayer
+class LZVideoDetailViewController: LZBaseViewController,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout {
 
     var  menuView:FWMenuView? = nil
     var  isHidden:Bool = true
@@ -22,7 +23,7 @@ class LZAlbumDetailsViewController: LZBaseViewController,UICollectionViewDelegat
                   UIImage(named: "right_menu_addFri_white"),]
 //    var indexs:Array = Array<Int>()
     var exCount = 0
-    public var folderModel:LZAlbumModel? = nil
+    public  var folderModel:LZVideoFolderModel? = nil
     private var imageDataArr = NSArray()
     private lazy var collectionView:UICollectionView = {
         let layout = UICollectionViewFlowLayout.init()
@@ -171,26 +172,48 @@ class LZAlbumDetailsViewController: LZBaseViewController,UICollectionViewDelegat
                 self.pickerController.didSelectAssets = { (assets) in
                     for (index,itme) in assets.enumerated() {
                         let model:DKAsset = itme
-                        PHCachingImageManager.default().requestImage(for: model.originalAsset!, targetSize: PHImageManagerMaximumSize, contentMode: .default, options: nil) { (result: UIImage?, dictionry: Dictionary?) in
+                     
+                        
+                        PHCachingImageManager.default().requestAVAsset(forVideo: model.originalAsset!, options: nil) { (asset:AVAsset?, minx:AVAudioMix?, info:[AnyHashable : Any]?) in
                             
-                            let path = self.folderModel!.path + "/image" + String(format: "%d.dat",Date().timeIntervalSince1970)
-                            
-                            if LZFileManager.writeImageFile(filePath: path, data:(result?.jpegData(compressionQuality: 1))!){
-                                let imageModel = LZAlbumImageModel.init()
-                                imageModel.isHidden = self.isHidden
-                                imageModel.path = path
-                                try! realm.write {
-                                    self.folderModel?.images.append(imageModel)
-                                }
+                             DispatchQueue.main.async {
+                                
+                                    let paths = self.folderModel?.path
+                                    let path = paths! + "/Video" + String(format: "%d.mp4",Date().timeIntervalSince1970)
+                                    let ImagePath = paths! + "/Thumb" + String(format: "%d.dat",Date().timeIntervalSince1970)
+                                    let urlAsset:AVURLAsset = asset as! AVURLAsset
+                                    guard let jsonData = try? Data.init(contentsOf: urlAsset.url, options: Data.ReadingOptions.alwaysMapped) else {
+                                         return
+                                    }
+
+                                    if LZFileManager.writeVideoFile(filePath: path, data:jsonData){
+                                        
+                                       
+                                            let imgData:Data = self.getVideoFengMian(url: urlAsset.url).jpegData(compressionQuality: 1)!
+                                            if LZFileManager.writeVideoFile(filePath: ImagePath, data:imgData){
+                                                print("写入成功")
+                                            }else{
+                                                print("写入失败")
+                                            }
+                                            let imageModel = LZVideoModel.init()
+                                                imageModel.isHidden = self.isHidden
+                                                imageModel.path = path
+                                                imageModel.imagePath = ImagePath
+                                                try! realm.write {
+
+                                                self.folderModel?.images.append(imageModel)
+
+                                            }
+                                            self.getDataSource()
+                                        
+                                        }
+
+                                       
+
                             }
-                            
-                            if index == assets.count - 1{
-                                 self.getDataSource()
+
                             }
-                    }
                     
-                   
-                   
                     }
                     
                 }
@@ -210,7 +233,7 @@ class LZAlbumDetailsViewController: LZBaseViewController,UICollectionViewDelegat
         
         self.setHidden(hidden: self.isHidden)
         for item in self.dataSource {
-            let model:LZAlbumImageModel = item as! LZAlbumImageModel
+            let model:LZVideoModel = item as! LZVideoModel
             try! realm.write {
                 model.isSelect = false
             }
@@ -269,7 +292,7 @@ class LZAlbumDetailsViewController: LZBaseViewController,UICollectionViewDelegat
                return
            }
            for (index,value) in self.dataSource.enumerated() {
-               let model:LZAlbumImageModel = value as! LZAlbumImageModel
+               let model:LZVideoModel = value as! LZVideoModel
                
                try! realm.write {
                    model.isHidden = hidden
@@ -306,7 +329,7 @@ class LZAlbumDetailsViewController: LZBaseViewController,UICollectionViewDelegat
             for itme in self.dataSource{
             
                 try! realm.write {
-                    let model:LZAlbumImageModel =  itme as! LZAlbumImageModel
+                    let model:LZVideoModel =  itme as! LZVideoModel
                     model.isSelect = true
                 }
             }
@@ -314,7 +337,7 @@ class LZAlbumDetailsViewController: LZBaseViewController,UICollectionViewDelegat
             for itme in self.dataSource {
               
                 try! realm.write {
-                    let model:LZAlbumImageModel =  itme as! LZAlbumImageModel
+                    let model:LZVideoModel =  itme as! LZVideoModel
                     model.isSelect = false
                 }
             }
@@ -326,7 +349,7 @@ class LZAlbumDetailsViewController: LZBaseViewController,UICollectionViewDelegat
         if self.dataSource.count != 0 {
             btn.isSelected = !btn.isSelected
             try! realm.write {
-               let model:LZAlbumImageModel =  self.dataSource[btn.tag] as! LZAlbumImageModel
+               let model:LZVideoModel =  self.dataSource[btn.tag] as! LZVideoModel
                 model.isSelect = btn.isSelected
             }
             self.collectionView.reloadData()
@@ -343,9 +366,10 @@ class LZAlbumDetailsViewController: LZBaseViewController,UICollectionViewDelegat
             var isbool = true
             
             for (index,itme) in self.dataSource.enumerated(){
-                 let model:LZAlbumImageModel = itme as! LZAlbumImageModel
+                 let model:LZVideoModel = itme as! LZVideoModel
                 if model.isSelect {
-                    LZFileManager.deleteImageFile(filePath: model.path)
+                    LZFileManager.deleteViodeFile(filePath: model.path)
+                    LZFileManager.deleteViodeFile(filePath: model.imagePath)
                     try! realm.write {
                         let indexNum1:Int? =  self.folderModel?.images.index(of: model)
                         self.folderModel?.images.remove(at: indexNum1!)
@@ -375,7 +399,7 @@ class LZAlbumDetailsViewController: LZBaseViewController,UICollectionViewDelegat
             
                 var isbool = true
                 for (index,itme) in self.dataSource.enumerated(){
-                    let model:LZAlbumImageModel = itme as! LZAlbumImageModel
+                    let model:LZVideoModel = itme as! LZVideoModel
                     if model.isSelect {
                         UIImageWriteToSavedPhotosAlbum(UIImage.init(data: LZFileManager.getImageFile(filePath: model.path))!, self, #selector(self.image(image:didFinishSavingWithError:contextInfo:)), nil)
                         isbool = false
@@ -415,7 +439,7 @@ class LZAlbumDetailsViewController: LZBaseViewController,UICollectionViewDelegat
         
         let reuseIdentifier = "LZAlbumDetailsCell"
         let cell:LZAlbumDetailsCell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! LZAlbumDetailsCell
-        cell.loadData(model: self.dataSource[indexPath.row] as! LZAlbumImageModel)
+        cell.loadData(model: self.dataSource[indexPath.row] as! LZVideoModel)
         cell.selectBtn.tag = indexPath.item
         cell.selectBtn.addTarget(self, action:#selector(touchBtn(btn:)) , for: .touchUpInside)
         return cell
@@ -423,25 +447,56 @@ class LZAlbumDetailsViewController: LZBaseViewController,UICollectionViewDelegat
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
-        let localData = JXLocalDataSource(numberOfItems: { () -> Int in
-                   return self.dataSource.count
-               }, localImage: { (index) -> UIImage? in
-                   let data:LZAlbumImageModel = self.dataSource[index] as! LZAlbumImageModel
-                let image = UIImage.init(data: LZFileManager.getImageFile(filePath: data.path))
-                   return image
-        })
+//        let localData = JXLocalDataSource(numberOfItems: { () -> Int in
+//                   return self.dataSource.count
+//               }, localImage: { (index) -> UIImage? in
+//                   let data:LZAlbumImageModel = self.dataSource[index] as! LZAlbumImageModel
+//                let image = UIImage.init(data: LZFileManager.getImageFile(filePath: data.path))
+//                   return image
+//        })
+//        
+//        JXPhotoBrowser(dataSource: localData).show(pageIndex: indexPath.item)
         
-        JXPhotoBrowser(dataSource: localData).show(pageIndex: indexPath.item)
+        let model:LZVideoModel = self.dataSource[indexPath.item] as! LZVideoModel
+//
+//        let playerModel = WMPlayerModel.init()
+//        playerModel.videoURL = URL.init(fileURLWithPath: videoFolder + model.path)
+//        let player = WMPlayer.init(playerModel: playerModel)
+//        UIApplication.shared.keyWindow?.addSubview(player!)
+//        player?.snp.makeConstraints({ (make) in
+//            make.leading.trailing.top.equalTo(UIApplication.shared.keyWindow!);
+//            make.height.equalTo(player!.snp_width).multipliedBy(9.0/16);
+//        })
+//
+//        player?.play()
+        
+        let videoUrl = URL.init(fileURLWithPath: videoFolder + model.path)
+       let playerVC = MobilePlayerViewController(contentURL: videoUrl)
+        playerVC.title = "Vanilla Player "
+        playerVC.activityItems = [videoUrl] // Check the documentation for more information.
+        presentMoviePlayerViewControllerAnimated(playerVC)
     }
 
-    /*
-    // MARK: - Navigation
+    
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    func getVideoFengMian(url:URL) -> UIImage {
+        if url == nil {
+            //默认封面图
+            return UIImage(named: "")!
+        }
+        let aset = AVURLAsset(url: url, options: nil)
+        let assetImg = AVAssetImageGenerator(asset: aset)
+        assetImg.appliesPreferredTrackTransform = true
+        assetImg.apertureMode = AVAssetImageGenerator.ApertureMode.encodedPixels
+        do{
+            let cgimgref = try assetImg.copyCGImage(at: CMTime(seconds: 10, preferredTimescale: 50), actualTime: nil)
+            let img = UIImage(cgImage: cgimgref)
+            return img
+            
+            
+        }catch{
+            return UIImage(named: "")!
+        }
+        
     }
-    */
-
 }

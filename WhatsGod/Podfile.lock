@@ -66,6 +66,7 @@ PODS:
     - Kingfisher
   - Kingfisher (4.10.1)
   - LYEmptyView (1.3.1)
+  - MobilePlayer (1.3.0)
   - Realm (3.18.0):
     - Realm/Headers (= 3.18.0)
   - Realm/Headers (3.18.0)
@@ -91,6 +92,7 @@ DEPENDENCIES:
   - IQKeyboardManagerSwift
   - JXPhotoBrowser
   - LYEmptyView
+  - MobilePlayer
   - RealmSwift
   - SnapKit (~> 4.0.0)
   - SSZipArchive
@@ -112,6 +114,7 @@ SPEC REPOS:
     - JXPhotoBrowser
     - Kingfisher
     - LYEmptyView
+    - MobilePlayer
     - Realm
     - RealmSwift
     - SDWebImage
@@ -135,6 +138,7 @@ SPEC CHECKSUMS:
   JXPhotoBrowser: 12f72156f34bc7f49e2d22bb20259b0f1b5c2076
   Kingfisher: c148cd7b47ebde9989f6bc7c27dcaa79d81279a0
   LYEmptyView: b6d418cfa38b78df0cf243f9a9c25ccbdc399922
+  MobilePlayer: e50e2160830f3db51d6e08067318aec6a9d39408
   Realm: 7b3d04740facf45e958a514b466a32b04f1113d6
   RealmSwift: c817b5f374668cf08f649afb05f55d92a787649c
   SDWebImage: 96d7f03415ccb28d299d765f93557ff8a617abd8
@@ -142,6 +146,6 @@ SPEC CHECKSUMS:
   SnapKit: 0de968a9fec17499afa29683b05d0c775b6d1c29
   SSZipArchive: fa16b8cc4cdeceb698e5e5d9f67e9558532fbf23
 
-PODFILE CHECKSUM: e8f45f9ea7e746868b329529f873063e51eeef4a
+PODFILE CHECKSUM: 1d315c74e2f368c7b8d2d2079eaf8a5ef99a6ce1
 
 COCOAPODS: 1.6.1
