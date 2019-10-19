@@ -75,9 +75,12 @@ class LZAlbumCollectionViewCell: UICollectionViewCell {
         if model.isKind(of: LZAlbumModel.self) == true {
             self.delBtn.isHidden = (model as! LZAlbumModel).isHidden
             self.title.text = (model as! LZAlbumModel).finderName
-        }else{
+        }else if model.isKind(of: LZVideoFolderModel.self) == true{
             self.delBtn.isHidden = (model as! LZVideoFolderModel).isHidden
             self.title.text = (model as! LZVideoFolderModel).finderName
+        }else{
+            self.delBtn.isHidden = (model as! LZOfficeFolderModel).isHidden
+            self.title.text = (model as! LZOfficeFolderModel).finderName
         }
 
        

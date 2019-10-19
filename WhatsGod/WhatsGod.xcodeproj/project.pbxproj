@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		7ADB2B96D8098E500A5FFC40 /* Pods_WhatsGod.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF2C973FF3A6D4A1DC2AA312 /* Pods_WhatsGod.framework */; };
 		881433FA2348AFCF00A11E2C /* LZSettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 881433F92348AFCF00A11E2C /* LZSettingsCell.swift */; };
+		8817EA54235AEC74007395DD /* LZOfficeFolderModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8817EA53235AEC74007395DD /* LZOfficeFolderModel.swift */; };
+		8817EA56235AEEFA007395DD /* LZOfficeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8817EA55235AEEFA007395DD /* LZOfficeViewController.swift */; };
+		8817EA58235B1821007395DD /* LZOfficeDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8817EA57235B1821007395DD /* LZOfficeDetailViewController.swift */; };
 		8821799723477C4E002C32B1 /* ExtensionString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8821799623477C4E002C32B1 /* ExtensionString.swift */; };
 		88223C822355A19400163FD2 /* LZVideoDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88223C812355A19400163FD2 /* LZVideoDetailViewController.swift */; };
 		8822C32A233F8FDC00E09741 /* LZAlbumDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8822C329233F8FDC00E09741 /* LZAlbumDetailsViewController.swift */; };
@@ -67,6 +70,9 @@
 /* Begin PBXFileReference section */
 		237F0DF970AA48B3BF36B833 /* Pods-WhatsGod.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WhatsGod.debug.xcconfig"; path = "Target Support Files/Pods-WhatsGod/Pods-WhatsGod.debug.xcconfig"; sourceTree = "<group>"; };
 		881433F92348AFCF00A11E2C /* LZSettingsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LZSettingsCell.swift; sourceTree = "<group>"; };
+		8817EA53235AEC74007395DD /* LZOfficeFolderModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LZOfficeFolderModel.swift; sourceTree = "<group>"; };
+		8817EA55235AEEFA007395DD /* LZOfficeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LZOfficeViewController.swift; sourceTree = "<group>"; };
+		8817EA57235B1821007395DD /* LZOfficeDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LZOfficeDetailViewController.swift; sourceTree = "<group>"; };
 		8821799623477C4E002C32B1 /* ExtensionString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionString.swift; sourceTree = "<group>"; };
 		88223C812355A19400163FD2 /* LZVideoDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LZVideoDetailViewController.swift; sourceTree = "<group>"; };
 		8822C329233F8FDC00E09741 /* LZAlbumDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LZAlbumDetailsViewController.swift; sourceTree = "<group>"; };
@@ -149,6 +155,14 @@
 			path = View;
 			sourceTree = "<group>";
 		};
+		8817EA52235AEC44007395DD /* OfficeModel */ = {
+			isa = PBXGroup;
+			children = (
+				8817EA53235AEC74007395DD /* LZOfficeFolderModel.swift */,
+			);
+			path = OfficeModel;
+			sourceTree = "<group>";
+		};
 		88261C8923320A22005CE69D = {
 			isa = PBXGroup;
 			children = (
@@ -183,7 +197,7 @@
 				88613A062336310C0089C402 /* Video */,
 				88613A05233630810089C402 /* Album */,
 				88261CC423320CF4005CE69D /* Base */,
-				88261CC323320B7A005CE69D /* Photo */,
+				88261CC323320B7A005CE69D /* OfficeDocuments */,
 				88261C9523320A22005CE69D /* AppDelegate.swift */,
 				88261C9923320A22005CE69D /* Main.storyboard */,
 				88261C9C23320A23005CE69D /* Assets.xcassets */,
@@ -212,11 +226,13 @@
 			path = WhatsGodUITests;
 			sourceTree = "<group>";
 		};
-		88261CC323320B7A005CE69D /* Photo */ = {
+		88261CC323320B7A005CE69D /* OfficeDocuments */ = {
 			isa = PBXGroup;
 			children = (
+				8817EA55235AEEFA007395DD /* LZOfficeViewController.swift */,
+				8817EA57235B1821007395DD /* LZOfficeDetailViewController.swift */,
 			);
-			path = Photo;
+			path = OfficeDocuments;
 			sourceTree = "<group>";
 		};
 		88261CC423320CF4005CE69D /* Base */ = {
@@ -386,6 +402,7 @@
 		88BD9B3D233B9C160098B8FB /* DBFIleData */ = {
 			isa = PBXGroup;
 			children = (
+				8817EA52235AEC44007395DD /* OfficeModel */,
 				8826C7CA23545B2500C40B6A /* VideoModel */,
 				88BD9B3E233B9C3D0098B8FB /* AlbumModel */,
 				88262D5F23509D3B006A305C /* LZFileManager.swift */,
@@ -652,7 +669,9 @@
 				88BD9B42233BA5690098B8FB /* LZAlbumModel.swift in Sources */,
 				88262D6023509D3B006A305C /* LZFileManager.swift in Sources */,
 				883A46BC23520224004A9DDC /* UIApplicationExtension.swift in Sources */,
+				8817EA58235B1821007395DD /* LZOfficeDetailViewController.swift in Sources */,
 				88261C9623320A22005CE69D /* AppDelegate.swift in Sources */,
+				8817EA56235AEEFA007395DD /* LZOfficeViewController.swift in Sources */,
 				883A46BE23520224004A9DDC /* UICollectionViewControllerExtension.swift in Sources */,
 				883A46BB23520224004A9DDC /* UIViewControllerExtension.swift in Sources */,
 				88613A24233648800089C402 /* LZSettingsViewController.swift in Sources */,
@@ -663,6 +682,7 @@
 				881433FA2348AFCF00A11E2C /* LZSettingsCell.swift in Sources */,
 				883AB3A1233E21A6007E0D4B /* LZAlbumCollectionViewCell.swift in Sources */,
 				8826C7CE23545BBF00C40B6A /* LZVideoFolderModel.swift in Sources */,
+				8817EA54235AEC74007395DD /* LZOfficeFolderModel.swift in Sources */,
 				88613A09233636250089C402 /* LZBaseNavController.swift in Sources */,
 				88223C822355A19400163FD2 /* LZVideoDetailViewController.swift in Sources */,
 				88613A1A233647A70089C402 /* LZAlbumViewController.swift in Sources */,

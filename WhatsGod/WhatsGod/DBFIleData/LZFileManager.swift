@@ -12,6 +12,8 @@ public var rootFileManager = FileManager.default
 public   let albumsFolder = rootFolder + "AlbumsFolder/"
 
 public   let videoFolder = rootFolder + "VideoFolder/"
+
+public   let officeFolder = rootFolder + "OfficeFolder/"
 class LZFileManager: NSObject {
    
    
@@ -65,7 +67,7 @@ class LZFileManager: NSObject {
           }
         return ""
     }
-    
+     //mark视频文件管理
     //写入文件
     public class func writeImageFile(filePath:String, data:Data) -> Bool{
         if filePath == "" {
@@ -100,7 +102,7 @@ class LZFileManager: NSObject {
         
         return Data.init()
     }
-    
+    //mark视频文件管理
       //写入视频文件
         public class func writeVideoFile(filePath:String, data:Data) -> Bool{
             
@@ -140,5 +142,67 @@ class LZFileManager: NSObject {
             return Data.init()
         }
     
+     //mark办公文件管理
+    public class func createOfficeFolder(){
+             if (!rootFileManager.fileExists(atPath: officeFolder)){
+                 try! rootFileManager.createDirectory(at: NSURL.fileURL(withPath: officeFolder), withIntermediateDirectories: true,
+
+                                                             attributes: nil)
+                 print("Create folder success")
+             }
+         }
+       
+       //创建办公子文件夹
+       public class func createOfficeSubFolder(SubPath:String) -> String{
+           
+           if SubPath == "" {
+               return ""
+           }
+             if (!rootFileManager.fileExists(atPath: officeFolder + SubPath)){
+                 try! rootFileManager.createDirectory(at: NSURL.fileURL(withPath: officeFolder + SubPath), withIntermediateDirectories: true,
+
+                                                             attributes: nil)
+                 print("Create sub folder success")
+                return SubPath
+             }
+           return ""
+       }
+    //写入办公文件
+    public class func writeOfficeFile(filePath:String, data:Data) -> Bool{
+        
+        if filePath == "" {
+            return false
+        }
+        if (!rootFileManager.fileExists(atPath: officeFolder + filePath)){
+            try? data.write(to: URL(fileURLWithPath: officeFolder + filePath))
+            return true
+        }
+        return false
+    }
+    //删除办公文件
+    public class func deleteOfficeFile(filePath:String) -> Bool{
+        if filePath == "" {
+            return false
+        }
+        if (rootFileManager.fileExists(atPath:officeFolder + filePath)) {
+            try! rootFileManager.removeItem(atPath: officeFolder + filePath)
+            return true
+        }
+        return false
+    }
     
+    //读取办公文件
+    public class func getOfficeFile(filePath:String) -> Data{
+        
+        if filePath == "" {
+             return Data.init()
+        }
+        if (rootFileManager.fileExists(atPath: officeFolder + filePath)) {
+            
+            
+            return rootFileManager.contents(atPath: officeFolder + filePath)!
+        }
+
+        return Data.init()
+    }
 }

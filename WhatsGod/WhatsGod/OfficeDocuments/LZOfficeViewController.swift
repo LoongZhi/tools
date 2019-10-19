@@ -1,14 +1,14 @@
 //
-//  LZVideoViewController.swift
+//  LZOfficeViewController.swift
 //  WhatsGod
 //
-//  Created by imac on 9/21/19.
+//  Created by imac on 10/19/19.
 //  Copyright © 2019 L. All rights reserved.
 //
 
 import UIKit
 import FWPopupView
-class LZVideoViewController: LZBaseViewController,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout {
+class LZOfficeViewController: LZBaseViewController,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout {
    
     
 
@@ -39,7 +39,7 @@ class LZVideoViewController: LZBaseViewController,UICollectionViewDelegate,UICol
         readyView()
         
         if self.dataSource.count != 0{
-            let model:LZVideoFolderModel = self.dataSource.first as! LZVideoFolderModel
+            let model:LZOfficeFolderModel = self.dataSource.first as! LZOfficeFolderModel
             if !model.isHidden{
                 let itme = UIBarButtonItem.init(title: LanguageStrins(string: "Completed"), style: .done, target: self, action: #selector(self.leftItmeEvent))
                 self.navigationItem.leftBarButtonItem = itme
@@ -105,13 +105,13 @@ class LZVideoViewController: LZBaseViewController,UICollectionViewDelegate,UICol
                                                         
                                 }
                                                     
-                                let albumModel = LZVideoFolderModel()
-                                albumModel.finderName = acc.text!
-                                albumModel.createDate = Date().timeIntervalSince1970
-                                albumModel.path = LZFileManager.createVideoSubFolder(SubPath: acc.text! + String(format: "%.0f", albumModel.createDate))
+                                let officeModel = LZOfficeFolderModel()
+                                officeModel.finderName = acc.text!
+                                officeModel.createDate = Date().timeIntervalSince1970
+                                officeModel.path = LZFileManager.createOfficeSubFolder(SubPath: acc.text! + String(format: "%.0f", officeModel.createDate))
                                
                                 try! realm.write {
-                                  realm.add(albumModel)
+                                  realm.add(officeModel)
                                   self.getDataSource()
                                 }
                             }
@@ -135,7 +135,7 @@ class LZVideoViewController: LZBaseViewController,UICollectionViewDelegate,UICol
         if self.dataSource.count != 0 {
             self.dataSource.removeAll()
         }
-        let models = realm.objects(LZVideoFolderModel.self)
+        let models = realm.objects(LZOfficeFolderModel.self)
         for albumModel in models {
             self.dataSource.append(albumModel)
         }
@@ -160,7 +160,7 @@ class LZVideoViewController: LZBaseViewController,UICollectionViewDelegate,UICol
             return
         }
         for (index,value) in self.dataSource.enumerated() {
-            let model:LZVideoFolderModel = value as! LZVideoFolderModel
+            let model:LZOfficeFolderModel = value as! LZOfficeFolderModel
             
             try! realm.write {
                 model.isHidden = hidden
@@ -178,8 +178,8 @@ class LZVideoViewController: LZBaseViewController,UICollectionViewDelegate,UICol
         let alert = FWAlertView.alert(title: LanguageStrins(string: "Tips"), detail: LanguageStrins(string: "Whether you delete the folder"), confirmBlock: { (view, number, str) in
             if self.dataSource.count != 0{
                 try! realm.write {
-                    let model:LZVideoFolderModel = self.dataSource[btn.tag] as! LZVideoFolderModel
-                    if LZFileManager.deleteViodeFile(filePath: model.path){
+                    let model:LZOfficeFolderModel = self.dataSource[btn.tag] as! LZOfficeFolderModel
+                    if LZFileManager.deleteOfficeFile(filePath: model.path){
                         realm.delete(model)
                         self.getDataSource()
                         self.collectionView.reloadData()
@@ -211,17 +211,17 @@ class LZVideoViewController: LZBaseViewController,UICollectionViewDelegate,UICol
         let reuseIdentifier = "LZAlbumCollectionViewCell"
         let cell:LZAlbumCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! LZAlbumCollectionViewCell
         
-        cell.loadData(model: self.dataSource[indexPath.row] as! LZVideoFolderModel)
+        cell.loadData(model: self.dataSource[indexPath.row] as! LZOfficeFolderModel)
         cell.delBtn.tag = indexPath.row
         cell.delBtn.addTarget(self, action: #selector(delBtn(btn:)), for: .touchUpInside)
         return cell
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let model = self.dataSource[indexPath.row] as! LZVideoFolderModel
+        let model = self.dataSource[indexPath.row] as! LZOfficeFolderModel
         
-        let vc = LZVideoDetailViewController()
-        vc.folderModel = model
-        self.navigationController?.pushViewController(vc, animated: true)
+//        let vc = LZVideoDetailViewController()
+//        vc.folderModel = model
+//        self.navigationController?.pushViewController(vc, animated: true)
     }
 
 }

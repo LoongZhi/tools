@@ -447,28 +447,8 @@ class LZVideoDetailViewController: LZBaseViewController,UICollectionViewDelegate
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
-//        let localData = JXLocalDataSource(numberOfItems: { () -> Int in
-//                   return self.dataSource.count
-//               }, localImage: { (index) -> UIImage? in
-//                   let data:LZAlbumImageModel = self.dataSource[index] as! LZAlbumImageModel
-//                let image = UIImage.init(data: LZFileManager.getImageFile(filePath: data.path))
-//                   return image
-//        })
-//        
-//        JXPhotoBrowser(dataSource: localData).show(pageIndex: indexPath.item)
         
         let model:LZVideoModel = self.dataSource[indexPath.item] as! LZVideoModel
-//
-//        let playerModel = WMPlayerModel.init()
-//        playerModel.videoURL = URL.init(fileURLWithPath: videoFolder + model.path)
-//        let player = WMPlayer.init(playerModel: playerModel)
-//        UIApplication.shared.keyWindow?.addSubview(player!)
-//        player?.snp.makeConstraints({ (make) in
-//            make.leading.trailing.top.equalTo(UIApplication.shared.keyWindow!);
-//            make.height.equalTo(player!.snp_width).multipliedBy(9.0/16);
-//        })
-//
-//        player?.play()
         
         let videoUrl = URL.init(fileURLWithPath: videoFolder + model.path)
        let playerVC = MobilePlayerViewController(contentURL: videoUrl)

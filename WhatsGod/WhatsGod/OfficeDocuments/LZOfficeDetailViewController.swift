@@ -1,8 +1,8 @@
 //
-//  LZAlbumDetailsViewController.swift
+//  LZOfficeDetailViewController.swift
 //  WhatsGod
 //
-//  Created by imac on 9/28/19.
+//  Created by imac on 10/19/19.
 //  Copyright © 2019 L. All rights reserved.
 //
 
@@ -14,7 +14,7 @@ import AVKit
 import AssetsLibrary
 import Photos
 import JXPhotoBrowser
-class LZAlbumDetailsViewController: LZBaseViewController,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout {
+class LZOfficeDetailViewController: LZBaseViewController,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout {
 
     var  menuView:FWMenuView? = nil
     var  isHidden:Bool = true
@@ -22,7 +22,7 @@ class LZAlbumDetailsViewController: LZBaseViewController,UICollectionViewDelegat
                   UIImage(named: "right_menu_addFri_white"),]
 //    var indexs:Array = Array<Int>()
     var exCount = 0
-    public var folderModel:LZAlbumModel? = nil
+    public var folderModel:LZOfficeFolderModel? = nil
     private var imageDataArr = NSArray()
     private lazy var collectionView:UICollectionView = {
         let layout = UICollectionViewFlowLayout.init()
@@ -173,14 +173,14 @@ class LZAlbumDetailsViewController: LZBaseViewController,UICollectionViewDelegat
                         let model:DKAsset = itme
                         PHCachingImageManager.default().requestImage(for: model.originalAsset!, targetSize: PHImageManagerMaximumSize, contentMode: .default, options: nil) { (result: UIImage?, dictionry: Dictionary?) in
                             
-                            let path = self.folderModel!.path + "/image" + String(format: "%d.dat",Date().timeIntervalSince1970)
+                            let path = self.folderModel!.path + "/office" + String(format: "%d.dat",Date().timeIntervalSince1970)
                             
                             if LZFileManager.writeImageFile(filePath: path, data:(result?.jpegData(compressionQuality: 1))!){
-                                let imageModel = LZAlbumImageModel.init()
-                                imageModel.isHidden = self.isHidden
-                                imageModel.path = path
+                                let officeModel = LZOfficeModel.init()
+                                officeModel.isHidden = self.isHidden
+                                officeModel.path = path
                                 try! realm.write {
-                                    self.folderModel?.images.append(imageModel)
+                                    self.folderModel?.images.append(officeModel)
                                 }
                             }
                             
@@ -210,7 +210,7 @@ class LZAlbumDetailsViewController: LZBaseViewController,UICollectionViewDelegat
         
         self.setHidden(hidden: self.isHidden)
         for item in self.dataSource {
-            let model:LZAlbumImageModel = item as! LZAlbumImageModel
+            let model:LZOfficeModel = item as! LZOfficeModel
             try! realm.write {
                 model.isSelect = false
             }
@@ -269,7 +269,7 @@ class LZAlbumDetailsViewController: LZBaseViewController,UICollectionViewDelegat
                return
            }
            for (index,value) in self.dataSource.enumerated() {
-               let model:LZAlbumImageModel = value as! LZAlbumImageModel
+               let model:LZOfficeModel = value as! LZOfficeModel
                
                try! realm.write {
                    model.isHidden = hidden
@@ -281,22 +281,6 @@ class LZAlbumDetailsViewController: LZBaseViewController,UICollectionViewDelegat
           
            self.collectionView.reloadData()
        }
-    // 相机权限
-       func isRightCamera() -> Bool {
-
-                   let authStatus = AVCaptureDevice.authorizationStatus(for: AVMediaType.video)
-
-           return authStatus != .restricted && authStatus != .denied
-
-       }
-       // 相册权限
-       func isRightPhoto() -> Bool {
-
-           let authStatus = ALAssetsLibrary.authorizationStatus()
-
-           return authStatus != .restricted && authStatus != .denied
-
-       }
 
     @objc func allEvent(btn:UIButton) -> Void {
         btn.isSelected = !btn.isSelected
@@ -306,7 +290,7 @@ class LZAlbumDetailsViewController: LZBaseViewController,UICollectionViewDelegat
             for itme in self.dataSource{
             
                 try! realm.write {
-                    let model:LZAlbumImageModel =  itme as! LZAlbumImageModel
+                    let model:LZOfficeModel =  itme as! LZOfficeModel
                     model.isSelect = true
                 }
             }
@@ -314,7 +298,7 @@ class LZAlbumDetailsViewController: LZBaseViewController,UICollectionViewDelegat
             for itme in self.dataSource {
               
                 try! realm.write {
-                    let model:LZAlbumImageModel =  itme as! LZAlbumImageModel
+                    let model:LZOfficeModel =  itme as! LZOfficeModel
                     model.isSelect = false
                 }
             }
@@ -326,12 +310,11 @@ class LZAlbumDetailsViewController: LZBaseViewController,UICollectionViewDelegat
         if self.dataSource.count != 0 {
             btn.isSelected = !btn.isSelected
             try! realm.write {
-               let model:LZAlbumImageModel =  self.dataSource[btn.tag] as! LZAlbumImageModel
+               let model:LZOfficeModel =  self.dataSource[btn.tag] as! LZOfficeModel
                 model.isSelect = btn.isSelected
             }
             self.collectionView.reloadData()
-            
-            
+
         }
     }
     
@@ -343,7 +326,7 @@ class LZAlbumDetailsViewController: LZBaseViewController,UICollectionViewDelegat
             var isbool = true
             
             for (index,itme) in self.dataSource.enumerated(){
-                 let model:LZAlbumImageModel = itme as! LZAlbumImageModel
+                 let model:LZOfficeModel = itme as! LZOfficeModel
                 if model.isSelect {
                     LZFileManager.deleteImageFile(filePath: model.path)
                     try! realm.write {
@@ -375,7 +358,7 @@ class LZAlbumDetailsViewController: LZBaseViewController,UICollectionViewDelegat
             
                 var isbool = true
                 for (index,itme) in self.dataSource.enumerated(){
-                    let model:LZAlbumImageModel = itme as! LZAlbumImageModel
+                    let model:LZOfficeModel = itme as! LZOfficeModel
                     if model.isSelect {
                         UIImageWriteToSavedPhotosAlbum(UIImage.init(data: LZFileManager.getImageFile(filePath: model.path))!, self, #selector(self.image(image:didFinishSavingWithError:contextInfo:)), nil)
                         isbool = false
@@ -415,7 +398,7 @@ class LZAlbumDetailsViewController: LZBaseViewController,UICollectionViewDelegat
         
         let reuseIdentifier = "LZAlbumDetailsCell"
         let cell:LZAlbumDetailsCell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! LZAlbumDetailsCell
-        cell.loadData(model: self.dataSource[indexPath.row] as! LZAlbumImageModel)
+        cell.loadData(model: self.dataSource[indexPath.row] as! LZOfficeModel)
         cell.selectBtn.tag = indexPath.item
         cell.selectBtn.addTarget(self, action:#selector(touchBtn(btn:)) , for: .touchUpInside)
         return cell
@@ -423,17 +406,8 @@ class LZAlbumDetailsViewController: LZBaseViewController,UICollectionViewDelegat
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
-        let localData = JXLocalDataSource(numberOfItems: { () -> Int in
-                   return self.dataSource.count
-               }, localImage: { (index) -> UIImage? in
-                   let data:LZAlbumImageModel = self.dataSource[index] as! LZAlbumImageModel
-                let image = UIImage.init(data: LZFileManager.getImageFile(filePath: data.path))
-                   return image
-        })
-        
-        JXPhotoBrowser(dataSource: localData).show(pageIndex: indexPath.item)
+       
     }
-
 
 
 }

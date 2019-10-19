@@ -52,11 +52,18 @@ class LZAlbumDetailsCell: UICollectionViewCell {
             self.selectBtn.isSelected = (model as! LZAlbumImageModel).isSelect
             self.selectBtn.isHidden = (model as! LZAlbumImageModel).isHidden
             
-         }else{
+         }else if model.isKind(of: LZVideoModel.self) == true{
+            
             self.imageView.image = UIImage.init(data: LZFileManager.getViodeFile(filePath: (model as! LZVideoModel).imagePath))
             self.imageView.contentMode = .scaleAspectFill
             self.selectBtn.isSelected = (model as! LZVideoModel).isSelect
             self.selectBtn.isHidden = (model as! LZVideoModel).isHidden
+            
+         }else if model.isKind(of: LZOfficeModel.self) == true{
+            self.imageView.image = UIImage.init(data: LZFileManager.getOfficeFile(filePath: (model as! LZOfficeModel).imagePath))
+            self.imageView.contentMode = .scaleAspectFill
+            self.selectBtn.isSelected = (model as! LZOfficeModel).isSelect
+            self.selectBtn.isHidden = (model as! LZOfficeModel).isHidden
         }
     }
     required init?(coder aDecoder: NSCoder) {
