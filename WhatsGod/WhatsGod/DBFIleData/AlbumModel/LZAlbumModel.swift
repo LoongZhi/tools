@@ -24,7 +24,7 @@ class LZAlbumImageModel: Object {
     @objc dynamic var imageDes = ""
     @objc dynamic var isHidden = true
     @objc dynamic var isSelect = false
-//    @objc dynamic var ids = ""
+    @objc dynamic var type = ""
     
     
 }

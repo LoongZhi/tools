@@ -39,6 +39,7 @@ class LZVideoDetailViewController: LZBaseViewController,UICollectionViewDelegate
     }()
     private lazy var pickerController:DKImagePickerController = {
         let pc = DKImagePickerController.init()
+        pc.assetType = .allVideos
         return pc
         
     }()
@@ -172,15 +173,15 @@ class LZVideoDetailViewController: LZBaseViewController,UICollectionViewDelegate
                 self.pickerController.didSelectAssets = { (assets) in
                     for (index,itme) in assets.enumerated() {
                         let model:DKAsset = itme
-                     
-                        
+                       
                         PHCachingImageManager.default().requestAVAsset(forVideo: model.originalAsset!, options: nil) { (asset:AVAsset?, minx:AVAudioMix?, info:[AnyHashable : Any]?) in
                             
                              DispatchQueue.main.async {
-                                
+                                    let url:String = model.originalAsset?.value(forKey: "filename") as! String
+                                    let type = url.returnFileType(fileUrl: url)
                                     let paths = self.folderModel?.path
                                     let path = paths! + "/Video" + String(format: "%d.mp4",Date().timeIntervalSince1970)
-                                    let ImagePath = paths! + "/Thumb" + String(format: "%d.dat",Date().timeIntervalSince1970)
+                                    let ImagePath = paths! + "/Thumb" + String(format: "%d.%@",Date().timeIntervalSince1970,type)
                                     let urlAsset:AVURLAsset = asset as! AVURLAsset
                                     guard let jsonData = try? Data.init(contentsOf: urlAsset.url, options: Data.ReadingOptions.alwaysMapped) else {
                                          return
@@ -195,20 +196,19 @@ class LZVideoDetailViewController: LZBaseViewController,UICollectionViewDelegate
                                             }else{
                                                 print("写入失败")
                                             }
-                                            let imageModel = LZVideoModel.init()
-                                                imageModel.isHidden = self.isHidden
-                                                imageModel.path = path
-                                                imageModel.imagePath = ImagePath
+                                            let videoModel = LZVideoModel.init()
+                                                videoModel.isHidden = self.isHidden
+                                                videoModel.path = path
+                                                videoModel.type = type
+                                                videoModel.imagePath = ImagePath
                                                 try! realm.write {
 
-                                                self.folderModel?.images.append(imageModel)
+                                                self.folderModel?.images.append(videoModel)
 
                                             }
                                             self.getDataSource()
                                         
                                         }
-
-                                       
 
                             }
 

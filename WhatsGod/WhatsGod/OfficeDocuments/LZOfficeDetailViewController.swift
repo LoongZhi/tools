@@ -234,27 +234,27 @@ class LZOfficeDetailViewController: LZBaseViewController,UICollectionViewDelegat
     }
     override func rightItmeEvent() {
         
-        if self.isRightPhoto() {
-            self.menuView?.show()
-        }else{
-            let alert = FWAlertView.alert(title: LanguageStrins(string: "Tips"), detail: LanguageStrins(string: "Whether you delete the folder"), confirmBlock: { (view, number, str) in
-             
-                let url = URL(string: UIApplication.openSettingsURLString)
-                if let url = url, UIApplication.shared.canOpenURL(url) {
-                    if #available(iOS 10, *) {
-                        UIApplication.shared.open(url, options: [:],
-                                                  completionHandler: {
-                                                    (success) in
-                        })
-                    } else {
-                       UIApplication.shared.openURL(url)
-                    }
-                }
-            }) { (view, number, str) in
-                
-            }
-            alert.show()
-        }
+//        if self.isRightPhoto() {
+//            self.menuView?.show()
+//        }else{
+//            let alert = FWAlertView.alert(title: LanguageStrins(string: "Tips"), detail: LanguageStrins(string: "Whether you delete the folder"), confirmBlock: { (view, number, str) in
+//
+//                let url = URL(string: UIApplication.openSettingsURLString)
+//                if let url = url, UIApplication.shared.canOpenURL(url) {
+//                    if #available(iOS 10, *) {
+//                        UIApplication.shared.open(url, options: [:],
+//                                                  completionHandler: {
+//                                                    (success) in
+//                        })
+//                    } else {
+//                       UIApplication.shared.openURL(url)
+//                    }
+//                }
+//            }) { (view, number, str) in
+//
+//            }
+//            alert.show()
+//        }
          
     }
     override func leftItmeEvent() {

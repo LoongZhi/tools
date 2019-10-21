@@ -38,6 +38,7 @@ class LZAlbumDetailsViewController: LZBaseViewController,UICollectionViewDelegat
     }()
     private lazy var pickerController:DKImagePickerController = {
         let pc = DKImagePickerController.init()
+        pc.assetType = .allPhotos
         return pc
         
     }()
@@ -172,13 +173,15 @@ class LZAlbumDetailsViewController: LZBaseViewController,UICollectionViewDelegat
                     for (index,itme) in assets.enumerated() {
                         let model:DKAsset = itme
                         PHCachingImageManager.default().requestImage(for: model.originalAsset!, targetSize: PHImageManagerMaximumSize, contentMode: .default, options: nil) { (result: UIImage?, dictionry: Dictionary?) in
-                            
-                            let path = self.folderModel!.path + "/image" + String(format: "%d.dat",Date().timeIntervalSince1970)
+                            let url:String = model.originalAsset?.value(forKey: "filename") as! String
+                            let type = url.returnFileType(fileUrl: url)
+                            let path = self.folderModel!.path + "/image" + String(format: "%d.%@",Date().timeIntervalSince1970,type)
                             
                             if LZFileManager.writeImageFile(filePath: path, data:(result?.jpegData(compressionQuality: 1))!){
                                 let imageModel = LZAlbumImageModel.init()
                                 imageModel.isHidden = self.isHidden
                                 imageModel.path = path
+                                imageModel.type = type
                                 try! realm.write {
                                     self.folderModel?.images.append(imageModel)
                                 }

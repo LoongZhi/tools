@@ -25,6 +25,6 @@ class LZVideoModel: Object {
     @objc dynamic var isHidden = true
     @objc dynamic var isSelect = false
     @objc dynamic var imagePath = ""
-    
+    @objc dynamic var type = ""
     
 }

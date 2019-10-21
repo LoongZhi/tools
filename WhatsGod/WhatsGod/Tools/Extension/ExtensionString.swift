@@ -7,6 +7,7 @@
 //
 
 import Foundation
+
 extension String {
     
     public func isStringNull() -> Bool{
@@ -15,4 +16,17 @@ extension String {
         }
         return false
     }
+    
+    public func returnFileType(fileUrl:String) -> String{
+        if fileUrl.contains(".") == false {
+             return ""
+        }
+        let typeArr:Array = fileUrl.components(separatedBy: ".")
+        if (typeArr.last != nil){
+            return typeArr.last!
+        }
+        return ""
+    }
+    
+    
 }

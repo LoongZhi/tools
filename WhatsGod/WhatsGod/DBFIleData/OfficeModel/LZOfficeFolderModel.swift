@@ -24,5 +24,5 @@ class LZOfficeModel: Object {
     @objc dynamic var isSelect = false
     @objc dynamic var imagePath = ""
     @objc dynamic var format = ""
-  
+    @objc dynamic var type = ""
 }

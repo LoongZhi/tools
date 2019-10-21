@@ -9,8 +9,9 @@
 import UIKit
 import RealmSwift
 import IQKeyboardManagerSwift
+import FWPopupView
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate,UIDocumentInteractionControllerDelegate {
 
     var window: UIWindow?
 
@@ -50,9 +51,62 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         //创建文件目录
         LZFileManager.createAlbumsFolder()
         LZFileManager.createVideoFolder()
+        LZFileManager.createOfficeFolder()
     }
     
+    func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
+        
+        let myBlock: FWPopupItemClickedBlock = { [weak self] (popupView, index, title) in
+                       print("AlertView：点击了第\(index)个按钮")
+            switch index {
+            case 0:
+                self!.selectTypeFile(url: url)
+                break
+            case 1:
+                let dic = UIDocumentInteractionController.init(url: url)
+                dic.delegate = self;
+                dic.presentPreview(animated: true)
+                break
+            default:
+                break
+            }
+        }
+        let items = [FWPopupItem(title: LanguageStrins(string: "Receive"), itemType: .normal, isCancel: true, canAutoHide: true, itemClickedBlock: myBlock),
+                                       FWPopupItem(title: LanguageStrins(string: "Preview"), itemType: .normal, isCancel: false, canAutoHide: true, itemClickedBlock: myBlock),
+                                       FWPopupItem(title: LanguageStrins(string: "Cancel"), itemType: .normal, isCancel: false, canAutoHide: true, itemClickedBlock: myBlock)]
+        let alertView = FWAlertView.alert(title: LanguageStrins(string: "Tips"), detail: LanguageStrins(string: "Please select the options below"), inputPlaceholder: nil, keyboardType: .default, isSecureTextEntry: false, customView: nil, items: items)
+                                 alertView.show()
+       
+        return true
+    }
     
+    func selectTypeFile(url: URL){
+        let type:String = url.absoluteString.returnFileType(fileUrl: url.absoluteString)
+        switch type {
+        case FileTypeName.JPG_TYPE.rawValue:
+            
+            break
+            
+        default: break
+            
+        }
+    }
+ 
+    func documentInteractionControllerViewControllerForPreview(_ controller: UIDocumentInteractionController) -> UIViewController {
+        return self.window!.rootViewController!
+    }
+    func documentInteractionControllerViewForPreview(_ controller: UIDocumentInteractionController) -> UIView? {
+        return self.window?.rootViewController?.view
+    }
+
+    func documentInteractionControllerRectForPreview(_ controller: UIDocumentInteractionController) -> CGRect {
+        return (self.window?.rootViewController?.view.frame)!
+    }
+
+    //点击预览窗口的“Done”(完成)按钮时调用
+    func documentInteractionControllerDidEndPreview(_ controller: UIDocumentInteractionController) {
+        
+    }
     func applicationWillResignActive(_ application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
         // Use this method to pause ongoing tasks, disable timers, and invalidate graphics rendering callbacks. Games should use this method to pause the game.
