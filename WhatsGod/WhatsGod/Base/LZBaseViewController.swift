@@ -63,7 +63,9 @@ class LZBaseViewController: UIViewController {
     @objc  func leftItmeEvent(){
         
     }
-    
+    @objc func navBack(){
+        self.dismiss(animated: true, completion: nil)
+    }
     override var hidesBottomBarWhenPushed: Bool {
             get {
                 return navigationController?.topViewController != self

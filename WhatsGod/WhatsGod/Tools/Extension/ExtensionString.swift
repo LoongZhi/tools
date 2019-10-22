@@ -11,7 +11,7 @@ import Foundation
 extension String {
     
     public func isStringNull() -> Bool{
-        if self.isEmpty || self == nil{
+        if self.isEmpty || self == nil || self == ""{
             return true
         }
         return false

@@ -55,12 +55,31 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UIDocumentInteractionContr
     }
     
     func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
-        
+       
+        if url.absoluteString.isStringNull(){
+            return true
+        }
         let myBlock: FWPopupItemClickedBlock = { [weak self] (popupView, index, title) in
                        print("AlertView：点击了第\(index)个按钮")
             switch index {
             case 0:
-                self!.selectTypeFile(url: url)
+                let path:String = url.absoluteString
+                let paths = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.documentDirectory, FileManager.SearchPathDomainMask.userDomainMask, true)
+                let documentsDirectory:String = paths.last!
+                let string:NSMutableString = NSMutableString.init(string: path)
+                
+                if path.hasPrefix("file:///private") {
+                    string.replaceOccurrences(of: "file:///private", with: "", options: NSString.CompareOptions.caseInsensitive, range: NSRange.init(location: 0, length: path.utf16.count))
+                    self!.selectTypeFile(url: string as String)
+                }else{
+                    let tempArray = string.components(separatedBy: "/")
+                    let fileName:String = tempArray.last!
+                    let sourceName:String = options[UIApplication.OpenURLOptionsKey.sourceApplication] as! String
+                    let filePath = String(format:"%@/%@/%@",documentsDirectory,sourceName,fileName)
+                    self!.selectTypeFile(url: filePath)
+                }
+                
+                
                 break
             case 1:
                 let dic = UIDocumentInteractionController.init(url: url)
@@ -80,13 +99,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UIDocumentInteractionContr
         return true
     }
     
-    func selectTypeFile(url: URL){
-        let type:String = url.absoluteString.returnFileType(fileUrl: url.absoluteString)
-        switch type {
-        case FileTypeName.JPG_TYPE.rawValue:
-            
+    func selectTypeFile(url: String){
+        let type:String = url.returnFileType(fileUrl: url)
+        switch fileUrlType(type: type) {
+        case .AlbumType:
+            let vc = LZAlbumViewController.init()
+            vc.fileType = .AlbumType
+            vc.fileUrl = url
+            let nav = LZBaseNavController.init(rootViewController: vc)
+            self.window?.rootViewController?.present(nav, animated: true, completion: nil)
+           
             break
+        case .VideoType:
+            let vc = LZVideoViewController.init()
+             vc.fileType = .VideoType
+             vc.fileUrl = url
+             let nav = LZBaseNavController.init(rootViewController: vc)
+             self.window?.rootViewController?.present(nav, animated: true, completion: nil)
             
+             break
+        case .WrongType:
+            break
         default: break
             
         }

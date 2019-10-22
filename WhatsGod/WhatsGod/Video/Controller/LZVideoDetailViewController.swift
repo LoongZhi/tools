@@ -180,8 +180,8 @@ class LZVideoDetailViewController: LZBaseViewController,UICollectionViewDelegate
                                     let url:String = model.originalAsset?.value(forKey: "filename") as! String
                                     let type = url.returnFileType(fileUrl: url)
                                     let paths = self.folderModel?.path
-                                    let path = paths! + "/Video" + String(format: "%d.mp4",Date().timeIntervalSince1970)
-                                    let ImagePath = paths! + "/Thumb" + String(format: "%d.%@",Date().timeIntervalSince1970,type)
+                                    let path = paths! + "/Video" + String(format: "%d.@",Date().timeIntervalSince1970,type)
+                                    let ImagePath = paths! + "/Thumb" + String(format: "%d.jpg",Date().timeIntervalSince1970)
                                     let urlAsset:AVURLAsset = asset as! AVURLAsset
                                     guard let jsonData = try? Data.init(contentsOf: urlAsset.url, options: Data.ReadingOptions.alwaysMapped) else {
                                          return

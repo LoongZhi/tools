@@ -40,7 +40,6 @@ private func maxComparison(type1:String,type2:String) -> Bool{
 //数据库对象
  let realm = LZRealmTool.lz_realm
 
-
 private func blankof<T>(type:T.Type) -> T {
     let ptr = UnsafeMutablePointer<T>.allocate(capacity: MemoryLayout<T>.size)
     let val = ptr.pointee

@@ -8,6 +8,8 @@
 
 import UIKit
 import FWPopupView
+import AVFoundation
+import AVKit
 class LZVideoViewController: LZBaseViewController,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout {
    
     
@@ -16,7 +18,8 @@ class LZVideoViewController: LZBaseViewController,UICollectionViewDelegate,UICol
     var  isHidden:Bool = true
     let images = [UIImage(named: "right_menu_multichat_white"),
                   UIImage(named: "right_menu_addFri_white"),]
- 
+    public var fileType:FileType?
+    public var fileUrl:String?
     private lazy var collectionView:UICollectionView = {
         let layout = UICollectionViewFlowLayout.init()
         layout.itemSize = CGSize.init(width: SCREEN_WIDTH / 4, height: 80)
@@ -44,6 +47,16 @@ class LZVideoViewController: LZBaseViewController,UICollectionViewDelegate,UICol
                 let itme = UIBarButtonItem.init(title: LanguageStrins(string: "Completed"), style: .done, target: self, action: #selector(self.leftItmeEvent))
                 self.navigationItem.leftBarButtonItem = itme
                 self.isHidden = false
+            }
+        }
+        
+        if (self.fileType != nil) {
+            let itme = UIBarButtonItem.init(title: LanguageStrins(string: "Return"), style: .done, target: self, action: #selector(self.navBack))
+             self.navigationItem.leftBarButtonItem = itme
+            if self.dataSource.count != 0{
+                self.chrysan.show(.plain, message:LanguageStrins(string: "Please select the folder."), hideDelay: HIDE_DELAY)
+            }else{
+                 self.chrysan.show(.plain, message:LanguageStrins(string: "Please create a folder first."), hideDelay: HIDE_DELAY)
             }
         }
     }
@@ -218,10 +231,61 @@ class LZVideoViewController: LZBaseViewController,UICollectionViewDelegate,UICol
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let model = self.dataSource[indexPath.row] as! LZVideoFolderModel
-        
+        if (self.fileType != nil) {
+            
+            let type = fileUrl!.returnFileType(fileUrl: fileUrl!)
+            let path = fileUrl! + "/Video" + String(format: "%d.@",Date().timeIntervalSince1970,type)
+            let ImagePath = fileUrl! + "/Thumb" + String(format: "%d.jpg",Date().timeIntervalSince1970)
+            guard let jsonData = try? Data.init(contentsOf: URL.init(string: fileUrl!)!, options: Data.ReadingOptions.alwaysMapped) else {
+                 return
+            }
+            if LZFileManager.writeVideoFile(filePath: path, data:jsonData){
+             
+            
+                 let imgData:Data = self.getVideoFengMian(url: URL.init(string: fileUrl!)!).jpegData(compressionQuality: 1)!
+                 if LZFileManager.writeVideoFile(filePath: ImagePath, data:imgData){
+                     print("写入成功")
+                 }else{
+                     print("写入失败")
+                 }
+                 let videoModel = LZVideoModel.init()
+                     videoModel.isHidden = self.isHidden
+                     videoModel.path = path
+                     videoModel.type = type
+                     videoModel.imagePath = ImagePath
+                     try! realm.write {
+
+                     model.images.append(videoModel)
+
+                 }
+             
+             }
+            self.dismiss(animated: true, completion: nil)
+            return
+        }
         let vc = LZVideoDetailViewController()
         vc.folderModel = model
         self.navigationController?.pushViewController(vc, animated: true)
     }
 
+    func getVideoFengMian(url:URL) -> UIImage {
+           if url == nil {
+               //默认封面图
+               return UIImage(named: "")!
+           }
+           let aset = AVURLAsset(url: url, options: nil)
+           let assetImg = AVAssetImageGenerator(asset: aset)
+           assetImg.appliesPreferredTrackTransform = true
+           assetImg.apertureMode = AVAssetImageGenerator.ApertureMode.encodedPixels
+           do{
+               let cgimgref = try assetImg.copyCGImage(at: CMTime(seconds: 10, preferredTimescale: 50), actualTime: nil)
+               let img = UIImage(cgImage: cgimgref)
+               return img
+               
+               
+           }catch{
+               return UIImage(named: "")!
+           }
+           
+       }
 }
