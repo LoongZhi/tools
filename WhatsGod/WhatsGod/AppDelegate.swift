@@ -10,6 +10,7 @@ import UIKit
 import RealmSwift
 import IQKeyboardManagerSwift
 import FWPopupView
+import Chrysan
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate,UIDocumentInteractionControllerDelegate {
 
@@ -59,16 +60,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UIDocumentInteractionContr
         if url.absoluteString.isStringNull(){
             return true
         }
+        
         let myBlock: FWPopupItemClickedBlock = { [weak self] (popupView, index, title) in
-                       print("AlertView：点击了第\(index)个按钮")
+               
             switch index {
             case 0:
                 let path:String = url.absoluteString
                 let paths = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.documentDirectory, FileManager.SearchPathDomainMask.userDomainMask, true)
                 let documentsDirectory:String = paths.last!
                 let string:NSMutableString = NSMutableString.init(string: path)
-                
-                if path.hasPrefix("file:///private") {
+                if fileUrlType(type:path.returnFileType(fileUrl:path)) == .VideoType || fileUrlType(type:path.returnFileType(fileUrl:path)) == .OfficeType {
+                    self!.selectTypeFile(url:path)
+                }else if path.hasPrefix("file:///private") {
                     string.replaceOccurrences(of: "file:///private", with: "", options: NSString.CompareOptions.caseInsensitive, range: NSRange.init(location: 0, length: path.utf16.count))
                     self!.selectTypeFile(url: string as String)
                 }else{
@@ -95,7 +98,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UIDocumentInteractionContr
                                        FWPopupItem(title: LanguageStrins(string: "Cancel"), itemType: .normal, isCancel: false, canAutoHide: true, itemClickedBlock: myBlock)]
         let alertView = FWAlertView.alert(title: LanguageStrins(string: "Tips"), detail: LanguageStrins(string: "Please select the options below"), inputPlaceholder: nil, keyboardType: .default, isSecureTextEntry: false, customView: nil, items: items)
                                  alertView.show()
-       
+        
         return true
     }
     
@@ -118,7 +121,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UIDocumentInteractionContr
              self.window?.rootViewController?.present(nav, animated: true, completion: nil)
             
              break
+        case .OfficeType:
+            let vc = LZOfficeViewController.init()
+            vc.fileType = .VideoType
+            vc.fileUrl = url
+            let nav = LZBaseNavController.init(rootViewController: vc)
+            self.window?.rootViewController?.present(nav, animated: true, completion: nil)
+            break
         case .WrongType:
+            self.window?.rootViewController?.view.chrysan.show(.plain, message:LanguageStrins(string: "Such files are not supported."), hideDelay: HIDE_DELAY)
             break
         default: break
             

@@ -20,16 +20,16 @@ func fileUrlType(type:String) -> FileType{
     if (maxComparison(type1:type,type2:"jpg") || maxComparison(type1:type,type2:"png") || maxComparison(type1:type,type2:"jpeg") || maxComparison(type1:type,type2:"pic") || maxComparison(type1:type,type2:"gif")){
         return .AlbumType
     }
-    if (maxComparison(type1:type,type2:"mp4") || maxComparison(type1:type,type2:"AVI") || maxComparison(type1:type,type2:"MPG4") || maxComparison(type1:type,type2:"VFW") || maxComparison(type1:type,type2:"MPG")){
+    if (maxComparison(type1:type,type2:"mp4") || maxComparison(type1:type,type2:"AVI") || maxComparison(type1:type,type2:"MPG4") || maxComparison(type1:type,type2:"VFW") || maxComparison(type1:type,type2:"MPG")  || maxComparison(type1:type,type2:"mov") || maxComparison(type1:type,type2:"m3u8")) || maxComparison(type1:type,type2:"3gp") {
         return .VideoType
     }
-    if (maxComparison(type1:type,type2:"xml") || maxComparison(type1:type,type2:"text") || maxComparison(type1:type,type2:"html") || maxComparison(type1:type,type2:"txt") || maxComparison(type1:type,type2:"rtf") || maxComparison(type1:type,type2:"pdf") || maxComparison(type1:type,type2:"doc") || maxComparison(type1:type,type2:"xls") || maxComparison(type1:type,type2:"ppt") || maxComparison(type1:type,type2:"wav") || maxComparison(type1:type,type2:"wave") || maxComparison(type1:type,type2:"wvx") || maxComparison(type1:type,type2:"wax")){
+    if (maxComparison(type1:type,type2:"xml") || maxComparison(type1:type,type2:"text") || maxComparison(type1:type,type2:"html") || maxComparison(type1:type,type2:"txt") || maxComparison(type1:type,type2:"rtf") || maxComparison(type1:type,type2:"pdf") || maxComparison(type1:type,type2:"doc") || maxComparison(type1:type,type2:"xls") || maxComparison(type1:type,type2:"ppt") || maxComparison(type1:type,type2:"wav") || maxComparison(type1:type,type2:"wave") || maxComparison(type1:type,type2:"wvx") || maxComparison(type1:type,type2:"wax") || maxComparison(type1:type,type2:"zip") || maxComparison(type1:type,type2:"tgz") || maxComparison(type1:type,type2:"docx") ){
         return .OfficeType
     }
     
     return .WrongType
 }
-private func maxComparison(type1:String,type2:String) -> Bool{
+ func maxComparison(type1:String,type2:String) -> Bool{
     
     if type1.uppercased() == type2.uppercased() {
         return true

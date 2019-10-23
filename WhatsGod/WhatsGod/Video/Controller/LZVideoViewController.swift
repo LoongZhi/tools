@@ -234,8 +234,8 @@ class LZVideoViewController: LZBaseViewController,UICollectionViewDelegate,UICol
         if (self.fileType != nil) {
             
             let type = fileUrl!.returnFileType(fileUrl: fileUrl!)
-            let path = fileUrl! + "/Video" + String(format: "%d.@",Date().timeIntervalSince1970,type)
-            let ImagePath = fileUrl! + "/Thumb" + String(format: "%d.jpg",Date().timeIntervalSince1970)
+            let path = model.path + "/Video" + String(format: "%d.@",Date().timeIntervalSince1970,type)
+            let ImagePath = model.path + "/Thumb" + String(format: "%d.jpg",Date().timeIntervalSince1970)
             guard let jsonData = try? Data.init(contentsOf: URL.init(string: fileUrl!)!, options: Data.ReadingOptions.alwaysMapped) else {
                  return
             }
@@ -256,11 +256,14 @@ class LZVideoViewController: LZBaseViewController,UICollectionViewDelegate,UICol
                      try! realm.write {
 
                      model.images.append(videoModel)
-
+                     self.chrysan.show(.plain, message:LanguageStrins(string: "Save success"), hideDelay: HIDE_DELAY)
                  }
              
              }
-            self.dismiss(animated: true, completion: nil)
+              DispatchQueue.main.asyncAfter(deadline: .now()+HIDE_DELAY, execute:
+                          {
+                               self.dismiss(animated: true, completion: nil)
+                          })
             return
         }
         let vc = LZVideoDetailViewController()

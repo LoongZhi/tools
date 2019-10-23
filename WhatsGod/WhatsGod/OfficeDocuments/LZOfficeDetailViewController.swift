@@ -14,7 +14,8 @@ import AVKit
 import AssetsLibrary
 import Photos
 import JXPhotoBrowser
-class LZOfficeDetailViewController: LZBaseViewController,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout {
+import QuickLook
+class LZOfficeDetailViewController: LZBaseViewController,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,QLPreviewControllerDelegate,QLPreviewControllerDataSource{
 
     var  menuView:FWMenuView? = nil
     var  isHidden:Bool = true
@@ -24,6 +25,7 @@ class LZOfficeDetailViewController: LZBaseViewController,UICollectionViewDelegat
     var exCount = 0
     public var folderModel:LZOfficeFolderModel? = nil
     private var imageDataArr = NSArray()
+    var indexPaths = IndexPath.init(row: 0, section: 0)
     private lazy var collectionView:UICollectionView = {
         let layout = UICollectionViewFlowLayout.init()
         layout.itemSize = CGSize.init(width: SCREEN_WIDTH / 3, height: SCREEN_WIDTH / 3)
@@ -136,7 +138,7 @@ class LZOfficeDetailViewController: LZBaseViewController,UICollectionViewDelegat
         self.navigationItem.rightBarButtonItem = itme;
         
         
-        self.collectionView.register(LZAlbumDetailsCell.classForCoder(), forCellWithReuseIdentifier: "LZAlbumDetailsCell")
+        self.collectionView.register(LZOfficeDetailCell.classForCoder(), forCellWithReuseIdentifier: "LZOfficeDetailCell")
         
 
         self.collectionView.snp.makeConstraints { (make) in
@@ -328,7 +330,7 @@ class LZOfficeDetailViewController: LZBaseViewController,UICollectionViewDelegat
             for (index,itme) in self.dataSource.enumerated(){
                  let model:LZOfficeModel = itme as! LZOfficeModel
                 if model.isSelect {
-                    LZFileManager.deleteImageFile(filePath: model.path)
+                    LZFileManager.deleteOfficeFile(filePath: model.path)
                     try! realm.write {
                         let indexNum1:Int? =  self.folderModel?.images.index(of: model)
                         self.folderModel?.images.remove(at: indexNum1!)
@@ -360,7 +362,7 @@ class LZOfficeDetailViewController: LZBaseViewController,UICollectionViewDelegat
                 for (index,itme) in self.dataSource.enumerated(){
                     let model:LZOfficeModel = itme as! LZOfficeModel
                     if model.isSelect {
-                        UIImageWriteToSavedPhotosAlbum(UIImage.init(data: LZFileManager.getImageFile(filePath: model.path))!, self, #selector(self.image(image:didFinishSavingWithError:contextInfo:)), nil)
+                        UIImageWriteToSavedPhotosAlbum(UIImage.init(data: LZFileManager.getOfficeFile(filePath: model.path))!, self, #selector(self.image(image:didFinishSavingWithError:contextInfo:)), nil)
                         isbool = false
                     }
                 }
@@ -396,8 +398,8 @@ class LZOfficeDetailViewController: LZBaseViewController,UICollectionViewDelegat
     //cellForItemAt indexPath
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        let reuseIdentifier = "LZAlbumDetailsCell"
-        let cell:LZAlbumDetailsCell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! LZAlbumDetailsCell
+        let reuseIdentifier = "LZOfficeDetailCell"
+        let cell:LZOfficeDetailCell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! LZOfficeDetailCell
         cell.loadData(model: self.dataSource[indexPath.row] as! LZOfficeModel)
         cell.selectBtn.tag = indexPath.item
         cell.selectBtn.addTarget(self, action:#selector(touchBtn(btn:)) , for: .touchUpInside)
@@ -406,8 +408,22 @@ class LZOfficeDetailViewController: LZBaseViewController,UICollectionViewDelegat
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
-       
+        self.indexPaths = indexPath
+        let vc = QLPreviewController.init()
+        vc.delegate = self
+        vc.dataSource = self
+        self.navigationController?.pushViewController(vc, animated: true)
     }
 
+    func numberOfPreviewItems(in controller: QLPreviewController) -> Int {
+        return self.dataSource.count
+    }
 
+    func previewController(_ controller: QLPreviewController, previewItemAt index: Int) -> QLPreviewItem {
+        let model = self.dataSource[self.indexPaths.row] as! LZOfficeModel
+       
+        return URL.init(fileURLWithPath:officeFolder + model.path) as QLPreviewItem
+  
+    }
+   
 }

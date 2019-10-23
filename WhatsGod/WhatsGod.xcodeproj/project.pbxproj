@@ -12,6 +12,7 @@
 		8817EA54235AEC74007395DD /* LZOfficeFolderModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8817EA53235AEC74007395DD /* LZOfficeFolderModel.swift */; };
 		8817EA56235AEEFA007395DD /* LZOfficeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8817EA55235AEEFA007395DD /* LZOfficeViewController.swift */; };
 		8817EA58235B1821007395DD /* LZOfficeDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8817EA57235B1821007395DD /* LZOfficeDetailViewController.swift */; };
+		88212D8B236062B4003128E4 /* LZOfficeDetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88212D8A236062B4003128E4 /* LZOfficeDetailCell.swift */; };
 		8821799723477C4E002C32B1 /* ExtensionString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8821799623477C4E002C32B1 /* ExtensionString.swift */; };
 		88223C822355A19400163FD2 /* LZVideoDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88223C812355A19400163FD2 /* LZVideoDetailViewController.swift */; };
 		8822C32A233F8FDC00E09741 /* LZAlbumDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8822C329233F8FDC00E09741 /* LZAlbumDetailsViewController.swift */; };
@@ -73,6 +74,7 @@
 		8817EA53235AEC74007395DD /* LZOfficeFolderModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LZOfficeFolderModel.swift; sourceTree = "<group>"; };
 		8817EA55235AEEFA007395DD /* LZOfficeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LZOfficeViewController.swift; sourceTree = "<group>"; };
 		8817EA57235B1821007395DD /* LZOfficeDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LZOfficeDetailViewController.swift; sourceTree = "<group>"; };
+		88212D8A236062B4003128E4 /* LZOfficeDetailCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LZOfficeDetailCell.swift; sourceTree = "<group>"; };
 		8821799623477C4E002C32B1 /* ExtensionString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionString.swift; sourceTree = "<group>"; };
 		88223C812355A19400163FD2 /* LZVideoDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LZVideoDetailViewController.swift; sourceTree = "<group>"; };
 		8822C329233F8FDC00E09741 /* LZAlbumDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LZAlbumDetailsViewController.swift; sourceTree = "<group>"; };
@@ -163,6 +165,14 @@
 			path = OfficeModel;
 			sourceTree = "<group>";
 		};
+		88212D8723606238003128E4 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				88212D8A236062B4003128E4 /* LZOfficeDetailCell.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		88261C8923320A22005CE69D = {
 			isa = PBXGroup;
 			children = (
@@ -229,6 +239,7 @@
 		88261CC323320B7A005CE69D /* OfficeDocuments */ = {
 			isa = PBXGroup;
 			children = (
+				88212D8723606238003128E4 /* View */,
 				8817EA55235AEEFA007395DD /* LZOfficeViewController.swift */,
 				8817EA57235B1821007395DD /* LZOfficeDetailViewController.swift */,
 			);
@@ -600,6 +611,7 @@
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-WhatsGod/Pods-WhatsGod-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Charts/Charts.framework",
 				"${BUILT_PRODUCTS_DIR}/Chrysan/Chrysan.framework",
 				"${BUILT_PRODUCTS_DIR}/ComplimentaryGradientView/ComplimentaryGradientView.framework",
 				"${BUILT_PRODUCTS_DIR}/CropViewController/CropViewController.framework",
@@ -627,6 +639,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Charts.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Chrysan.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ComplimentaryGradientView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CropViewController.framework",
@@ -676,6 +689,7 @@
 				883A46BB23520224004A9DDC /* UIViewControllerExtension.swift in Sources */,
 				88613A24233648800089C402 /* LZSettingsViewController.swift in Sources */,
 				88613A12233639990089C402 /* BubbleTabBarController.swift in Sources */,
+				88212D8B236062B4003128E4 /* LZOfficeDetailCell.swift in Sources */,
 				883A46C22352062E004A9DDC /* NavigationControllerDelegate.swift in Sources */,
 				88261CCA23320D7B005CE69D /* LZMainViewController.swift in Sources */,
 				88613A20233647FB0089C402 /* LZNoteBookViewController.swift in Sources */,

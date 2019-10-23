@@ -249,7 +249,10 @@ class LZAlbumViewController: LZBaseViewController,UICollectionViewDelegate,UICol
                 }
                 self.chrysan.show(.plain, message:LanguageStrins(string: "Save success"), hideDelay: HIDE_DELAY)
             }
-            self.dismiss(animated: true, completion: nil)
+              DispatchQueue.main.asyncAfter(deadline: .now()+HIDE_DELAY, execute:
+                          {
+                               self.dismiss(animated: true, completion: nil)
+                          })
             return
         }
         

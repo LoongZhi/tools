@@ -16,7 +16,8 @@ class LZOfficeViewController: LZBaseViewController,UICollectionViewDelegate,UICo
     var  isHidden:Bool = true
     let images = [UIImage(named: "right_menu_multichat_white"),
                   UIImage(named: "right_menu_addFri_white"),]
- 
+    public var fileType:FileType?
+    public var fileUrl:String?
     private lazy var collectionView:UICollectionView = {
         let layout = UICollectionViewFlowLayout.init()
         layout.itemSize = CGSize.init(width: SCREEN_WIDTH / 4, height: 80)
@@ -44,6 +45,16 @@ class LZOfficeViewController: LZBaseViewController,UICollectionViewDelegate,UICo
                 let itme = UIBarButtonItem.init(title: LanguageStrins(string: "Completed"), style: .done, target: self, action: #selector(self.leftItmeEvent))
                 self.navigationItem.leftBarButtonItem = itme
                 self.isHidden = false
+            }
+        }
+        
+        if (self.fileType != nil) {
+            let itme = UIBarButtonItem.init(title: LanguageStrins(string: "Return"), style: .done, target: self, action: #selector(self.navBack))
+             self.navigationItem.leftBarButtonItem = itme
+            if self.dataSource.count != 0{
+                self.chrysan.show(.plain, message:LanguageStrins(string: "Please select the folder."), hideDelay: HIDE_DELAY)
+            }else{
+                 self.chrysan.show(.plain, message:LanguageStrins(string: "Please create a folder first."), hideDelay: HIDE_DELAY)
             }
         }
     }
@@ -218,10 +229,32 @@ class LZOfficeViewController: LZBaseViewController,UICollectionViewDelegate,UICo
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let model = self.dataSource[indexPath.row] as! LZOfficeFolderModel
-        
-//        let vc = LZVideoDetailViewController()
-//        vc.folderModel = model
-//        self.navigationController?.pushViewController(vc, animated: true)
+        if (self.fileType != nil) {
+                let type = fileUrl!.returnFileType(fileUrl: fileUrl!)
+                let path = model.path + "/office" + String(format: "%d.%@",Date().timeIntervalSince1970,type)
+                guard let jsonData = try? Data.init(contentsOf: URL.init(string: fileUrl!)!, options: Data.ReadingOptions.alwaysMapped) else {
+                     return
+                }
+                if LZFileManager.writeOfficeFile(filePath: path, data:jsonData){
+                let officeModel = LZOfficeModel.init()
+                officeModel.isHidden = self.isHidden
+                officeModel.path = path
+                officeModel.type = type
+                try! realm.write {
+                    model.images.append(officeModel)
+                }
+                self.chrysan.show(.plain, message:LanguageStrins(string: "Save success"), hideDelay: HIDE_DELAY)
+                DispatchQueue.main.asyncAfter(deadline: .now()+HIDE_DELAY, execute:
+                {
+                     self.dismiss(animated: true, completion: nil)
+                })
+               
+            }
+            return
+        }
+        let vc = LZOfficeDetailViewController()
+        vc.folderModel = model
+        self.navigationController?.pushViewController(vc, animated: true)
     }
 
 }

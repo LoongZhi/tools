@@ -50,4 +50,6 @@ target 'WhatsGod' do
    pod 'JXPhotoBrowser'
    
    pod "MobilePlayer"
+   
+   pod 'Charts'
 end
