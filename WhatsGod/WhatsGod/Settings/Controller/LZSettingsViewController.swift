@@ -56,8 +56,12 @@ class LZSettingsViewController: LZBaseViewController,UITableViewDataSource,UITab
                       view.data = data
                       
                       view.chartDescription?.text = "Piechart Demo"
+        
+  
+        
     }
-    
+   
+
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.dataSource.count
