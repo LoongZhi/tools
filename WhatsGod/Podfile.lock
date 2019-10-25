@@ -1,7 +1,4 @@
 PODS:
-  - Charts (3.4.0):
-    - Charts/Core (= 3.4.0)
-  - Charts/Core (3.4.0)
   - Chrysan (1.5.0)
   - ComplimentaryGradientView (0.3.0)
   - CropViewController (2.5.1)
@@ -85,7 +82,6 @@ PODS:
   - SSZipArchive (2.2.2)
 
 DEPENDENCIES:
-  - Charts
   - Chrysan
   - ComplimentaryGradientView
   - CryptoSwift
@@ -103,7 +99,6 @@ DEPENDENCIES:
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
-    - Charts
     - Chrysan
     - ComplimentaryGradientView
     - CropViewController
@@ -128,7 +123,6 @@ SPEC REPOS:
     - SSZipArchive
 
 SPEC CHECKSUMS:
-  Charts: 74c9f256eaf0460c0c416522d1cf8c634ea6b286
   Chrysan: 6bf6682adb2db76f7f5c103930a8c6670f54eebe
   ComplimentaryGradientView: d874186ea4c37bd08ebd1f2d229698416cacaa39
   CropViewController: 10ba7af75e302f2db7eb913f8aa1156f95cfe88e
@@ -152,6 +146,6 @@ SPEC CHECKSUMS:
   SnapKit: 0de968a9fec17499afa29683b05d0c775b6d1c29
   SSZipArchive: fa16b8cc4cdeceb698e5e5d9f67e9558532fbf23
 
-PODFILE CHECKSUM: a8bd6d1cca843c372d959ce7bd6219b42fb02124
+PODFILE CHECKSUM: 791d0f975bd6dca5ef0960b8e63784317d9a30dd
 
 COCOAPODS: 1.6.1

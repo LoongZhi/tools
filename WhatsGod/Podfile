@@ -51,5 +51,4 @@ target 'WhatsGod' do
    
    pod "MobilePlayer"
    
-   pod 'Charts'
 end

@@ -47,19 +47,19 @@ private func blankof<T>(type:T.Type) -> T {
     return val
 }
 // 获取总内存大小
-func totalRAM() -> Int64 {
+func totalRAM() -> Double {
     var fs = blankof(type: statfs.self)
     if statfs("/var",&fs) >= 0{
-        return Int64(UInt64(fs.f_bsize) * fs.f_blocks)
+        return Double(Double(fs.f_bsize) * Double(fs.f_blocks))
     }
     return -1
 }
 
 // 获取当前可用内存
-func availableRAM() -> Int64 {
+func availableRAM() -> Double {
     var fs = blankof(type: statfs.self)
     if statfs("/var",&fs) >= 0{
-        return Int64(UInt64(fs.f_bsize) * fs.f_bavail)
+        return Double(Double(fs.f_bsize) * Double(fs.f_bavail))
     }
     return -1
 }

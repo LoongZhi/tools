@@ -14,6 +14,9 @@
 		8817EA58235B1821007395DD /* LZOfficeDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8817EA57235B1821007395DD /* LZOfficeDetailViewController.swift */; };
 		88212D8B236062B4003128E4 /* LZOfficeDetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88212D8A236062B4003128E4 /* LZOfficeDetailCell.swift */; };
 		8821799723477C4E002C32B1 /* ExtensionString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8821799623477C4E002C32B1 /* ExtensionString.swift */; };
+		88222FF52363015E00FBFD58 /* OProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88222FF42363015E00FBFD58 /* OProgressView.swift */; };
+		88222FF92363268700FBFD58 /* LZColorMacro.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88222FF82363268700FBFD58 /* LZColorMacro.swift */; };
+		88222FFB23632D4600FBFD58 /* LZExtensionColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88222FFA23632D4600FBFD58 /* LZExtensionColor.swift */; };
 		88223C822355A19400163FD2 /* LZVideoDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88223C812355A19400163FD2 /* LZVideoDetailViewController.swift */; };
 		8822C32A233F8FDC00E09741 /* LZAlbumDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8822C329233F8FDC00E09741 /* LZAlbumDetailsViewController.swift */; };
 		8822C32C233F908400E09741 /* LZAlbumDetailsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8822C32B233F908400E09741 /* LZAlbumDetailsCell.swift */; };
@@ -76,6 +79,9 @@
 		8817EA57235B1821007395DD /* LZOfficeDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LZOfficeDetailViewController.swift; sourceTree = "<group>"; };
 		88212D8A236062B4003128E4 /* LZOfficeDetailCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LZOfficeDetailCell.swift; sourceTree = "<group>"; };
 		8821799623477C4E002C32B1 /* ExtensionString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionString.swift; sourceTree = "<group>"; };
+		88222FF42363015E00FBFD58 /* OProgressView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OProgressView.swift; sourceTree = "<group>"; };
+		88222FF82363268700FBFD58 /* LZColorMacro.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LZColorMacro.swift; sourceTree = "<group>"; };
+		88222FFA23632D4600FBFD58 /* LZExtensionColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LZExtensionColor.swift; sourceTree = "<group>"; };
 		88223C812355A19400163FD2 /* LZVideoDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LZVideoDetailViewController.swift; sourceTree = "<group>"; };
 		8822C329233F8FDC00E09741 /* LZAlbumDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LZAlbumDetailsViewController.swift; sourceTree = "<group>"; };
 		8822C32B233F908400E09741 /* LZAlbumDetailsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LZAlbumDetailsCell.swift; sourceTree = "<group>"; };
@@ -253,6 +259,7 @@
 				88613A08233636240089C402 /* LZBaseNavController.swift */,
 				88613A14233646850089C402 /* LZBaseTabBarController.swift */,
 				88613A2C233651E90089C402 /* LZMacro.swift */,
+				88222FF82363268700FBFD58 /* LZColorMacro.swift */,
 			);
 			path = Base;
 			sourceTree = "<group>";
@@ -271,6 +278,7 @@
 				883A46B6235201F6004A9DDC /* CollectExtension */,
 				882A81CD23462F4200A97ADC /* ExtensionView.swift */,
 				8821799623477C4E002C32B1 /* ExtensionString.swift */,
+				88222FFA23632D4600FBFD58 /* LZExtensionColor.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -333,6 +341,7 @@
 		88613A0A2336397E0089C402 /* Tools */ = {
 			isa = PBXGroup;
 			children = (
+				88222FF42363015E00FBFD58 /* OProgressView.swift */,
 				882A81CC23462EE800A97ADC /* Extension */,
 				88BD9B3A233B9B840098B8FB /* DB */,
 				88613A0B233639990089C402 /* Classes */,
@@ -611,7 +620,6 @@
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-WhatsGod/Pods-WhatsGod-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/Charts/Charts.framework",
 				"${BUILT_PRODUCTS_DIR}/Chrysan/Chrysan.framework",
 				"${BUILT_PRODUCTS_DIR}/ComplimentaryGradientView/ComplimentaryGradientView.framework",
 				"${BUILT_PRODUCTS_DIR}/CropViewController/CropViewController.framework",
@@ -639,7 +647,6 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Charts.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Chrysan.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ComplimentaryGradientView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CropViewController.framework",
@@ -675,6 +682,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				88222FF92363268700FBFD58 /* LZColorMacro.swift in Sources */,
 				8821799723477C4E002C32B1 /* ExtensionString.swift in Sources */,
 				88613A15233646850089C402 /* LZBaseTabBarController.swift in Sources */,
 				8822C32A233F8FDC00E09741 /* LZAlbumDetailsViewController.swift in Sources */,
@@ -686,6 +694,7 @@
 				88261C9623320A22005CE69D /* AppDelegate.swift in Sources */,
 				8817EA56235AEEFA007395DD /* LZOfficeViewController.swift in Sources */,
 				883A46BE23520224004A9DDC /* UICollectionViewControllerExtension.swift in Sources */,
+				88222FFB23632D4600FBFD58 /* LZExtensionColor.swift in Sources */,
 				883A46BB23520224004A9DDC /* UIViewControllerExtension.swift in Sources */,
 				88613A24233648800089C402 /* LZSettingsViewController.swift in Sources */,
 				88613A12233639990089C402 /* BubbleTabBarController.swift in Sources */,
@@ -708,6 +717,7 @@
 				88613A1D233647E10089C402 /* LZVideoViewController.swift in Sources */,
 				88613A2D233651E90089C402 /* LZMacro.swift in Sources */,
 				8822C32C233F908400E09741 /* LZAlbumDetailsCell.swift in Sources */,
+				88222FF52363015E00FBFD58 /* OProgressView.swift in Sources */,
 				88261CC623320D18005CE69D /* LZBaseViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
