@@ -19,6 +19,7 @@ import UIKit
     //进度条路径（整个圆圈）
     let path = UIBezierPath()
     
+    var pro:Int = 0
     //当前进度
     @IBInspectable var progress: Int = 0 {
         didSet {
@@ -39,6 +40,10 @@ import UIKit
     }
     
     override func draw(_ rect: CGRect) {
+        
+        if pro != progress {
+            return
+        }
         //获取整个进度条圆圈路径
         path.addArc(withCenter: CGPoint(x: bounds.midX, y: bounds.midY),
             radius: bounds.size.width/2 - Constant.lineWidth,
@@ -65,6 +70,7 @@ import UIKit
     
     //设置进度（可以设置是否播放动画）
     func setProgress(_ pro: Int,animated anim: Bool) {
+       
         setProgress(pro, animated: anim, withDuration: 0.55)
     }
     
@@ -83,6 +89,7 @@ import UIKit
     
     //将角度转为弧度
     fileprivate func angleToRadian(_ angle: Double)->CGFloat {
+         self.pro = progress
         return CGFloat(angle/Double(180.0) * M_PI)
     }
 }

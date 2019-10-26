@@ -205,4 +205,16 @@ class LZFileManager: NSObject {
 
         return Data.init()
     }
+    
+    //获取知道文件缓存大小
+    public class func  fileSizeAtPath(path:String) -> Int{
+          
+          if rootFileManager.fileExists(atPath: path) {
+           
+            let attr = try! rootFileManager.attributesOfItem(atPath: path)
+              return Int(attr[FileAttributeKey.size] as! UInt64)
+          }
+          return 0
+          
+    }
 }
