@@ -20,6 +20,7 @@
 		88223C822355A19400163FD2 /* LZVideoDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88223C812355A19400163FD2 /* LZVideoDetailViewController.swift */; };
 		8822C32A233F8FDC00E09741 /* LZAlbumDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8822C329233F8FDC00E09741 /* LZAlbumDetailsViewController.swift */; };
 		8822C32C233F908400E09741 /* LZAlbumDetailsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8822C32B233F908400E09741 /* LZAlbumDetailsCell.swift */; };
+		8825CD7523670359007AB209 /* ContentLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8825CD7423670359007AB209 /* ContentLabel.swift */; };
 		88261C9623320A22005CE69D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88261C9523320A22005CE69D /* AppDelegate.swift */; };
 		88261C9B23320A22005CE69D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 88261C9923320A22005CE69D /* Main.storyboard */; };
 		88261C9D23320A23005CE69D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 88261C9C23320A23005CE69D /* Assets.xcassets */; };
@@ -85,6 +86,7 @@
 		88223C812355A19400163FD2 /* LZVideoDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LZVideoDetailViewController.swift; sourceTree = "<group>"; };
 		8822C329233F8FDC00E09741 /* LZAlbumDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LZAlbumDetailsViewController.swift; sourceTree = "<group>"; };
 		8822C32B233F908400E09741 /* LZAlbumDetailsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LZAlbumDetailsCell.swift; sourceTree = "<group>"; };
+		8825CD7423670359007AB209 /* ContentLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentLabel.swift; sourceTree = "<group>"; };
 		88261C9223320A22005CE69D /* WhatsGod.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WhatsGod.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		88261C9523320A22005CE69D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		88261C9A23320A22005CE69D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -345,6 +347,7 @@
 				882A81CC23462EE800A97ADC /* Extension */,
 				88BD9B3A233B9B840098B8FB /* DB */,
 				88613A0B233639990089C402 /* Classes */,
+				8825CD7423670359007AB209 /* ContentLabel.swift */,
 			);
 			path = Tools;
 			sourceTree = "<group>";
@@ -694,6 +697,7 @@
 				88261C9623320A22005CE69D /* AppDelegate.swift in Sources */,
 				8817EA56235AEEFA007395DD /* LZOfficeViewController.swift in Sources */,
 				883A46BE23520224004A9DDC /* UICollectionViewControllerExtension.swift in Sources */,
+				8825CD7523670359007AB209 /* ContentLabel.swift in Sources */,
 				88222FFB23632D4600FBFD58 /* LZExtensionColor.swift in Sources */,
 				883A46BB23520224004A9DDC /* UIViewControllerExtension.swift in Sources */,
 				88613A24233648800089C402 /* LZSettingsViewController.swift in Sources */,

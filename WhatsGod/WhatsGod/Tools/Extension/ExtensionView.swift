@@ -60,6 +60,22 @@ extension UIView {
             self.layer.mask = shape
         }
  
+    open override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        backgroundColor = UIColor.groupTableViewBackground
+    }
+    open override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
+       
+        UIView.animate(withDuration: 0.15) {
+            self.backgroundColor = .clear
+        }
+    }
+  
+    open override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        UIView.animate(withDuration: 0.15) {
+                   self.backgroundColor = .clear
+        }
+    
+    }
     
     
 }

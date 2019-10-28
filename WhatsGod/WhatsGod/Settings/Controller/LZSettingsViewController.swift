@@ -8,24 +8,22 @@
 
 import UIKit
 
-
 class LZSettingsViewController: LZBaseViewController,UITableViewDataSource,UITableViewDelegate {
     var progressView:OProgressView?
     lazy var tapView:UIView = {
-        let view = UIView.init(frame: CGRect.init(x: 0, y: 0, width: SCREEN_WIDTH, height: 300))
-        view.backgroundColor = .yellow
+        let view = UIView.init(frame: CGRect.init(x: 0, y: 0, width: SCREEN_WIDTH, height: 260))
         return view
     }()
-    lazy var diskLabel:UILabel = {
-        let label = UILabel.init()
-        label.textColor = COLOE_4990ED
+    lazy var diskLabel:ContentLabel = {
+        let label = ContentLabel.init()
+        label.textColor = COLOR_4990ED
         label.textAlignment = .center
-        label.font = UIFont.systemFont(ofSize: 35)
+        label.font = UIFont.systemFont(ofSize: 30)
         return label
     }()
     lazy var diskTitleLabel:UILabel = {
            let label = UILabel.init()
-           label.textColor = COLOE_4990ED
+           label.textColor = COLOR_4990ED
            label.textAlignment = .center
            label.font = UIFont.systemFont(ofSize: 15)
            return label
@@ -39,35 +37,57 @@ class LZSettingsViewController: LZBaseViewController,UITableViewDataSource,UITab
     }()
     lazy var textLabel2:UILabel = {
         let label = UILabel.init()
-        label.textColor = .gray
+        label.textColor = COLOR_B8B8B8
         label.textAlignment = .center
         label.font = UIFont.systemFont(ofSize: 14)
         return label
     }()
-    lazy var textLabel3:UILabel = {
-        let label = UILabel.init()
-        label.textColor = .gray
+    lazy var textLabel3:ContentLabel = {
+        let label = ContentLabel.init()
+        label.textColor = .black
         label.textAlignment = .center
         label.font = UIFont.systemFont(ofSize: 16)
         return label
     }()
-    lazy var textLabel4:UILabel = {
-        let label = UILabel.init()
-        label.textColor = .gray
+    lazy var textLabel4:ContentLabel = {
+        let label = ContentLabel.init()
+        label.textColor = .black
         label.textAlignment = .center
         label.font = UIFont.systemFont(ofSize: 16)
         return label
     }()
-    lazy var textLabel5:UILabel = {
-        let label = UILabel.init()
-        label.textColor = .gray
+    lazy var textLabel5:ContentLabel = {
+        let label = ContentLabel.init()
+        label.textColor = .black
         label.textAlignment = .center
         label.font = UIFont.systemFont(ofSize: 16)
         return label
     }()
+    
+    lazy var textLabel6:UILabel = {
+        let label = UILabel.init()
+        label.textColor = COLOR_B8B8B8
+        label.textAlignment = .center
+        label.font = UIFont.systemFont(ofSize: 12)
+        return label
+    }()
+    lazy var textLabel7:UILabel = {
+        let label = UILabel.init()
+        label.textColor = COLOR_B8B8B8
+        label.textAlignment = .center
+        label.font = UIFont.systemFont(ofSize: 12)
+        return label
+    }()
+    lazy var textLabel8:UILabel = {
+        let label = UILabel.init()
+        label.textColor = COLOR_B8B8B8
+        label.textAlignment = .center
+        label.font = UIFont.systemFont(ofSize: 12)
+        return label
+    }()
+    
     lazy var bottomView:UIView = {
         let view = UIView.init()
-        view.backgroundColor = .orange
         return view
     }()
     override func viewDidLoad() {
@@ -77,6 +97,12 @@ class LZSettingsViewController: LZBaseViewController,UITableViewDataSource,UITab
     
     override func readyView() {
         
+        self.dataSource.append(contentsOf: [["",LanguageStrins(string: "Account number settings")],
+        ["",LanguageStrins(string: "Share application")],
+        ["",LanguageStrins(string: "Language settings")],
+        ["",LanguageStrins(string: "Document backup")],
+        ["",LanguageStrins(string: "Clean up the cache")],
+        ["",LanguageStrins(string: "About us")]])
         self.setAoutLayot()
     }
    
@@ -89,12 +115,29 @@ class LZSettingsViewController: LZBaseViewController,UITableViewDataSource,UITab
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return UITableViewCell.init()
+        let reuseIdentifier = "LZSettingsCell"
+        let cell:LZSettingsCell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier,for: indexPath) as! LZSettingsCell
+        
+        let arr:Array = self.dataSource[indexPath.row] as! Array<String>
+        cell.layoutUI(arr: arr)
+
+        return cell
     }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 55
+    }
+    
+}
+
+extension LZSettingsViewController{
     
     func  setAoutLayot(){
         
         self.tableView.tableHeaderView = self.tapView
+        self.tableView.register(LZSettingsCell.classForCoder(), forCellReuseIdentifier: "LZSettingsCell")
          self.view.addSubview(self.tableView)
          self.tableView.snp.makeConstraints { (make) in
              make.left.top.bottom.right.equalTo(0)
@@ -120,32 +163,34 @@ class LZSettingsViewController: LZBaseViewController,UITableViewDataSource,UITab
             make.left.equalTo(10)
             make.right.equalTo(-10)
         }
-      
-        var number = 0
+        self.diskLabel.text = "0%"
+        self.diskTitleLabel.text = LanguageStrins(string: "Used")
          DispatchQueue.main.asyncAfter(deadline: .now()+0.5, execute:
          {
              
              self.progressView!.setProgress(Int(avai / total * 100), animated: true)
-             self.diskTitleLabel.text = LanguageStrins(string: "Used")
+             self.diskLabel.animate(fromValue: 0.0, toValue: avai / total * 100 ,str: "%", duration: 0.55)
+            self.textLabel3.animate(fromValue: 0, toValue: Double(LZFileManager.fileSizeAtPath(path: albumsFolder) / (1024 * 1024)), str: "MB", duration: 0.55)
+            self.textLabel4.animate(fromValue: 0, toValue: Double(LZFileManager.fileSizeAtPath(path: videoFolder) / (1024 * 1024)), str: "MB", duration: 0.55)
+            self.textLabel5.animate(fromValue: 0, toValue: Double(LZFileManager.fileSizeAtPath(path: officeFolder) / (1024 * 1024)), str: "MB", duration: 0.55)
 
-            UIView.animate(withDuration: 1.55) {
-                number = Int(availableRAM() / (1024 * 1024 * 1024))
-                self.diskLabel.text = "\(number)" + "%"
-            }
          })
         
         self.textLabel1.text = LanguageStrins(string: "Disk space.")
-        self.textLabel2.text = "\(Int(total - avai)) GB/" + "\(Int(total)) GB"
-        self.textLabel3.text = "\(LZFileManager.fileSizeAtPath(path: videoFolder))MB"
-        self.textLabel4.text = "\(LZFileManager.fileSizeAtPath(path: albumsFolder))MB"
-        self.textLabel5.text = "\(LZFileManager.fileSizeAtPath(path: officeFolder))MB"
-        
+        self.textLabel2.text = "\(Int(total - avai))GB / " + "\(Int(total))GB"
+     
+        self.textLabel6.text = LanguageStrins(string: "Album")
+        self.textLabel7.text = LanguageStrins(string: "Video")
+        self.textLabel8.text = LanguageStrins(string: "Other")
         self.tapView.addSubview(self.textLabel1)
         self.tapView.addSubview(self.textLabel2)
         self.tapView.addSubview(self.bottomView)
         self.bottomView.addSubview(self.textLabel3)
         self.bottomView.addSubview(self.textLabel4)
         self.bottomView.addSubview(self.textLabel5)
+        self.bottomView.addSubview(self.textLabel6)
+        self.bottomView.addSubview(self.textLabel7)
+        self.bottomView.addSubview(self.textLabel8)
         self.textLabel1.snp.makeConstraints { (make) in
                   
             make.top.equalTo(self.progressView!.snp_bottom).offset(5)
@@ -176,11 +221,33 @@ class LZSettingsViewController: LZBaseViewController,UITableViewDataSource,UITab
             make.height.equalTo(25)
             make.right.equalTo(self.textLabel4.snp_left).offset(-10)
         }
+        
         self.textLabel5.snp.makeConstraints { (make) in
             make.centerY.equalTo(self.textLabel4)
             make.right.equalTo(-10)
             make.height.equalTo(25)
             make.left.equalTo(self.textLabel4.snp_right).offset(10)
+        }
+        
+        self.textLabel7.snp.makeConstraints { (make) in
+            make.centerX.equalToSuperview()
+            make.top.equalTo(self.textLabel4).offset(-5)
+        }
+
+        self.textLabel6.snp.makeConstraints { (make) in
+            make.centerY.equalTo(self.textLabel7)
+            make.left.equalTo(10)
+            make.height.equalTo(25)
+            make.right.equalTo(self.textLabel7.snp_left).offset(-10)
+             make.top.equalTo(self.textLabel3.snp_bottom).offset(-5)
+        }
+
+        self.textLabel8.snp.makeConstraints { (make) in
+            make.centerY.equalTo(self.textLabel7)
+            make.right.equalTo(-10)
+            make.height.equalTo(25)
+            make.left.equalTo(self.textLabel7.snp_right).offset(10)
+             make.top.equalTo(self.textLabel5.snp_bottom).offset(-5)
         }
     }
 }

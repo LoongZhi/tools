@@ -10,6 +10,7 @@ import Foundation
 
 
 //主色调
-let COLOE_4990ED = UIColor(hexString: "#4990ED")
+let COLOR_4990ED = UIColor(hexString: "#4990ED")
 
-
+//线色调
+let COLOR_B8B8B8 = UIColor(hexString: "#B8B8B8")

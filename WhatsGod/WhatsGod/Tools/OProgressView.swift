@@ -9,7 +9,7 @@ import UIKit
         static let trackColor = UIColor(red: 245/255.0, green: 245/255.0, blue: 245/255.0,
             alpha: 1)
         //进度条颜色
-        static let progressColoar = COLOE_4990ED
+        static let progressColoar = COLOR_4990ED
     }
     
     //进度槽
