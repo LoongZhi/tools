@@ -97,12 +97,12 @@ class LZSettingsViewController: LZBaseViewController,UITableViewDataSource,UITab
     
     override func readyView() {
         
-        self.dataSource.append(contentsOf: [["",LanguageStrins(string: "Account number settings")],
-        ["",LanguageStrins(string: "Share application")],
-        ["",LanguageStrins(string: "Language settings")],
-        ["",LanguageStrins(string: "Document backup")],
-        ["",LanguageStrins(string: "Clean up the cache")],
-        ["",LanguageStrins(string: "About us")]])
+        self.dataSource.append(contentsOf: [["zhanghaoanquan",LanguageStrins(string: "Account number settings")],
+        ["beifens",LanguageStrins(string: "Share application")],
+        ["yuyan",LanguageStrins(string: "Language settings")],
+        ["beifen",LanguageStrins(string: "Document backup")],
+        ["qinglihuanchun",LanguageStrins(string: "Clean up the cache")],
+        ["guanyuwomen",LanguageStrins(string: "About us")]])
         self.setAoutLayot()
     }
    
@@ -125,6 +125,9 @@ class LZSettingsViewController: LZBaseViewController,UITableViewDataSource,UITab
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+        
+        let vc = LZAccountViewController(nibName: "LZAccountViewController", bundle: nil)
+        
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 55

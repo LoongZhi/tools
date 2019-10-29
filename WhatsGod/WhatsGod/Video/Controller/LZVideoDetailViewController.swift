@@ -14,11 +14,13 @@ import AVKit
 import AssetsLibrary
 import Photos
 import JXPhotoBrowser
-import MobilePlayer
-class LZVideoDetailViewController: LZBaseViewController,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout {
+
+import QuickLook
+class LZVideoDetailViewController: LZBaseViewController,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,QLPreviewControllerDelegate,QLPreviewControllerDataSource {
 
     var  menuView:FWMenuView? = nil
     var  isHidden:Bool = true
+     var indexPaths = IndexPath.init(row: 0, section: 0)
     let images = [UIImage(named: "right_menu_multichat_white"),
                   UIImage(named: "right_menu_addFri_white"),]
 //    var indexs:Array = Array<Int>()
@@ -180,8 +182,11 @@ class LZVideoDetailViewController: LZBaseViewController,UICollectionViewDelegate
                                     let url:String = model.originalAsset?.value(forKey: "filename") as! String
                                     let type = url.returnFileType(fileUrl: url)
                                     let paths = self.folderModel?.path
-                                    let path = paths! + "/Video" + String(format: "%d.@",Date().timeIntervalSince1970,type)
+                                    let path = paths! + "/Video" + String(format: "%d.%@",Date().timeIntervalSince1970,type)
                                     let ImagePath = paths! + "/Thumb" + String(format: "%d.jpg",Date().timeIntervalSince1970)
+                                    if asset == nil{
+                                        return
+                                    }
                                     let urlAsset:AVURLAsset = asset as! AVURLAsset
                                     guard let jsonData = try? Data.init(contentsOf: urlAsset.url, options: Data.ReadingOptions.alwaysMapped) else {
                                          return
@@ -201,6 +206,8 @@ class LZVideoDetailViewController: LZBaseViewController,UICollectionViewDelegate
                                                 videoModel.path = path
                                                 videoModel.type = type
                                                 videoModel.imagePath = ImagePath
+                                                videoModel.timerscale = Int(urlAsset.duration.timescale)
+                                        videoModel.timer = String.init().transToHourMinSecs(time:videoModel.timerscale)
                                                 try! realm.write {
 
                                                 self.folderModel?.images.append(videoModel)
@@ -348,6 +355,7 @@ class LZVideoDetailViewController: LZBaseViewController,UICollectionViewDelegate
     @objc func touchBtn(btn:UIButton) -> Void {
         if self.dataSource.count != 0 {
             btn.isSelected = !btn.isSelected
+           
             try! realm.write {
                let model:LZVideoModel =  self.dataSource[btn.tag] as! LZVideoModel
                 model.isSelect = btn.isSelected
@@ -448,15 +456,23 @@ class LZVideoDetailViewController: LZBaseViewController,UICollectionViewDelegate
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
         
-        let model:LZVideoModel = self.dataSource[indexPath.item] as! LZVideoModel
-        
-        let videoUrl = URL.init(fileURLWithPath: videoFolder + model.path)
-       let playerVC = MobilePlayerViewController(contentURL: videoUrl)
-        playerVC.title = "Vanilla Player "
-        playerVC.activityItems = [videoUrl] // Check the documentation for more information.
-        presentMoviePlayerViewControllerAnimated(playerVC)
+        self.indexPaths = indexPath
+        let vc = QLPreviewController.init()
+        vc.delegate = self
+        vc.dataSource = self
+        self.navigationController?.pushViewController(vc, animated: true)
     }
 
+    func numberOfPreviewItems(in controller: QLPreviewController) -> Int {
+          return self.dataSource.count
+      }
+
+      func previewController(_ controller: QLPreviewController, previewItemAt index: Int) -> QLPreviewItem {
+          let model = self.dataSource[self.indexPaths.row] as! LZVideoModel
+          let videoUrl = URL.init(fileURLWithPath: videoFolder + model.path)
+          return videoUrl as QLPreviewItem
+    
+      }
     
 
     func getVideoFengMian(url:URL) -> UIImage {

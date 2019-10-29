@@ -2,7 +2,7 @@
  platform :ios, '9.0'
 post_install do |installer|
     # 需要指定编译版本的第三方的名称
-    myTargets = ['Translucid','CKWaveCollectionViewTransition']
+    myTargets = ['Translucid','CKWaveCollectionViewTransition','ChameleonFramework']
     
     installer.pods_project.targets.each do |target|
         if myTargets.include? target.name
@@ -49,6 +49,5 @@ target 'WhatsGod' do
    
    pod 'JXPhotoBrowser'
    
-   pod "MobilePlayer"
-   
+  
 end

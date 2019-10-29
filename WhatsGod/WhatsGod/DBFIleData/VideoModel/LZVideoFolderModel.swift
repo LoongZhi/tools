@@ -26,5 +26,7 @@ class LZVideoModel: Object {
     @objc dynamic var isSelect = false
     @objc dynamic var imagePath = ""
     @objc dynamic var type = ""
+    @objc dynamic var timerscale:Int = 0
+    @objc dynamic var timer = ""
     
 }
