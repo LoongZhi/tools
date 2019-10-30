@@ -17,13 +17,12 @@ class LZAlbumDetailsCell: UICollectionViewCell {
     }()
     lazy var bottomView:UIView = {
         let view = UIView.init()
-        view.backgroundColor = UIColor.init(red: 0, green: 0, blue: 0, alpha: 0.6)
+        view.backgroundColor = .clear
        return view
     }()
     lazy var iconImage:UIImageView = {
         let image = UIImageView.init()
         image.layer.masksToBounds = true
-        image.backgroundColor = .orange
         return image
     }()
     lazy var nameLabel:UILabel = {
@@ -50,22 +49,29 @@ class LZAlbumDetailsCell: UICollectionViewCell {
         self.contentView.layer.borderWidth = 0.5
         self.contentView.layer.borderColor = UIColor.white.cgColor
         self.contentView.layer.masksToBounds = true
-        self.contentView .addSubview(self.imageView)
-        self.contentView .addSubview(self.bottomView)
-        self.bottomView .addSubview(self.iconImage)
-        self.bottomView .addSubview(self.nameLabel)
+        self.contentView.addSubview(self.imageView)
+        self.contentView.addSubview(self.bottomView)
+        self.bottomView.addSubview(self.iconImage)
+        self.bottomView.addSubview(self.nameLabel)
         self.imageView.snp.makeConstraints { (make) in
-            make.left.right.top.bottom.equalTo(0)
+            make.left.right.top.bottom.equalToSuperview()
         }
         
         self.bottomView.snp.makeConstraints { (make) in
             make.left.bottom.right.equalToSuperview()
             make.height.equalTo(25)
         }
+        self.layoutIfNeeded()
+        let blurEffect = UIBlurEffect(style: .light)
+        let blurView = UIVisualEffectView(effect: blurEffect)
+        blurView.frame.size = CGSize(width: self.bottomView.frame.width, height: self.bottomView.frame.height)
+        blurView.contentView.addSubview(self.iconImage)
+        blurView.contentView.addSubview(self.nameLabel)
+        self.bottomView.addSubview(blurView)
         self.iconImage.snp.makeConstraints { (make) in
-            make.width.equalTo(30)
-            make.height.equalTo(20)
-            make.left.equalTo(10)
+            make.width.equalTo(15)
+            make.height.equalTo(15)
+            make.left.equalTo(5)
             make.centerY.equalToSuperview()
         }
         self.nameLabel.snp.makeConstraints { (make) in
@@ -89,7 +95,8 @@ class LZAlbumDetailsCell: UICollectionViewCell {
             self.imageView.contentMode = .scaleAspectFill
             self.selectBtn.isSelected = (model as! LZAlbumImageModel).isSelect
             self.selectBtn.isHidden = (model as! LZAlbumImageModel).isHidden
-            
+            self.nameLabel.text = (model as! LZAlbumImageModel).type
+            self.iconImage.image = Img(url: "tupantubiao")
          }else if model.isKind(of: LZVideoModel.self) == true{
             
             self.imageView.image = UIImage.init(data: LZFileManager.getViodeFile(filePath: (model as! LZVideoModel).imagePath))
@@ -97,14 +104,8 @@ class LZAlbumDetailsCell: UICollectionViewCell {
             self.selectBtn.isSelected = (model as! LZVideoModel).isSelect
             self.selectBtn.isHidden = (model as! LZVideoModel).isHidden
             self.nameLabel.text = (model as! LZVideoModel).timer
-            
-         }else if model.isKind(of: LZOfficeModel.self) == true{
-            self.imageView.image = UIImage.init(data: LZFileManager.getOfficeFile(filePath: (model as! LZOfficeModel).imagePath))
-            self.imageView.contentMode = .scaleAspectFill
-            self.selectBtn.isSelected = (model as! LZOfficeModel).isSelect
-            self.selectBtn.isHidden = (model as! LZOfficeModel).isHidden
-        }
-        
+            self.iconImage.image = Img(url: "shexiang")
+         }
         if self.selectBtn.isSelected {
             self.bottomView.backgroundColor = COLOR_4990ED
             self.selectBtn.layer.borderWidth = 3

@@ -237,7 +237,7 @@ class LZOfficeDetailViewController: LZBaseViewController,UICollectionViewDelegat
     override func rightItmeEvent() {
         
 //        if self.isRightPhoto() {
-//            self.menuView?.show()
+            self.menuView?.show()
 //        }else{
 //            let alert = FWAlertView.alert(title: LanguageStrins(string: "Tips"), detail: LanguageStrins(string: "Whether you delete the folder"), confirmBlock: { (view, number, str) in
 //
@@ -315,7 +315,8 @@ class LZOfficeDetailViewController: LZBaseViewController,UICollectionViewDelegat
                let model:LZOfficeModel =  self.dataSource[btn.tag] as! LZOfficeModel
                 model.isSelect = btn.isSelected
             }
-            self.collectionView.reloadData()
+            let indexPath = IndexPath.init(row: btn.tag, section: 0)
+            self.collectionView.reloadItems(at: [indexPath])
 
         }
     }

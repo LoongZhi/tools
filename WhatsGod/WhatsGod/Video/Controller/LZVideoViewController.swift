@@ -22,7 +22,7 @@ class LZVideoViewController: LZBaseViewController,UICollectionViewDelegate,UICol
     public var fileUrl:String?
     private lazy var collectionView:UICollectionView = {
         let layout = UICollectionViewFlowLayout.init()
-        layout.itemSize = CGSize.init(width: SCREEN_WIDTH / 4, height: 80)
+        layout.itemSize = CGSize(width: SCREEN_WIDTH / 4, height: 80)
         layout.minimumLineSpacing = 10
         layout.minimumInteritemSpacing = 0
         layout.sectionInset = UIEdgeInsets.init(top: 0, left: 0, bottom: 0, right: 0)

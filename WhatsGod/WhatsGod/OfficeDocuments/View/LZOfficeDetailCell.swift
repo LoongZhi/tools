@@ -23,7 +23,7 @@ class LZOfficeDetailCell: UICollectionViewCell {
           lazy var iconImage:UIImageView = {
               let image = UIImageView.init()
               image.layer.masksToBounds = true
-              image.backgroundColor = .orange
+              image.image = Img(url: "wenjianlei")
               return image
           }()
           lazy var nameLabel:UILabel = {
@@ -57,7 +57,6 @@ class LZOfficeDetailCell: UICollectionViewCell {
               
             make.centerY.centerX.equalTo(self.contentView)
             make.width.height.equalTo(60)
-//            make.bottom.equalTo(self.nameLabel).offset(-10)
                
            }
            self.bottomView.snp.makeConstraints { (make) in
@@ -65,8 +64,8 @@ class LZOfficeDetailCell: UICollectionViewCell {
                make.height.equalTo(25)
            }
            self.iconImage.snp.makeConstraints { (make) in
-               make.width.equalTo(30)
-               make.height.equalTo(20)
+               make.width.equalTo(20)
+               make.height.equalTo(15)
                make.left.equalTo(10)
                make.centerY.equalToSuperview()
            }
@@ -78,8 +77,8 @@ class LZOfficeDetailCell: UICollectionViewCell {
            }
            self.contentView.addSubview(self.selectBtn)
            self.selectBtn.snp.makeConstraints { (make) in
-               make.right.top.equalTo(0)
-               make.width.height.equalTo(20)
+               make.right.top.left.bottom.equalToSuperview()
+             
            }
        }
        public func loadData(model:LZOfficeModel){
@@ -90,9 +89,16 @@ class LZOfficeDetailCell: UICollectionViewCell {
             self.imageView.image = Img(url: "xls")
         }else if maxComparison(type1:model.type,type2:"docx") || maxComparison(type1:model.type,type2:"docx") {
             self.imageView.image = Img(url: "docx")
-        }else if maxComparison(type1:model.type,type2:"zip") {
+        }else if maxComparison(type1:model.type,type2:"zip") || maxComparison(type1:model.type,type2:"rar") || maxComparison(type1:model.type,type2:"tgz"){
             self.imageView.image = Img(url: "yasuobao")
+        }else if maxComparison(type1:model.type,type2:"ppt") || maxComparison(type1:model.type,type2:"pptx"){
+            self.imageView.image = Img(url: "PPT")
+        }else if  maxComparison(type1:model.type,type2:"mp3") || maxComparison(type1:model.type,type2:"mpg3") || maxComparison(type1:model.type,type2:"ape") || maxComparison(type1:model.type,type2:"AAC") || maxComparison(type1:model.type,type2:"wav") || maxComparison(type1:model.type,type2:"wave"){
+            self.imageView.image = Img(url: "yinyue")
+        }else{
+            self.imageView.image = Img(url: "weizhiwenjian")
         }
+        
         self.nameLabel.text = model.type
         self.selectBtn.isSelected = (model as! LZOfficeModel).isSelect
         self.selectBtn.isHidden = (model as! LZOfficeModel).isHidden

@@ -29,7 +29,7 @@ extension String {
     }
     
     public func transToHourMinSecs(time: Int) -> String{
-        let allTime: Int = Int(time)
+        let allTime: Int = Int(time) 
         var hours = 0
         var minutes = 0
         var seconds = 0
@@ -37,7 +37,7 @@ extension String {
         var minutesText = ""
         var secondsText = ""
         
-        hours = allTime / 3600 / 3600
+        hours = allTime / 3600 
         hoursText = hours > 9 ? "\(hours)" : "0\(hours)"
         
         minutes = allTime % 3600 / 60

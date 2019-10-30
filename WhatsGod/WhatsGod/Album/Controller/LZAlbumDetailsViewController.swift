@@ -26,7 +26,7 @@ class LZAlbumDetailsViewController: LZBaseViewController,UICollectionViewDelegat
     private var imageDataArr = NSArray()
     private lazy var collectionView:UICollectionView = {
         let layout = UICollectionViewFlowLayout.init()
-        layout.itemSize = CGSize.init(width: SCREEN_WIDTH / 3, height: SCREEN_WIDTH / 3)
+        layout.itemSize = CGSize.init(width: SCREEN_WIDTH / 4, height: SCREEN_WIDTH / 4)
         layout.minimumLineSpacing = 10
         layout.minimumInteritemSpacing = 0
         layout.sectionInset = UIEdgeInsets.init(top: 0, left: 0, bottom: 0, right: 0)
@@ -332,7 +332,8 @@ class LZAlbumDetailsViewController: LZBaseViewController,UICollectionViewDelegat
                let model:LZAlbumImageModel =  self.dataSource[btn.tag] as! LZAlbumImageModel
                 model.isSelect = btn.isSelected
             }
-            self.collectionView.reloadData()
+            let indexPath = IndexPath.init(row: btn.tag, section: 0)
+            self.collectionView.reloadItems(at: [indexPath])
             
             
         }

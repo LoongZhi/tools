@@ -206,7 +206,7 @@ class LZVideoDetailViewController: LZBaseViewController,UICollectionViewDelegate
                                                 videoModel.path = path
                                                 videoModel.type = type
                                                 videoModel.imagePath = ImagePath
-                                                videoModel.timerscale = Int(urlAsset.duration.timescale)
+                                                videoModel.timerscale = Int(urlAsset.duration.seconds)
                                         videoModel.timer = String.init().transToHourMinSecs(time:videoModel.timerscale)
                                                 try! realm.write {
 
@@ -360,7 +360,8 @@ class LZVideoDetailViewController: LZBaseViewController,UICollectionViewDelegate
                let model:LZVideoModel =  self.dataSource[btn.tag] as! LZVideoModel
                 model.isSelect = btn.isSelected
             }
-            self.collectionView.reloadData()
+            let indexPath = IndexPath.init(row: btn.tag, section: 0)
+            self.collectionView.reloadItems(at: [indexPath])
             
             
         }

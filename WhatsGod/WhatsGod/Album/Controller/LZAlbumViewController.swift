@@ -21,8 +21,8 @@ class LZAlbumViewController: LZBaseViewController,UICollectionViewDelegate,UICol
     public var fileUrl:String?
     private lazy var collectionView:UICollectionView = {
         let layout = UICollectionViewFlowLayout.init()
-        layout.itemSize = CGSize(width: SCREEN_WIDTH / 4, height: SCREEN_WIDTH / 4)
-        layout.minimumLineSpacing = 0
+        layout.itemSize = CGSize(width: SCREEN_WIDTH / 4, height: 80)
+        layout.minimumLineSpacing = 10
         layout.minimumInteritemSpacing = 0
         layout.sectionInset = UIEdgeInsets.init(top: 0, left: 0, bottom: 0, right: 0)
         let collection = UICollectionView.init(frame: self.view.bounds, collectionViewLayout: layout)
@@ -261,9 +261,6 @@ class LZAlbumViewController: LZBaseViewController,UICollectionViewDelegate,UICol
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: SCREEN_WIDTH / 4, height: SCREEN_WIDTH / 4)
-    }
    
 }
 
