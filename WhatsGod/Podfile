@@ -48,6 +48,6 @@ target 'WhatsGod' do
    pod 'SSZipArchive'
    
    pod 'JXPhotoBrowser'
-   
+
   
 end

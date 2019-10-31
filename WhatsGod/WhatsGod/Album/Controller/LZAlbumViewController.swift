@@ -16,9 +16,23 @@ class LZAlbumViewController: LZBaseViewController,UICollectionViewDelegate,UICol
     var  menuView:FWMenuView? = nil
     var  isHidden:Bool = true
     let images = [UIImage(named: "right_menu_multichat_white"),
+                  UIImage(named: "right_menu_addFri_white"),
+                  UIImage(named: "right_menu_multichat_white"),
                   UIImage(named: "right_menu_addFri_white"),]
     public var fileType:FileType?
     public var fileUrl:String?
+    var indexPath: IndexPath?
+    var targetIndexPath: IndexPath?
+    
+    private lazy var dragingItem: LZAlbumCollectionViewCell = {
+          
+           let cell = LZAlbumCollectionViewCell(frame: CGRect(x: 0, y: 0, width: SCREEN_WIDTH / 4, height: 80))
+          
+        cell.loadData(model: self.dataSource[indexPath!.row] as! LZAlbumModel)
+        cell.delBtn.tag = indexPath!.row
+        cell.delBtn.addTarget(self, action: #selector(delBtn(btn:)), for: .touchUpInside)
+           return cell
+       }()
     private lazy var collectionView:UICollectionView = {
         let layout = UICollectionViewFlowLayout.init()
         layout.itemSize = CGSize(width: SCREEN_WIDTH / 4, height: 80)
@@ -29,6 +43,9 @@ class LZAlbumViewController: LZBaseViewController,UICollectionViewDelegate,UICol
         collection.dataSource = self
         collection.delegate = self
         collection.backgroundColor = UIColor.white
+        collection.isPagingEnabled = true
+        let longPress = UILongPressGestureRecognizer(target: self, action: #selector(self.longPressGesture(_:)))
+        collection.addGestureRecognizer(longPress)
         return collection;
     }()
     
@@ -88,7 +105,7 @@ class LZAlbumViewController: LZBaseViewController,UICollectionViewDelegate,UICol
         vProperty.separatorInset = UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 15)
         
        
-        self.menuView = FWMenuView.menu(itemTitles: [LanguageStrins(string: "New"),LanguageStrins(string: "Edit")], itemImageNames:images as! [UIImage], itemBlock: { (popupView, index, title) in
+        self.menuView = FWMenuView.menu(itemTitles: [LanguageStrins(string: "New"),LanguageStrins(string: "Private password"),LanguageStrins(string: "Renamed"),LanguageStrins(string: "Edit")], itemImageNames:images as! [UIImage], itemBlock: { (popupView, index, title) in
             print("Menu：点击了第\(index)个按钮")
             
             switch (index) {
@@ -131,7 +148,8 @@ class LZAlbumViewController: LZBaseViewController,UICollectionViewDelegate,UICol
                           alertController.addAction(okAction)
                           self.present(alertController,animated: true,completion: nil)
                 break;
-            case 1:
+            case 3:
+                
                 let itme = UIBarButtonItem.init(title: LanguageStrins(string: "Completed"), style: .done, target: self, action: #selector(self.leftItmeEvent))
                 self.navigationItem.leftBarButtonItem = itme
                 self.isHidden = false
@@ -166,6 +184,7 @@ class LZAlbumViewController: LZBaseViewController,UICollectionViewDelegate,UICol
         self.isHidden = true
         self.setHidden(hidden: self.isHidden)
         self.navigationItem.leftBarButtonItem = nil
+       
     }
    
     private func setHidden(hidden:Bool){
@@ -260,7 +279,92 @@ class LZAlbumViewController: LZBaseViewController,UICollectionViewDelegate,UICol
         vc.folderModel = model
         self.navigationController?.pushViewController(vc, animated: true)
     }
+    func collectionView(_ collectionView: UICollectionView, canMoveItemAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+
+     //MARK: - 长按动作
+    @objc func longPressGesture(_ tap: UILongPressGestureRecognizer) {
+           
+           if self.isHidden {
+
+               return
+           }
+           let point = tap.location(in: collectionView)
+           
+           switch tap.state {
+               case UIGestureRecognizerState.began:
+                   dragBegan(point: point)
+               case UIGestureRecognizerState.changed:
+                   drageChanged(point: point)
+               case UIGestureRecognizerState.ended:
+                   drageEnded(point: point)
+               case UIGestureRecognizerState.cancelled:
+                   drageEnded(point: point)
+               default: break
+               
+           }
+           
+       }
+    //MARK: - 长按开始
+    private func dragBegan(point: CGPoint) {
+        
+        
+        
+        indexPath = collectionView.indexPathForItem(at: point)
+        if indexPath == nil || (indexPath?.section)! > 0
+        {return}
+        
+        let item = collectionView.cellForItem(at: indexPath!) as? LZAlbumCollectionViewCell
+      
+        dragingItem.frame = (item?.frame)!
+      
+        dragingItem.transform = CGAffineTransform(scaleX: 1.1, y: 1.1)
+    }
+    //MARK: - 长按过程
+    private func drageChanged(point: CGPoint) {
+        if indexPath == nil || (indexPath?.section)! > 0
+        {return}
+        dragingItem.center = point
+        targetIndexPath = collectionView.indexPathForItem(at: point)
+        if targetIndexPath == nil || (targetIndexPath?.section)! > 0 || indexPath == targetIndexPath {return}
+        //交换位置
+        collectionView.moveItem(at: indexPath!, to: targetIndexPath!)
+        indexPath = targetIndexPath
+          let obj:LZAlbumModel = self.dataSource[indexPath!.item] as! LZAlbumModel
+          let obj2:LZAlbumModel = self.dataSource[targetIndexPath!.item] as! LZAlbumModel
+          self.dataSource.remove(at: indexPath!.row)
+          self.dataSource.insert(obj, at: targetIndexPath!.item)
+        
+        let model:LZAlbumModel = obj.copy() as! LZAlbumModel
+        model.id = obj2.id
+        
+        try! realm.write {
+            realm.delete(self.dataSource)
+        }
+         self.getDataSource()
+    }
     
-   
+    //MARK: - 长按结束
+    private func drageEnded(point: CGPoint) {
+        
+        if indexPath == nil || (indexPath?.section)! > 0
+        {return}
+        let endCell = collectionView.cellForItem(at: indexPath!)
+        
+        UIView.animate(withDuration: 0.25, animations: {
+        
+            self.dragingItem.transform = CGAffineTransform.identity
+            self.dragingItem.center = (endCell?.center)!
+            
+        }, completion: {
+        
+            (finish) -> () in
+            
+            self.indexPath = nil
+            
+        })
+        
+    }
 }
 
