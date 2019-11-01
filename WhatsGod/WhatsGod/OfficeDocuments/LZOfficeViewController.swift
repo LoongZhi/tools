@@ -18,6 +18,17 @@ class LZOfficeViewController: LZBaseViewController,UICollectionViewDelegate,UICo
                   UIImage(named: "right_menu_addFri_white"),]
     public var fileType:FileType?
     public var fileUrl:String?
+    var indexPath: IndexPath?
+    var targetIndexPath: IndexPath?
+    private lazy var dragingItem: LZAlbumCollectionViewCell = {
+       
+        let cell = LZAlbumCollectionViewCell(frame: CGRect(x: 0, y: 0, width: SCREEN_WIDTH / 4, height: 80))
+       
+     cell.loadData(model: self.dataSource[indexPath!.row] as! LZOfficeFolderModel)
+     cell.delBtn.tag = indexPath!.row
+     cell.delBtn.addTarget(self, action: #selector(delBtn(btn:)), for: .touchUpInside)
+        return cell
+    }()
     private lazy var collectionView:UICollectionView = {
         let layout = UICollectionViewFlowLayout.init()
         layout.itemSize = CGSize.init(width: SCREEN_WIDTH / 4, height: 80)
@@ -28,9 +39,14 @@ class LZOfficeViewController: LZBaseViewController,UICollectionViewDelegate,UICo
         collection.dataSource = self
         collection.delegate = self
         collection.backgroundColor = UIColor.white
+        let longPress = UILongPressGestureRecognizer(target: self, action: #selector(self.longPressGesture(_:)))
+        collection.addGestureRecognizer(longPress)
         return collection;
     }()
-    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.collectionView.reloadData()
+    }
 //    let menuView
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -119,6 +135,7 @@ class LZOfficeViewController: LZBaseViewController,UICollectionViewDelegate,UICo
                                 let officeModel = LZOfficeFolderModel()
                                 officeModel.finderName = acc.text!
                                 officeModel.createDate = Date().timeIntervalSince1970
+                                officeModel.index = realm.objects(LZOfficeFolderModel.self).count
                                 officeModel.path = LZFileManager.createOfficeSubFolder(SubPath: acc.text! + String(format: "%.0f", officeModel.createDate))
                                
                                 try! realm.write {
@@ -146,7 +163,7 @@ class LZOfficeViewController: LZBaseViewController,UICollectionViewDelegate,UICo
         if self.dataSource.count != 0 {
             self.dataSource.removeAll()
         }
-        let models = realm.objects(LZOfficeFolderModel.self)
+        let models = realm.objects(LZOfficeFolderModel.self).sorted(byKeyPath: "index")
         for albumModel in models {
             self.dataSource.append(albumModel)
         }
@@ -225,7 +242,19 @@ class LZOfficeViewController: LZBaseViewController,UICollectionViewDelegate,UICo
         cell.loadData(model: self.dataSource[indexPath.row] as! LZOfficeFolderModel)
         cell.delBtn.tag = indexPath.row
         cell.delBtn.addTarget(self, action: #selector(delBtn(btn:)), for: .touchUpInside)
+        self.perform(#selector(runloopAnimCell(cell:)), with: cell, afterDelay: 0.0, inModes: [.common])
+               
         return cell
+    }
+    @objc func runloopAnimCell(cell:LZAlbumCollectionViewCell){
+        if !self.isHidden {
+            
+           
+            cell.layer.add(cell.anim, forKey: "SpringboardShake")
+        }else {
+            cell.layer.removeAllAnimations()
+            
+        }
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let model = self.dataSource[indexPath.row] as! LZOfficeFolderModel
@@ -257,4 +286,85 @@ class LZOfficeViewController: LZBaseViewController,UICollectionViewDelegate,UICo
         self.navigationController?.pushViewController(vc, animated: true)
     }
 
+    //MARK: - 长按动作
+       @objc func longPressGesture(_ tap: UILongPressGestureRecognizer) {
+              
+              if self.isHidden {
+
+                  return
+              }
+              let point = tap.location(in: collectionView)
+              
+              switch tap.state {
+                  case UIGestureRecognizerState.began:
+                      dragBegan(point: point)
+                  case UIGestureRecognizerState.changed:
+                      drageChanged(point: point)
+                  case UIGestureRecognizerState.ended:
+                      drageEnded(point: point)
+                  case UIGestureRecognizerState.cancelled:
+                      drageEnded(point: point)
+                  default: break
+                  
+              }
+              
+          }
+       //MARK: - 长按开始
+       private func dragBegan(point: CGPoint) {
+           
+           
+           
+           indexPath = collectionView.indexPathForItem(at: point)
+           if indexPath == nil || (indexPath?.section)! > 0
+           {return}
+           
+           let item = collectionView.cellForItem(at: indexPath!) as? LZAlbumCollectionViewCell
+           
+           dragingItem.frame = (item?.frame)!
+         
+           dragingItem.transform = CGAffineTransform(scaleX: 1.1, y: 1.1)
+       }
+       //MARK: - 长按过程
+       private func drageChanged(point: CGPoint) {
+           if indexPath == nil || (indexPath?.section)! > 0
+           {return}
+           dragingItem.center = point
+           targetIndexPath = collectionView.indexPathForItem(at: point)
+           if targetIndexPath == nil || (targetIndexPath?.section)! > 0 || indexPath == targetIndexPath {return}
+         
+           let obj1 = self.dataSource[indexPath!.row] as! LZOfficeFolderModel
+           let obj2 = self.dataSource[targetIndexPath!.row] as! LZOfficeFolderModel
+           //交换位置
+           collectionView.moveItem(at: indexPath!, to: targetIndexPath!)
+           try! realm.write {
+               obj1.index = targetIndexPath!.row
+               obj2.index = indexPath!.row
+           }
+
+
+           indexPath = targetIndexPath
+            self.getDataSource()
+       }
+       
+       //MARK: - 长按结束
+       private func drageEnded(point: CGPoint) {
+           
+           if indexPath == nil || (indexPath?.section)! > 0
+           {return}
+           let endCell = collectionView.cellForItem(at: indexPath!)
+           
+           UIView.animate(withDuration: 0.25, animations: {
+           
+               self.dragingItem.transform = CGAffineTransform.identity
+               self.dragingItem.center = (endCell?.center)!
+               
+           }, completion: {
+           
+               (finish) -> () in
+             
+               self.indexPath = nil
+               
+           })
+           
+       }
 }

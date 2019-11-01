@@ -15,6 +15,7 @@ class LZVideoFolderModel: Object {
     @objc dynamic var path = ""
     @objc dynamic var finderPass = false
     @objc dynamic var isHidden = true
+    @objc dynamic var index = 0
     let images = List<LZVideoModel>()
             
 }

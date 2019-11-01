@@ -9,16 +9,15 @@
 import Foundation
 import RealmSwift
 class LZAlbumModel: Object {
-    @objc dynamic var id = UUID().uuidString
+
     @objc dynamic var createDate:Double = 0.0
     @objc dynamic var finderName = ""
     @objc dynamic var path = ""
     @objc dynamic var isHidden = true
     @objc dynamic var password = ""
+    @objc dynamic var index = 0
     var images = List<LZAlbumImageModel>()
-    override static func primaryKey() ->String?{
-        return "id"
-    }
+
     
     
 }

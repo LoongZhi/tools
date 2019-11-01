@@ -30,7 +30,15 @@ class LZAlbumCollectionViewCell: UICollectionViewCell {
         
         return btn
     }()
-    
+    lazy var  anim:CABasicAnimation = {
+        let anim = CABasicAnimation(keyPath: "transform.rotation")
+        anim.toValue = -(Double.pi/32)
+        anim.fromValue = Double.pi/32
+        anim.duration = 0.1
+        anim.repeatCount = MAXFLOAT
+        anim.autoreverses = true
+        return anim
+    }()
     override init(frame: CGRect) {
         super.init(frame: frame)
         

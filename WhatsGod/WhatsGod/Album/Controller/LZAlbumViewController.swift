@@ -25,14 +25,14 @@ class LZAlbumViewController: LZBaseViewController,UICollectionViewDelegate,UICol
     var targetIndexPath: IndexPath?
     
     private lazy var dragingItem: LZAlbumCollectionViewCell = {
-          
-           let cell = LZAlbumCollectionViewCell(frame: CGRect(x: 0, y: 0, width: SCREEN_WIDTH / 4, height: 80))
-          
-        cell.loadData(model: self.dataSource[indexPath!.row] as! LZAlbumModel)
-        cell.delBtn.tag = indexPath!.row
-        cell.delBtn.addTarget(self, action: #selector(delBtn(btn:)), for: .touchUpInside)
-           return cell
-       }()
+       
+        let cell = LZAlbumCollectionViewCell(frame: CGRect(x: 0, y: 0, width: SCREEN_WIDTH / 4, height: 80))
+       
+     cell.loadData(model: self.dataSource[indexPath!.row] as! LZAlbumModel)
+     cell.delBtn.tag = indexPath!.row
+     cell.delBtn.addTarget(self, action: #selector(delBtn(btn:)), for: .touchUpInside)
+        return cell
+    }()
     private lazy var collectionView:UICollectionView = {
         let layout = UICollectionViewFlowLayout.init()
         layout.itemSize = CGSize(width: SCREEN_WIDTH / 4, height: 80)
@@ -48,7 +48,10 @@ class LZAlbumViewController: LZBaseViewController,UICollectionViewDelegate,UICol
         collection.addGestureRecognizer(longPress)
         return collection;
     }()
-    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.collectionView.reloadData()
+    }
 //    let menuView
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -113,7 +116,7 @@ class LZAlbumViewController: LZBaseViewController,UICollectionViewDelegate,UICol
        
                        let alertController = UIAlertController(title: LanguageStrins(string: "New Folders"),message:LanguageStrins(string: "Please enter the filename"),preferredStyle: .alert)
 
-                           // 輸入框
+                          
                        alertController.addTextField {
                                (textField: UITextField!) -> Void in
                                textField.placeholder = LanguageStrins(string: "Please enter the filename")
@@ -137,16 +140,24 @@ class LZAlbumViewController: LZBaseViewController,UICollectionViewDelegate,UICol
                                                     
                                 let albumModel = LZAlbumModel()
                                 albumModel.finderName = acc.text!
+                                albumModel.index = realm.objects(LZAlbumImageModel.self).count
                                 albumModel.createDate = Date().timeIntervalSince1970
                                 albumModel.path = LZFileManager.createAlbumsSubFolder(SubPath: acc.text! + String(format: "%.0f", albumModel.createDate))
                                
                                 try! realm.write {
+                                  
                                   realm.add(albumModel)
                                   self.getDataSource()
                                 }
                             }
                           alertController.addAction(okAction)
                           self.present(alertController,animated: true,completion: nil)
+                break;
+            case 1:
+                
+                break;
+            case 2:
+                
                 break;
             case 3:
                 
@@ -167,7 +178,7 @@ class LZAlbumViewController: LZBaseViewController,UICollectionViewDelegate,UICol
         if self.dataSource.count != 0 {
             self.dataSource.removeAll()
         }
-        let models = realm.objects(LZAlbumModel.self)
+        let models = realm.objects(LZAlbumModel.self).sorted(byKeyPath: "index")
         for albumModel in models {
             self.dataSource.append(albumModel)
         }
@@ -247,7 +258,19 @@ class LZAlbumViewController: LZBaseViewController,UICollectionViewDelegate,UICol
         cell.loadData(model: self.dataSource[indexPath.row] as! LZAlbumModel)
         cell.delBtn.tag = indexPath.row
         cell.delBtn.addTarget(self, action: #selector(delBtn(btn:)), for: .touchUpInside)
+        self.perform(#selector(runloopAnimCell(cell:)), with: cell, afterDelay: 0.0, inModes: [.common])
+        
         return cell
+    }
+    @objc func runloopAnimCell(cell:LZAlbumCollectionViewCell){
+        if !self.isHidden {
+            
+           
+            cell.layer.add(cell.anim, forKey: "SpringboardShake")
+        }else {
+            cell.layer.removeAllAnimations()
+            
+        }
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
@@ -328,20 +351,16 @@ class LZAlbumViewController: LZBaseViewController,UICollectionViewDelegate,UICol
         dragingItem.center = point
         targetIndexPath = collectionView.indexPathForItem(at: point)
         if targetIndexPath == nil || (targetIndexPath?.section)! > 0 || indexPath == targetIndexPath {return}
+        let obj1 = self.dataSource[indexPath!.row] as! LZAlbumModel
+        let obj2 = self.dataSource[targetIndexPath!.row] as! LZAlbumModel
         //交换位置
         collectionView.moveItem(at: indexPath!, to: targetIndexPath!)
-        indexPath = targetIndexPath
-          let obj:LZAlbumModel = self.dataSource[indexPath!.item] as! LZAlbumModel
-          let obj2:LZAlbumModel = self.dataSource[targetIndexPath!.item] as! LZAlbumModel
-          self.dataSource.remove(at: indexPath!.row)
-          self.dataSource.insert(obj, at: targetIndexPath!.item)
-        
-        let model:LZAlbumModel = obj.copy() as! LZAlbumModel
-        model.id = obj2.id
-        
         try! realm.write {
-            realm.delete(self.dataSource)
+            obj1.index = targetIndexPath!.row
+            obj2.index = indexPath!.row
         }
+
+        indexPath = targetIndexPath
          self.getDataSource()
     }
     
@@ -368,3 +387,49 @@ class LZAlbumViewController: LZBaseViewController,UICollectionViewDelegate,UICol
     }
 }
 
+extension LZAlbumViewController{
+    func changeData(type:Int){
+        
+        switch type {
+        case 0:
+            break
+        case 1:
+            break
+        default:
+            break
+        }
+        let alertController = UIAlertController(title: LanguageStrins(string: "Modify the folder name"),message:LanguageStrins(string: "Please enter the filename"),preferredStyle: .alert)
+
+                  
+               alertController.addTextField {
+                       (textField: UITextField!) -> Void in
+                       textField.placeholder = LanguageStrins(string: "Please enter the filename")
+               }
+        let cancelAction = UIAlertAction(title: LanguageStrins(string: "Cancel"),style: .cancel,handler: nil)
+                  alertController.addAction(cancelAction)
+
+              
+                  let okAction = UIAlertAction(title: LanguageStrins(string: "OK"),style: UIAlertAction.Style.default) {
+                      (action: UIAlertAction!) -> Void in
+                    let acc:UITextField =
+                        (alertController.textFields?.first)!
+                          as UITextField
+                        if acc.text!.isStringNull() {
+                                
+                            self.chrysan.show(.plain, message:LanguageStrins(string: "Please enter the filename"), hideDelay: HIDE_DELAY)
+                                                                                                   
+                            return
+                                                
+                        }
+                                            
+                    let albumModel:LZAlbumModel = self.dataSource[self.indexPath!.row] as! LZAlbumModel
+                        try! realm.write {
+                            albumModel.finderName = acc.text!
+                          self.getDataSource()
+                        }
+                    }
+                  alertController.addAction(okAction)
+                  self.present(alertController,animated: true,completion: nil)
+    }
+    
+}
