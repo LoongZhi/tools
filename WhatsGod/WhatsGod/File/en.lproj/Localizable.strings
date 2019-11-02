@@ -46,3 +46,11 @@
 "About us" = "About us";
 "Set the password" = "Set the password";
 "Modify the folder name" = "Modify the folder name";
+"The correct password was entered" = "The correct password was entered";
+"Please enter a six - digit password" = "Please enter a six - digit password";
+"Add a password" = "Add a password";
+"Modify the password" = "Modify the password";
+"Confirm the password" = "Confirm the password";
+"Please enter your password" = "Please enter your password";
+"The password was modified successfully" = "The password was modified successfully"
+"Add a password successful" = "Add a password successful"

@@ -17,7 +17,6 @@ class LZAlbumViewController: LZBaseViewController,UICollectionViewDelegate,UICol
     var  isHidden:Bool = true
     let images = [UIImage(named: "right_menu_multichat_white"),
                   UIImage(named: "right_menu_addFri_white"),
-                  UIImage(named: "right_menu_multichat_white"),
                   UIImage(named: "right_menu_addFri_white"),]
     public var fileType:FileType?
     public var fileUrl:String?
@@ -108,7 +107,7 @@ class LZAlbumViewController: LZBaseViewController,UICollectionViewDelegate,UICol
         vProperty.separatorInset = UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 15)
         
        
-        self.menuView = FWMenuView.menu(itemTitles: [LanguageStrins(string: "New"),LanguageStrins(string: "Private password"),LanguageStrins(string: "Renamed"),LanguageStrins(string: "Edit")], itemImageNames:images as! [UIImage], itemBlock: { (popupView, index, title) in
+        self.menuView = FWMenuView.menu(itemTitles: [LanguageStrins(string: "New"),LanguageStrins(string: "Export"),LanguageStrins(string: "Edit")], itemImageNames:images as! [UIImage], itemBlock: { (popupView, index, title) in
             print("Menu：点击了第\(index)个按钮")
             
             switch (index) {
@@ -157,9 +156,6 @@ class LZAlbumViewController: LZBaseViewController,UICollectionViewDelegate,UICol
                 
                 break;
             case 2:
-                
-                break;
-            case 3:
                 
                 let itme = UIBarButtonItem.init(title: LanguageStrins(string: "Completed"), style: .done, target: self, action: #selector(self.leftItmeEvent))
                 self.navigationItem.leftBarButtonItem = itme
@@ -275,7 +271,20 @@ class LZAlbumViewController: LZBaseViewController,UICollectionViewDelegate,UICol
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
         let model = self.dataSource[indexPath.row] as! LZAlbumModel
-        
+        if self.isHidden == false {
+            self.indexPath = indexPath
+            var pass = LanguageStrins(string: "Modify the password")
+            if model.password.isStringNull() {
+                pass = LanguageStrins(string: "Add a password")
+            }
+            let sheerView = FWSheetView.sheet(title: LanguageStrins(string: "Tips"), itemTitles: [pass,LanguageStrins(string: "Modify the folder name")], itemBlock: { (FWPopupViews, Ints, Strings) in
+                self.changeData(type: Ints)
+            }, cancelItemTitle: LanguageStrins(string: "Cancel"), cancenlBlock: {
+                
+            }, property: nil)
+            sheerView.show()
+            return
+        }
         if (self.fileType != nil) {
             
             let type = fileUrl!.returnFileType(fileUrl: fileUrl!)
@@ -388,22 +397,95 @@ class LZAlbumViewController: LZBaseViewController,UICollectionViewDelegate,UICol
 }
 
 extension LZAlbumViewController{
-    func changeData(type:Int){
+    
+   private func changeData(type:Int){
+        let albumModel:LZAlbumModel = self.dataSource[self.indexPath!.row] as! LZAlbumModel
         
         switch type {
         case 0:
+            var message = LanguageStrins(string: "Please enter a six - digit password")
+            var title = LanguageStrins(string: "Set the password")
+            if !albumModel.password.isStringNull() {
+                message = LanguageStrins(string: "Please enter a new password to be modified")
+                title = LanguageStrins(string: "Change password")
+                let itme = FWPopupItem.init(title: LanguageStrins(string: "Cancel"), itemType: .normal, isCancel: true, canAutoHide: false) { (FWPopupViews, Ints, Strings) in
+                    
+                }
+                let itme2 = FWPopupItem.init(title: LanguageStrins(string: "OK"), itemType: .normal, isCancel: false, canAutoHide: false) { (FWPopupViews, Ints, Strings) in
+                    
+                }
+                let alert = FWAlertView.alert(title: LanguageStrins(string: ""), detail: LanguageStrins(string: ""), inputPlaceholder: LanguageStrins(string: ""), keyboardType: .numberPad, isSecureTextEntry: true, customView: nil, items: [itme,itme2], vProperty: nil)
+                alert.show()
+                alert.inputBlock = { (text) in
+                    if !itme2.isCancel {
+                        if text == albumModel.password {
+                            self.changeAndAddPass(title: title, message: message)
+                        }
+                    }
+                    alert.hide()
+                }
+            }else{
+                self.changeAndAddPass(title: title, message: message)
+            }
+            
             break
         case 1:
+            let alertController = UIAlertController(title: LanguageStrins(string: "Modify the folder name"),message:LanguageStrins(string: "Please enter the filename"),preferredStyle: .alert)
+
+                      
+                   alertController.addTextField {
+                           (textField: UITextField!) -> Void in
+                           textField.placeholder = LanguageStrins(string: "Please enter the filename")
+                   }
+            let cancelAction = UIAlertAction(title: LanguageStrins(string: "Cancel"),style: .cancel,handler: nil)
+                      alertController.addAction(cancelAction)
+
+                  
+                      let okAction = UIAlertAction(title: LanguageStrins(string: "OK"),style: UIAlertAction.Style.default) {
+                          (action: UIAlertAction!) -> Void in
+                        let acc:UITextField =
+                            (alertController.textFields?.first)!
+                              as UITextField
+                            if acc.text!.isStringNull() {
+                                    
+                                self.chrysan.show(.plain, message:LanguageStrins(string: "Please enter the filename"), hideDelay: HIDE_DELAY)
+                                                                                                       
+                                return
+                                                    
+                            }
+                                                
+                        let albumModel:LZAlbumModel = self.dataSource[self.indexPath!.row] as! LZAlbumModel
+                            try! realm.write {
+                                albumModel.finderName = acc.text!
+                              self.getDataSource()
+                            }
+                        }
+                      alertController.addAction(okAction)
+                      self.present(alertController,animated: true,completion: nil)
             break
         default:
             break
         }
-        let alertController = UIAlertController(title: LanguageStrins(string: "Modify the folder name"),message:LanguageStrins(string: "Please enter the filename"),preferredStyle: .alert)
+ 
+    }
+    
+    private func changeAndAddPass(title:String,message:String){
+        
+        let albumModel:LZAlbumModel = self.dataSource[self.indexPath!.row] as! LZAlbumModel
+        let alertController = UIAlertController(title: title,message:message,preferredStyle: .alert)
 
                   
                alertController.addTextField {
                        (textField: UITextField!) -> Void in
-                       textField.placeholder = LanguageStrins(string: "Please enter the filename")
+                       textField.placeholder = LanguageStrins(string: "Please enter the password")
+                       textField.keyboardType = .numberPad
+                       textField.isSecureTextEntry = true
+               }
+               alertController.addTextField {
+                       (textField: UITextField!) -> Void in
+                       textField.placeholder = LanguageStrins(string: "Confirm the password")
+                       textField.keyboardType = .numberPad
+                       textField.isSecureTextEntry = true
                }
         let cancelAction = UIAlertAction(title: LanguageStrins(string: "Cancel"),style: .cancel,handler: nil)
                   alertController.addAction(cancelAction)
@@ -414,22 +496,27 @@ extension LZAlbumViewController{
                     let acc:UITextField =
                         (alertController.textFields?.first)!
                           as UITextField
-                        if acc.text!.isStringNull() {
+                    let acc2:UITextField =
+                    (alertController.textFields?.last)!
+                      as UITextField
+                    if acc.text!.isStringNull() || acc.text!.count < 6 || (acc.text != acc2.text){
                                 
-                            self.chrysan.show(.plain, message:LanguageStrins(string: "Please enter the filename"), hideDelay: HIDE_DELAY)
+                            self.chrysan.show(.plain, message:LanguageStrins(string: "Please enter your password"), hideDelay: HIDE_DELAY)
                                                                                                    
                             return
-                                                
-                        }
+                    }
                                             
-                    let albumModel:LZAlbumModel = self.dataSource[self.indexPath!.row] as! LZAlbumModel
                         try! realm.write {
-                            albumModel.finderName = acc.text!
+                            albumModel.password = acc.text!
                           self.getDataSource()
+                        }
+                        if albumModel.password.isStringNull(){
+                            self.chrysan.show(.plain, message:LanguageStrins(string: "Add a password successful"), hideDelay: HIDE_DELAY)
+                        }else{
+                             self.chrysan.show(.plain, message:LanguageStrins(string: "The password was modified successfully"), hideDelay: HIDE_DELAY)
                         }
                     }
                   alertController.addAction(okAction)
                   self.present(alertController,animated: true,completion: nil)
     }
-    
 }

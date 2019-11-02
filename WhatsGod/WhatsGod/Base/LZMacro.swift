@@ -29,28 +29,7 @@ func fileUrlType(type:String) -> FileType{
     
     return .WrongType
 }
-func modelToJson(model:LZAlbumModel) -> Dictionary<String, Any>{
-    var dic:Dictionary<String, Any> = Dictionary<String, Any>.init()
-    var arr:NSArray = Array<Dictionary<String, Any>>() as NSArray
-    if model.images.count > 0 {
-        for subModel in model.images {
-            var subDic:Dictionary<String, Any> = Dictionary<String, Any>.init()
-            subDic.updateValue(subModel.imageDes, forKey: "imageDes")
-            subDic.updateValue(subModel.path, forKey: "path")
-            subDic.updateValue(subModel.isHidden, forKey: "isHidden")
-            subDic.updateValue(subModel.isSelect, forKey: "isSelect")
-            subDic.updateValue(subModel.type, forKey: "type")
-            arr.adding(subDic)
-        }
-    }
-    dic.updateValue(model.finderName, forKey: "finderName")
-    dic.updateValue(model.path, forKey: "path")
-    dic.updateValue(model.createDate, forKey: "createDate")
-    dic.updateValue(model.password, forKey: "password")
-    dic.updateValue(model.isHidden, forKey: "isHidden")
-    dic.updateValue(arr, forKey: "images")
-    return dic
-}
+
  func maxComparison(type1:String,type2:String) -> Bool{
     
     if type1.uppercased() == type2.uppercased() {
