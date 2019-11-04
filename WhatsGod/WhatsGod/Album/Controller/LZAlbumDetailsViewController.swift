@@ -14,7 +14,8 @@ import AVKit
 import AssetsLibrary
 import Photos
 import JXPhotoBrowser
-class LZAlbumDetailsViewController: LZBaseViewController,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout {
+import QuickLook
+class LZAlbumDetailsViewController: LZBaseViewController,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,QLPreviewControllerDelegate,QLPreviewControllerDataSource  {
 
     var  menuView:FWMenuView? = nil
     var  isHidden:Bool = true
@@ -177,7 +178,8 @@ class LZAlbumDetailsViewController: LZBaseViewController,UICollectionViewDelegat
                             let type = url.returnFileType(fileUrl: url)
                             let path = self.folderModel!.path + "/image" + String(format: "%d.%@",Date().timeIntervalSince1970,type)
                             
-                            if LZFileManager.writeImageFile(filePath: path, data:(result?.jpegData(compressionQuality: 1))!){
+                            let img = UIImage.init(data: try! Data.init(contentsOf: dictionry!["PHImageFileURLKey"] as! URL))
+                            if LZFileManager.writeImageFile(filePath: path, data:(img!.jpegData(compressionQuality: 1))!){
                                 let imageModel = LZAlbumImageModel.init()
                                 imageModel.isHidden = self.isHidden
                                 imageModel.path = path
@@ -261,9 +263,12 @@ class LZAlbumDetailsViewController: LZBaseViewController,UICollectionViewDelegat
          
     }
     override func leftItmeEvent() {
+            self.allBtn.isSelected = true
+            self.allEvent(btn: self.allBtn)
            self.isHidden = true
            self.setHidden(hidden: self.isHidden)
            self.navigationItem.leftBarButtonItem = nil
+           
        }
     private func setHidden(hidden:Bool){
          
@@ -377,20 +382,7 @@ class LZAlbumDetailsViewController: LZBaseViewController,UICollectionViewDelegat
        
         let alert = FWAlertView.alert(title: LanguageStrins(string: "Tips"), detail: LanguageStrins(string: "Export the photos to the album"), confirmBlock: { (view, num, str) in
             
-                var isbool = true
-                for (index,itme) in self.dataSource.enumerated(){
-                    let model:LZAlbumImageModel = itme as! LZAlbumImageModel
-                    if model.isSelect {
-                        UIImageWriteToSavedPhotosAlbum(UIImage.init(data: LZFileManager.getImageFile(filePath: model.path))!, self, #selector(self.image(image:didFinishSavingWithError:contextInfo:)), nil)
-                        isbool = false
-                    }
-                }
-              
-                if isbool{
-                     self.chrysan.show(.plain, message:LanguageStrins(string: "Please select the photograph you need to export"), hideDelay: HIDE_DELAY)
-                }else{
-                     self.chrysan.show(.plain, message:LanguageStrins(string: "Save success"), hideDelay: HIDE_DELAY)
-                }
+            self.exportFile()
 
         }) { (view, num, str) in
                    
@@ -398,15 +390,7 @@ class LZAlbumDetailsViewController: LZBaseViewController,UICollectionViewDelegat
         alert.show()
        
     }
-    @objc private func image(image : UIImage, didFinishSavingWithError error : NSError?, contextInfo : AnyObject) {
-           var showInfo = ""
-           if error != nil {
-               showInfo = "保存失败"
-           } else {
-               showInfo = "保存成功"
-           }
-        print(showInfo)
-    }
+   
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
@@ -427,6 +411,7 @@ class LZAlbumDetailsViewController: LZBaseViewController,UICollectionViewDelegat
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
+        
         let localData = JXLocalDataSource(numberOfItems: { () -> Int in
                    return self.dataSource.count
                }, localImage: { (index) -> UIImage? in
@@ -440,4 +425,40 @@ class LZAlbumDetailsViewController: LZBaseViewController,UICollectionViewDelegat
 
 
 
+}
+extension LZAlbumDetailsViewController{
+    
+    func exportFile(){
+
+        var paths = [String]()
+    
+        for pathModel in self.folderModel!.images {
+            let m:LZAlbumImageModel = pathModel as! LZAlbumImageModel
+            if m.isSelect {
+                paths.append(albumsFolder + m.path)
+            }
+        }
+    
+        if SSZipArchive.createZipFile(atPath:tempAlbumPath, withFilesAtPaths: paths) {
+            print("压缩成功")
+            if (rootFileManager.fileExists(atPath: tempAlbumPath)) {
+                let vc = QLPreviewController.init()
+                vc.delegate = self
+                vc.dataSource = self
+                self.navigationController?.pushViewController(vc, animated: true)
+            }
+        }else{
+            print("压缩失败")
+        }
+    
+    }
+    func numberOfPreviewItems(in controller: QLPreviewController) -> Int {
+        return 1
+    }
+    func previewController(_ controller: QLPreviewController, previewItemAt index: Int) -> QLPreviewItem {
+        
+        let videoUrl = URL.init(fileURLWithPath: tempAlbumPath)
+        return videoUrl as QLPreviewItem
+    
+    }
 }

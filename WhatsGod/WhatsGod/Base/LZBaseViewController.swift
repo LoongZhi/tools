@@ -10,7 +10,10 @@ import UIKit
 import LYEmptyView
 import IQKeyboardManagerSwift
 import Chrysan
+
 class LZBaseViewController: UIViewController {
+  
+    
 
     public var dataSource = [Any]()
     lazy public var tableView:UITableView = {
@@ -75,7 +78,9 @@ class LZBaseViewController: UIViewController {
             }
     }
 
-
+    deinit {
+        print("释放内存")
+    }
     /*
     // MARK: - Navigation
 

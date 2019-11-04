@@ -7,6 +7,11 @@
 //
 
 import UIKit
+
+public  var tempAlbumPath = LZFileManager.tempDestPath()! + LanguageStrins(string: "/AllPhotoFiles.zip")
+public  var tempVideoPath = LZFileManager.tempDestPath()! + LanguageStrins(string: "/AllVideoFiles.zip")
+public  var tempOfficePath = LZFileManager.tempDestPath()! + LanguageStrins(string: "/AllOfficeFiles.zip")
+
 public let rootFolder = NSHomeDirectory() + "/Documents/"
 public var rootFileManager = FileManager.default
 public   let albumsFolder = rootFolder + "AlbumsFolder/"
@@ -14,6 +19,9 @@ public   let albumsFolder = rootFolder + "AlbumsFolder/"
 public   let videoFolder = rootFolder + "VideoFolder/"
 
 public   let officeFolder = rootFolder + "OfficeFolder/"
+public let albumsCompressedPath = rootFolder + "albumsCompressedPath/" + "album.zip"
+public let videosCompressedPath = rootFolder + "videosCompressedPath"
+public let officesCompressedPath = rootFolder + "officesCompressedPath"
 class LZFileManager: NSObject {
    
    
@@ -217,4 +225,26 @@ class LZFileManager: NSObject {
           return 0
           
     }
+    
+    //临时文件路径
+   public class  func tempDestPath() -> String? {
+           var path = NSSearchPathForDirectoriesInDomains(.cachesDirectory,
+                                                          .userDomainMask, true)[0]
+           path += "/\(NSUUID().uuidString)"
+           let url = NSURL(fileURLWithPath: path)
+            
+           do {
+               try FileManager.default.createDirectory(at: url as URL,
+                   withIntermediateDirectories: true, attributes: nil)
+           } catch {
+               return nil
+           }
+            
+           if let path = url.path {
+               print("path:\(path)")
+               return path
+           }
+            
+           return nil
+       }
 }

@@ -52,5 +52,6 @@
 "Modify the password" = "Modify the password";
 "Confirm the password" = "Confirm the password";
 "Please enter your password" = "Please enter your password";
-"The password was modified successfully" = "The password was modified successfully"
-"Add a password successful" = "Add a password successful"
+"The password was modified successfully" = "The password was modified successfully";
+"Add a password successful" = "Add a password successful";
+"/AllPhotoFiles.zip" = "/AllPhotoFiles.zip";

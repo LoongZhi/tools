@@ -13,7 +13,7 @@ class LZVideoFolderModel: Object {
     @objc dynamic var createDate:Double = 0.0
     @objc dynamic var finderName = ""
     @objc dynamic var path = ""
-    @objc dynamic var finderPass = false
+    @objc dynamic var password = ""
     @objc dynamic var isHidden = true
     @objc dynamic var index = 0
     let images = List<LZVideoModel>()

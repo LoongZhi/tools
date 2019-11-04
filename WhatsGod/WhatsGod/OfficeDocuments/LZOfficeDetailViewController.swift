@@ -260,6 +260,9 @@ class LZOfficeDetailViewController: LZBaseViewController,UICollectionViewDelegat
          
     }
     override func leftItmeEvent() {
+        
+           self.allBtn.isSelected = true
+           self.allEvent(btn: self.allBtn)
            self.isHidden = true
            self.setHidden(hidden: self.isHidden)
            self.navigationItem.leftBarButtonItem = nil

@@ -8,8 +8,8 @@
 
 import UIKit
 import FWPopupView
-
-class LZAlbumViewController: LZBaseViewController,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout {
+import QuickLook
+class LZAlbumViewController: LZBaseViewController,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,QLPreviewControllerDelegate,QLPreviewControllerDataSource {
    
     
 
@@ -22,7 +22,6 @@ class LZAlbumViewController: LZBaseViewController,UICollectionViewDelegate,UICol
     public var fileUrl:String?
     var indexPath: IndexPath?
     var targetIndexPath: IndexPath?
-    
     private lazy var dragingItem: LZAlbumCollectionViewCell = {
        
         let cell = LZAlbumCollectionViewCell(frame: CGRect(x: 0, y: 0, width: SCREEN_WIDTH / 4, height: 80))
@@ -153,7 +152,7 @@ class LZAlbumViewController: LZBaseViewController,UICollectionViewDelegate,UICol
                           self.present(alertController,animated: true,completion: nil)
                 break;
             case 1:
-                
+                self.exportFile()
                 break;
             case 2:
                 
@@ -271,6 +270,7 @@ class LZAlbumViewController: LZBaseViewController,UICollectionViewDelegate,UICol
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
         let model = self.dataSource[indexPath.row] as! LZAlbumModel
+        
         if self.isHidden == false {
             self.indexPath = indexPath
             var pass = LanguageStrins(string: "Modify the password")
@@ -519,4 +519,38 @@ extension LZAlbumViewController{
                   alertController.addAction(okAction)
                   self.present(alertController,animated: true,completion: nil)
     }
+    
+    func exportFile(){
+
+        var paths = [String]()
+        for Value in self.dataSource {
+            let model:LZAlbumModel = Value as! LZAlbumModel
+            for pathModel in model.images {
+                let m:LZAlbumImageModel = pathModel as! LZAlbumImageModel
+                paths.append(albumsFolder + m.path)
+            }
+        }
+        if SSZipArchive.createZipFile(atPath:tempAlbumPath, withFilesAtPaths: paths) {
+            print("压缩成功")
+            if (rootFileManager.fileExists(atPath: tempAlbumPath)) {
+                let vc = QLPreviewController.init()
+                vc.delegate = self
+                vc.dataSource = self
+                self.navigationController?.pushViewController(vc, animated: true)
+            }
+        }else{
+            print("压缩失败")
+        }
+    
+    }
+    func numberOfPreviewItems(in controller: QLPreviewController) -> Int {
+        return 1
+    }
+    func previewController(_ controller: QLPreviewController, previewItemAt index: Int) -> QLPreviewItem {
+        
+        let videoUrl = URL.init(fileURLWithPath: tempAlbumPath)
+        return videoUrl as QLPreviewItem
+    
+    }
+   
 }

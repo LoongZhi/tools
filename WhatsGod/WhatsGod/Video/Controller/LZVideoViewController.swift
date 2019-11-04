@@ -10,13 +10,15 @@ import UIKit
 import FWPopupView
 import AVFoundation
 import AVKit
-class LZVideoViewController: LZBaseViewController,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout {
+import QuickLook
+class LZVideoViewController: LZBaseViewController,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,QLPreviewControllerDelegate,QLPreviewControllerDataSource {
    
     
 
     var  menuView:FWMenuView? = nil
     var  isHidden:Bool = true
     let images = [UIImage(named: "right_menu_multichat_white"),
+                  UIImage(named: "right_menu_addFri_white"),
                   UIImage(named: "right_menu_addFri_white"),]
     public var fileType:FileType?
     public var fileUrl:String?
@@ -104,7 +106,7 @@ class LZVideoViewController: LZBaseViewController,UICollectionViewDelegate,UICol
         vProperty.separatorInset = UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 15)
         
        
-        self.menuView = FWMenuView.menu(itemTitles: [LanguageStrins(string: "New"),LanguageStrins(string: "Edit")], itemImageNames:images as! [UIImage], itemBlock: { (popupView, index, title) in
+        self.menuView = FWMenuView.menu(itemTitles: [LanguageStrins(string: "New"),LanguageStrins(string: "Export"),LanguageStrins(string: "Edit")], itemImageNames:images as! [UIImage], itemBlock: { (popupView, index, title) in
             print("Menu：点击了第\(index)个按钮")
             
             switch (index) {
@@ -149,6 +151,9 @@ class LZVideoViewController: LZBaseViewController,UICollectionViewDelegate,UICol
                           self.present(alertController,animated: true,completion: nil)
                 break;
             case 1:
+                self.exportFile()
+                break;
+            case 2:
                 let itme = UIBarButtonItem.init(title: LanguageStrins(string: "Completed"), style: .done, target: self, action: #selector(self.leftItmeEvent))
                 self.navigationItem.leftBarButtonItem = itme
                 self.isHidden = false
@@ -259,7 +264,22 @@ class LZVideoViewController: LZBaseViewController,UICollectionViewDelegate,UICol
         }
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    
         let model = self.dataSource[indexPath.row] as! LZVideoFolderModel
+        if self.isHidden == false {
+            self.indexPath = indexPath
+            var pass = LanguageStrins(string: "Modify the password")
+            if model.password.isStringNull() {
+                pass = LanguageStrins(string: "Add a password")
+            }
+            let sheerView = FWSheetView.sheet(title: LanguageStrins(string: "Tips"), itemTitles: [pass,LanguageStrins(string: "Modify the folder name")], itemBlock: { (FWPopupViews, Ints, Strings) in
+                self.changeData(type: Ints)
+            }, cancelItemTitle: LanguageStrins(string: "Cancel"), cancenlBlock: {
+                
+            }, property: nil)
+            sheerView.show()
+            return
+        }
         if (self.fileType != nil) {
             
             let type = fileUrl!.returnFileType(fileUrl: fileUrl!)
@@ -402,4 +422,160 @@ class LZVideoViewController: LZBaseViewController,UICollectionViewDelegate,UICol
            })
            
        }
+}
+extension LZVideoViewController{
+    private func changeData(type:Int){
+           let videoFolder:LZVideoFolderModel = self.dataSource[self.indexPath!.row] as! LZVideoFolderModel
+           
+           switch type {
+           case 0:
+               var message = LanguageStrins(string: "Please enter a six - digit password")
+               var title = LanguageStrins(string: "Set the password")
+               if !videoFolder.password.isStringNull() {
+                   message = LanguageStrins(string: "Please enter a new password to be modified")
+                   title = LanguageStrins(string: "Change password")
+                   let itme = FWPopupItem.init(title: LanguageStrins(string: "Cancel"), itemType: .normal, isCancel: true, canAutoHide: false) { (FWPopupViews, Ints, Strings) in
+                       
+                   }
+                   let itme2 = FWPopupItem.init(title: LanguageStrins(string: "OK"), itemType: .normal, isCancel: false, canAutoHide: false) { (FWPopupViews, Ints, Strings) in
+                       
+                   }
+                   let alert = FWAlertView.alert(title: LanguageStrins(string: ""), detail: LanguageStrins(string: ""), inputPlaceholder: LanguageStrins(string: ""), keyboardType: .numberPad, isSecureTextEntry: true, customView: nil, items: [itme,itme2], vProperty: nil)
+                   alert.show()
+                   alert.inputBlock = { (text) in
+                       if !itme2.isCancel {
+                           if text == videoFolder.password {
+                               self.changeAndAddPass(title: title, message: message)
+                           }
+                       }
+                       alert.hide()
+                   }
+               }else{
+                   self.changeAndAddPass(title: title, message: message)
+               }
+               
+               break
+           case 1:
+               let alertController = UIAlertController(title: LanguageStrins(string: "Modify the folder name"),message:LanguageStrins(string: "Please enter the filename"),preferredStyle: .alert)
+
+                         
+                      alertController.addTextField {
+                              (textField: UITextField!) -> Void in
+                              textField.placeholder = LanguageStrins(string: "Please enter the filename")
+                      }
+               let cancelAction = UIAlertAction(title: LanguageStrins(string: "Cancel"),style: .cancel,handler: nil)
+                         alertController.addAction(cancelAction)
+
+                     
+                         let okAction = UIAlertAction(title: LanguageStrins(string: "OK"),style: UIAlertAction.Style.default) {
+                             (action: UIAlertAction!) -> Void in
+                           let acc:UITextField =
+                               (alertController.textFields?.first)!
+                                 as UITextField
+                               if acc.text!.isStringNull() {
+                                       
+                                   self.chrysan.show(.plain, message:LanguageStrins(string: "Please enter the filename"), hideDelay: HIDE_DELAY)
+                                                                                                          
+                                   return
+                                                       
+                               }
+                                                   
+                           let videoFolder:LZVideoFolderModel = self.dataSource[self.indexPath!.row] as! LZVideoFolderModel
+                               try! realm.write {
+                                   videoFolder.finderName = acc.text!
+                                 self.getDataSource()
+                               }
+                           }
+                         alertController.addAction(okAction)
+                         self.present(alertController,animated: true,completion: nil)
+               break
+           default:
+               break
+           }
+    
+       }
+       
+       private func changeAndAddPass(title:String,message:String){
+           
+           let videoFolder:LZVideoFolderModel = self.dataSource[self.indexPath!.row] as! LZVideoFolderModel
+           let alertController = UIAlertController(title: title,message:message,preferredStyle: .alert)
+
+                     
+                  alertController.addTextField {
+                          (textField: UITextField!) -> Void in
+                          textField.placeholder = LanguageStrins(string: "Please enter the password")
+                          textField.keyboardType = .numberPad
+                          textField.isSecureTextEntry = true
+                  }
+                  alertController.addTextField {
+                          (textField: UITextField!) -> Void in
+                          textField.placeholder = LanguageStrins(string: "Confirm the password")
+                          textField.keyboardType = .numberPad
+                          textField.isSecureTextEntry = true
+                  }
+           let cancelAction = UIAlertAction(title: LanguageStrins(string: "Cancel"),style: .cancel,handler: nil)
+                     alertController.addAction(cancelAction)
+
+                 
+                     let okAction = UIAlertAction(title: LanguageStrins(string: "OK"),style: UIAlertAction.Style.default) {
+                         (action: UIAlertAction!) -> Void in
+                       let acc:UITextField =
+                           (alertController.textFields?.first)!
+                             as UITextField
+                       let acc2:UITextField =
+                       (alertController.textFields?.last)!
+                         as UITextField
+                       if acc.text!.isStringNull() || acc.text!.count < 6 || (acc.text != acc2.text){
+                                   
+                               self.chrysan.show(.plain, message:LanguageStrins(string: "Please enter your password"), hideDelay: HIDE_DELAY)
+                                                                                                      
+                               return
+                       }
+                                               
+                           try! realm.write {
+                               videoFolder.password = acc.text!
+                             self.getDataSource()
+                           }
+                           if videoFolder.password.isStringNull(){
+                               self.chrysan.show(.plain, message:LanguageStrins(string: "Add a password successful"), hideDelay: HIDE_DELAY)
+                           }else{
+                                self.chrysan.show(.plain, message:LanguageStrins(string: "The password was modified successfully"), hideDelay: HIDE_DELAY)
+                           }
+                       }
+                     alertController.addAction(okAction)
+                     self.present(alertController,animated: true,completion: nil)
+       }
+       
+       func exportFile(){
+
+           var paths = [String]()
+           for Value in self.dataSource {
+               let model:LZVideoFolderModel = Value as! LZVideoFolderModel
+               for pathModel in model.images {
+                   let m:LZVideoModel = pathModel as! LZVideoModel
+                   paths.append(videoFolder + m.path)
+               }
+           }
+           if SSZipArchive.createZipFile(atPath:tempVideoPath, withFilesAtPaths: paths) {
+               print("压缩成功")
+               if (rootFileManager.fileExists(atPath: tempVideoPath)) {
+                   let vc = QLPreviewController.init()
+                   vc.delegate = self
+                   vc.dataSource = self
+                   self.navigationController?.pushViewController(vc, animated: true)
+               }
+           }else{
+               print("压缩失败")
+           }
+       
+       }
+       func numberOfPreviewItems(in controller: QLPreviewController) -> Int {
+           return 1
+       }
+       func previewController(_ controller: QLPreviewController, previewItemAt index: Int) -> QLPreviewItem {
+           
+           let videoUrl = URL.init(fileURLWithPath: tempVideoPath)
+           return videoUrl as QLPreviewItem
+       
+         }
 }
