@@ -7,13 +7,14 @@
 //
 
 import Foundation
-
+import NVActivityIndicatorView
 enum FileType {
     case AlbumType
     case VideoType
     case OfficeType
     case WrongType
 }
+let loadingType = NVActivityIndicatorType.lineScale
 //文件类型
 func fileUrlType(type:String) -> FileType{
     
@@ -73,11 +74,12 @@ func Img(url:String) -> UIImage{
 public func LanguageStrins(string:String) ->String{
     return NSLocalizedString(string, comment: "")
 }
-
+//loding 大小
+let lodingSize = CGSize.init(width: 60, height: 60)
 //压缩文件路径
 let ZIPPATH = "zipfile.zip"
 //提示显示时间
-let HIDE_DELAY:Double = 2.0
+let HIDE_DELAY:Double = 1.2
 //定义屏幕宽高
 let SCREEN_WIDTH = UIScreen.main.bounds.size.width
 let SCREEN_HEIGHT = UIScreen.main.bounds.size.height

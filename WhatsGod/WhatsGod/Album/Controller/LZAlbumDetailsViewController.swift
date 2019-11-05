@@ -23,6 +23,7 @@ class LZAlbumDetailsViewController: LZBaseViewController,UICollectionViewDelegat
                   UIImage(named: "right_menu_addFri_white"),]
 //    var indexs:Array = Array<Int>()
     var exCount = 0
+    var paths = [String]()
     public var folderModel:LZAlbumModel? = nil
     private var imageDataArr = NSArray()
     private lazy var collectionView:UICollectionView = {
@@ -171,6 +172,7 @@ class LZAlbumDetailsViewController: LZBaseViewController,UICollectionViewDelegat
             switch (index) {
             case 0:
                 self.pickerController.didSelectAssets = { (assets) in
+                    self.startAnimating(lodingSize,type: loadingType, color: COLOR_4990ED)
                     for (index,itme) in assets.enumerated() {
                         let model:DKAsset = itme
                         PHCachingImageManager.default().requestImage(for: model.originalAsset!, targetSize: PHImageManagerMaximumSize, contentMode: .default, options: nil) { (result: UIImage?, dictionry: Dictionary?) in
@@ -193,6 +195,9 @@ class LZAlbumDetailsViewController: LZBaseViewController,UICollectionViewDelegat
                                  self.getDataSource()
                             }
                     }
+                        if assets.count == 0 {
+                            self.stopAnimating()
+                        }
                     
                    
                    
@@ -236,6 +241,7 @@ class LZAlbumDetailsViewController: LZBaseViewController,UICollectionViewDelegat
         }
       
         self.collectionView .reloadData()
+        self.stopAnimating()
     }
     override func rightItmeEvent() {
         
@@ -430,15 +436,20 @@ extension LZAlbumDetailsViewController{
     
     func exportFile(){
 
-        var paths = [String]()
+        startAnimating(lodingSize,type: loadingType, color: COLOR_4990ED)
+        self.paths.removeAll()
     
         for pathModel in self.folderModel!.images {
-            let m:LZAlbumImageModel = pathModel as! LZAlbumImageModel
+            let m:LZAlbumImageModel = pathModel 
             if m.isSelect {
                 paths.append(albumsFolder + m.path)
             }
         }
-    
+        if self.paths.count == 0 {
+             stopAnimating()
+             self.chrysan.show(.plain, message:LanguageStrins(string: "Please select the compressed file"), hideDelay: HIDE_DELAY)
+            return
+        }
         if SSZipArchive.createZipFile(atPath:tempAlbumPath, withFilesAtPaths: paths) {
             print("压缩成功")
             if (rootFileManager.fileExists(atPath: tempAlbumPath)) {
@@ -449,8 +460,10 @@ extension LZAlbumDetailsViewController{
             }
         }else{
             print("压缩失败")
+             self.chrysan.show(.plain, message:LanguageStrins(string: "Compression failed"), hideDelay: HIDE_DELAY)
         }
     
+        stopAnimating()
     }
     func numberOfPreviewItems(in controller: QLPreviewController) -> Int {
         return 1

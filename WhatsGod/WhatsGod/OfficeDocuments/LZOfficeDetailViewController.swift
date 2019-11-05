@@ -15,6 +15,7 @@ import AssetsLibrary
 import Photos
 import JXPhotoBrowser
 import QuickLook
+
 class LZOfficeDetailViewController: LZBaseViewController,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,QLPreviewControllerDelegate,QLPreviewControllerDataSource{
 
     var  menuView:FWMenuView? = nil
@@ -23,6 +24,7 @@ class LZOfficeDetailViewController: LZBaseViewController,UICollectionViewDelegat
                   UIImage(named: "right_menu_addFri_white"),]
 //    var indexs:Array = Array<Int>()
     var exCount = 0
+    var paths = [String]()
     public var folderModel:LZOfficeFolderModel? = nil
     private var imageDataArr = NSArray()
     var indexPaths = IndexPath.init(row: 0, section: 0)
@@ -46,8 +48,6 @@ class LZOfficeDetailViewController: LZBaseViewController,UICollectionViewDelegat
     private lazy var bottomView:UIView = {
         let view = UIView.init()
         view.backgroundColor = UIColor.white
-//        view.layer.borderWidth = 0.5
-//        view.layer.borderColor = UIColor.gray.cgColor
         
         return view;
     }()
@@ -83,11 +83,11 @@ class LZOfficeDetailViewController: LZBaseViewController,UICollectionViewDelegat
         super.viewDidLoad()
 
         
-        
+      
         // Do any additional setup after loading the view.
         readyView()
     }
-    
+  
     @objc override func readyView(){
         
         self.view.addSubview(self.collectionView)
@@ -170,33 +170,7 @@ class LZOfficeDetailViewController: LZBaseViewController,UICollectionViewDelegat
             
             switch (index) {
             case 0:
-                self.pickerController.didSelectAssets = { (assets) in
-                    for (index,itme) in assets.enumerated() {
-                        let model:DKAsset = itme
-                        PHCachingImageManager.default().requestImage(for: model.originalAsset!, targetSize: PHImageManagerMaximumSize, contentMode: .default, options: nil) { (result: UIImage?, dictionry: Dictionary?) in
-                            
-                            let path = self.folderModel!.path + "/office" + String(format: "%d.dat",Date().timeIntervalSince1970)
-                            
-                            if LZFileManager.writeImageFile(filePath: path, data:(result?.jpegData(compressionQuality: 1))!){
-                                let officeModel = LZOfficeModel.init()
-                                officeModel.isHidden = self.isHidden
-                                officeModel.path = path
-                                try! realm.write {
-                                    self.folderModel?.images.append(officeModel)
-                                }
-                            }
-                            
-                            if index == assets.count - 1{
-                                 self.getDataSource()
-                            }
-                    }
-                    
-                   
-                   
-                    }
-                    
-                }
-                self.present(self.pickerController, animated: true, completion: nil)
+                
                 break;
             case 1:
                 let itme = UIBarButtonItem.init(title: LanguageStrins(string: "Completed"), style: .done, target: self, action: #selector(self.leftItmeEvent))
@@ -233,6 +207,7 @@ class LZOfficeDetailViewController: LZBaseViewController,UICollectionViewDelegat
         }
       
         self.collectionView .reloadData()
+        self.stopAnimating()
     }
     override func rightItmeEvent() {
         
@@ -362,20 +337,7 @@ class LZOfficeDetailViewController: LZBaseViewController,UICollectionViewDelegat
        
         let alert = FWAlertView.alert(title: LanguageStrins(string: "Tips"), detail: LanguageStrins(string: "Export the photos to the album"), confirmBlock: { (view, num, str) in
             
-                var isbool = true
-                for (index,itme) in self.dataSource.enumerated(){
-                    let model:LZOfficeModel = itme as! LZOfficeModel
-                    if model.isSelect {
-                        UIImageWriteToSavedPhotosAlbum(UIImage.init(data: LZFileManager.getOfficeFile(filePath: model.path))!, self, #selector(self.image(image:didFinishSavingWithError:contextInfo:)), nil)
-                        isbool = false
-                    }
-                }
-              
-                if isbool{
-                     self.chrysan.show(.plain, message:LanguageStrins(string: "Please select the photograph you need to export"), hideDelay: HIDE_DELAY)
-                }else{
-                     self.chrysan.show(.plain, message:LanguageStrins(string: "Save success"), hideDelay: HIDE_DELAY)
-                }
+            self.exportFile()
 
         }) { (view, num, str) in
                    
@@ -420,14 +382,60 @@ class LZOfficeDetailViewController: LZBaseViewController,UICollectionViewDelegat
     }
 
     func numberOfPreviewItems(in controller: QLPreviewController) -> Int {
+        if self.isHidden == false {
+            return self.paths.count
+        }
         return self.dataSource.count
     }
 
     func previewController(_ controller: QLPreviewController, previewItemAt index: Int) -> QLPreviewItem {
+        
+        if self.isHidden == false {
+            return URL.init(fileURLWithPath:self.paths[index]) as QLPreviewItem
+        }
         let model = self.dataSource[self.indexPaths.row] as! LZOfficeModel
        
         return URL.init(fileURLWithPath:officeFolder + model.path) as QLPreviewItem
   
     }
    
+}
+
+extension LZOfficeDetailViewController{
+    
+    func exportFile(){
+        
+        
+
+        startAnimating(lodingSize,type: loadingType, color: COLOR_4990ED)
+        self.paths.removeAll()
+
+        for pathModel in self.folderModel!.images {
+            let m:LZOfficeModel = pathModel 
+            if m.isSelect {
+                paths.append(officeFolder + m.path)
+            }
+        }
+    
+        if self.paths.count == 0 {
+             stopAnimating()
+             self.chrysan.show(.plain, message:LanguageStrins(string: "Please select the compressed file"), hideDelay: HIDE_DELAY)
+            return
+        }
+        if SSZipArchive.createZipFile(atPath:tempOfficePath, withFilesAtPaths: paths) {
+            print("压缩成功")
+            if (rootFileManager.fileExists(atPath: tempOfficePath)) {
+                let vc = QLPreviewController.init()
+                vc.delegate = self
+                vc.dataSource = self
+                self.navigationController?.pushViewController(vc, animated: true)
+            }
+        }else{
+            print("压缩失败")
+            self.chrysan.show(.plain, message:LanguageStrins(string: "Compression failed"), hideDelay: HIDE_DELAY)
+        }
+        
+        stopAnimating()
+    
+    }
 }

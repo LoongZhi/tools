@@ -30,7 +30,8 @@ target 'WhatsGod' do
 
   pod 'Hue'
 
-#  pod 'NVActivityIndicatorView'
+  pod 'NVActivityIndicatorView'
+  
   pod 'CryptoSwift'
   
   pod 'ComplimentaryGradientView'

@@ -218,14 +218,30 @@ class LZFileManager: NSObject {
     public class func  fileSizeAtPath(path:String) -> Int{
           
           if rootFileManager.fileExists(atPath: path) {
-           
-            let attr = try! rootFileManager.attributesOfItem(atPath: path)
-              return Int(attr[FileAttributeKey.size] as! UInt64)
+            var fileSize: Int = 0
+            let childFilePath = rootFileManager.subpaths(atPath: path)
+            for paths in childFilePath! {
+                       let fileAbsoluePath = path + "/" + paths
+                       fileSize += self.returnSingleFileSize(path: fileAbsoluePath)
+                   }
+            return fileSize
           }
           return 0
           
     }
-    
+    private static func returnSingleFileSize(path: String) -> Int {
+        
+        var fileSize: Int = 0
+        do {
+            let fileAttributes = try FileManager.default.attributesOfItem(atPath: path)
+            let fileSizeNumber = fileAttributes[FileAttributeKey.size] as! NSNumber
+            fileSize = Int(fileSizeNumber.int64Value)
+        } catch _ as NSError {
+            print("Filesize reading failed")
+        }
+        
+        return fileSize/1024/1024
+    }
     //临时文件路径
    public class  func tempDestPath() -> String? {
            var path = NSSearchPathForDirectoriesInDomains(.cachesDirectory,

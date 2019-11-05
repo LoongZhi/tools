@@ -10,8 +10,8 @@ import UIKit
 import LYEmptyView
 import IQKeyboardManagerSwift
 import Chrysan
-
-class LZBaseViewController: UIViewController {
+import NVActivityIndicatorView
+class LZBaseViewController: UIViewController,NVActivityIndicatorViewable {
   
     
 

@@ -286,7 +286,7 @@ class LZAlbumViewController: LZBaseViewController,UICollectionViewDelegate,UICol
             return
         }
         if (self.fileType != nil) {
-            
+            self.startAnimating(lodingSize,type: loadingType, color: COLOR_4990ED)
             let type = fileUrl!.returnFileType(fileUrl: fileUrl!)
             let path = model.path + "/image" + String(format: "%d.%@",Date().timeIntervalSince1970,type)
             let data:Data = rootFileManager.contents(atPath: fileUrl!)!
@@ -302,6 +302,7 @@ class LZAlbumViewController: LZBaseViewController,UICollectionViewDelegate,UICol
             }
               DispatchQueue.main.asyncAfter(deadline: .now()+HIDE_DELAY, execute:
                           {
+                            self.stopAnimating()
                                self.dismiss(animated: true, completion: nil)
                           })
             return
@@ -521,14 +522,19 @@ extension LZAlbumViewController{
     }
     
     func exportFile(){
-
+        startAnimating(lodingSize,type: loadingType, color: COLOR_4990ED)
         var paths = [String]()
         for Value in self.dataSource {
             let model:LZAlbumModel = Value as! LZAlbumModel
             for pathModel in model.images {
-                let m:LZAlbumImageModel = pathModel as! LZAlbumImageModel
+                let m:LZAlbumImageModel = pathModel
                 paths.append(albumsFolder + m.path)
             }
+        }
+        if paths.count == 0 {
+             stopAnimating()
+             self.chrysan.show(.plain, message:LanguageStrins(string: "The folder is empty"), hideDelay: HIDE_DELAY)
+            return
         }
         if SSZipArchive.createZipFile(atPath:tempAlbumPath, withFilesAtPaths: paths) {
             print("压缩成功")
@@ -540,8 +546,9 @@ extension LZAlbumViewController{
             }
         }else{
             print("压缩失败")
+            self.chrysan.show(.plain, message:LanguageStrins(string: "Compression failed"), hideDelay: HIDE_DELAY)
         }
-    
+        stopAnimating()
     }
     func numberOfPreviewItems(in controller: QLPreviewController) -> Int {
         return 1

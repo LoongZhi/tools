@@ -282,10 +282,12 @@ class LZVideoViewController: LZBaseViewController,UICollectionViewDelegate,UICol
         }
         if (self.fileType != nil) {
             
+            self.startAnimating(lodingSize,type: loadingType, color: COLOR_4990ED)
             let type = fileUrl!.returnFileType(fileUrl: fileUrl!)
             let path = model.path + "/Video" + String(format: "%d.@",Date().timeIntervalSince1970,type)
             let ImagePath = model.path + "/Thumb" + String(format: "%d.jpg",Date().timeIntervalSince1970)
             guard let jsonData = try? Data.init(contentsOf: URL.init(string: fileUrl!)!, options: Data.ReadingOptions.alwaysMapped) else {
+                self.stopAnimating()
                  return
             }
             if LZFileManager.writeVideoFile(filePath: path, data:jsonData){
@@ -311,6 +313,7 @@ class LZVideoViewController: LZBaseViewController,UICollectionViewDelegate,UICol
              }
               DispatchQueue.main.asyncAfter(deadline: .now()+HIDE_DELAY, execute:
                           {
+                                self.stopAnimating()
                                self.dismiss(animated: true, completion: nil)
                           })
             return
@@ -548,14 +551,20 @@ extension LZVideoViewController{
        
        func exportFile(){
 
+           startAnimating(lodingSize,type: loadingType, color: COLOR_4990ED)
            var paths = [String]()
            for Value in self.dataSource {
                let model:LZVideoFolderModel = Value as! LZVideoFolderModel
                for pathModel in model.images {
-                   let m:LZVideoModel = pathModel as! LZVideoModel
+                let m:LZVideoModel = pathModel 
                    paths.append(videoFolder + m.path)
                }
            }
+            if paths.count == 0 {
+                 stopAnimating()
+                 self.chrysan.show(.plain, message:LanguageStrins(string: "The folder is empty"), hideDelay: HIDE_DELAY)
+                return
+            }
            if SSZipArchive.createZipFile(atPath:tempVideoPath, withFilesAtPaths: paths) {
                print("压缩成功")
                if (rootFileManager.fileExists(atPath: tempVideoPath)) {
@@ -566,8 +575,9 @@ extension LZVideoViewController{
                }
            }else{
                print("压缩失败")
+               self.chrysan.show(.plain, message:LanguageStrins(string: "Compression failed"), hideDelay: HIDE_DELAY)
            }
-       
+            stopAnimating()
        }
        func numberOfPreviewItems(in controller: QLPreviewController) -> Int {
            return 1

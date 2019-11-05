@@ -35,8 +35,8 @@ class LZSettingsViewController: LZBaseViewController,UITableViewDataSource,UITab
         label.font = UIFont.systemFont(ofSize: 20)
         return label
     }()
-    lazy var textLabel2:UILabel = {
-        let label = UILabel.init()
+    lazy var textLabel2:ContentLabel = {
+        let label = ContentLabel.init()
         label.textColor = COLOR_B8B8B8
         label.textAlignment = .center
         label.font = UIFont.systemFont(ofSize: 14)
@@ -103,9 +103,13 @@ class LZSettingsViewController: LZBaseViewController,UITableViewDataSource,UITab
         ["beifen",LanguageStrins(string: "Document backup")],
         ["qinglihuanchun",LanguageStrins(string: "Clean up the cache")],
         ["guanyuwomen",LanguageStrins(string: "About us")]])
-        self.setAoutLayot()
+        
     }
    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.setAoutLayot()
+    }
 
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
       
@@ -173,10 +177,10 @@ extension LZSettingsViewController{
              
              self.progressView!.setProgress(Int(avai / total * 100), animated: true)
              self.diskLabel.animate(fromValue: 0.0, toValue: avai / total * 100 ,str: "%", duration: 0.55)
-            self.textLabel3.animate(fromValue: 0, toValue: Double(LZFileManager.fileSizeAtPath(path: albumsFolder) / (1024 * 1024)), str: "MB", duration: 0.55)
-            self.textLabel4.animate(fromValue: 0, toValue: Double(LZFileManager.fileSizeAtPath(path: videoFolder) / (1024 * 1024)), str: "MB", duration: 0.55)
-            self.textLabel5.animate(fromValue: 0, toValue: Double(LZFileManager.fileSizeAtPath(path: officeFolder) / (1024 * 1024)), str: "MB", duration: 0.55)
-
+            self.textLabel3.animate(fromValue: 0, toValue: Double(LZFileManager.fileSizeAtPath(path: albumsFolder) ), str: "MB", duration: 0.55)
+            self.textLabel4.animate(fromValue: 0, toValue: Double(LZFileManager.fileSizeAtPath(path: rootFolder + "VideoFolder") ), str: "MB", duration: 0.55)
+            self.textLabel5.animate(fromValue: 0, toValue: Double(LZFileManager.fileSizeAtPath(path: officeFolder)), str: "MB", duration: 0.55)
+       
          })
         
         self.textLabel1.text = LanguageStrins(string: "Disk space.")

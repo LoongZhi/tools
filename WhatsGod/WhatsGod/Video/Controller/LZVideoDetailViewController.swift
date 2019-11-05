@@ -25,6 +25,7 @@ class LZVideoDetailViewController: LZBaseViewController,UICollectionViewDelegate
                   UIImage(named: "right_menu_addFri_white"),]
 //    var indexs:Array = Array<Int>()
     var exCount = 0
+    var paths = [String]()
     public  var folderModel:LZVideoFolderModel? = nil
     private var imageDataArr = NSArray()
     private lazy var collectionView:UICollectionView = {
@@ -173,6 +174,8 @@ class LZVideoDetailViewController: LZBaseViewController,UICollectionViewDelegate
             switch (index) {
             case 0:
                 self.pickerController.didSelectAssets = { (assets) in
+                    
+                    self.startAnimating(lodingSize,type: loadingType, color: COLOR_4990ED)
                     for (index,itme) in assets.enumerated() {
                         let model:DKAsset = itme
                        
@@ -220,6 +223,9 @@ class LZVideoDetailViewController: LZBaseViewController,UICollectionViewDelegate
                             }
 
                             }
+                        if assets.count == 0 {
+                            self.stopAnimating()
+                        }
                     
                     }
                     
@@ -261,6 +267,7 @@ class LZVideoDetailViewController: LZBaseViewController,UICollectionViewDelegate
         }
       
         self.collectionView .reloadData()
+        self.stopAnimating()
     }
     override func rightItmeEvent() {
         
@@ -408,20 +415,7 @@ class LZVideoDetailViewController: LZBaseViewController,UICollectionViewDelegate
        
         let alert = FWAlertView.alert(title: LanguageStrins(string: "Tips"), detail: LanguageStrins(string: "Export the photos to the album"), confirmBlock: { (view, num, str) in
             
-                var isbool = true
-                for (index,itme) in self.dataSource.enumerated(){
-                    let model:LZVideoModel = itme as! LZVideoModel
-                    if model.isSelect {
-                        UIImageWriteToSavedPhotosAlbum(UIImage.init(data: LZFileManager.getImageFile(filePath: model.path))!, self, #selector(self.image(image:didFinishSavingWithError:contextInfo:)), nil)
-                        isbool = false
-                    }
-                }
-              
-                if isbool{
-                     self.chrysan.show(.plain, message:LanguageStrins(string: "Please select the photograph you need to export"), hideDelay: HIDE_DELAY)
-                }else{
-                     self.chrysan.show(.plain, message:LanguageStrins(string: "Save success"), hideDelay: HIDE_DELAY)
-                }
+            self.exportFile()
 
         }) { (view, num, str) in
                    
@@ -429,15 +423,7 @@ class LZVideoDetailViewController: LZBaseViewController,UICollectionViewDelegate
         alert.show()
        
     }
-    @objc private func image(image : UIImage, didFinishSavingWithError error : NSError?, contextInfo : AnyObject) {
-           var showInfo = ""
-           if error != nil {
-               showInfo = "保存失败"
-           } else {
-               showInfo = "保存成功"
-           }
-        print(showInfo)
-    }
+ 
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
@@ -467,10 +453,18 @@ class LZVideoDetailViewController: LZBaseViewController,UICollectionViewDelegate
     }
 
     func numberOfPreviewItems(in controller: QLPreviewController) -> Int {
+        if self.isHidden == false {
+            return self.paths.count
+        }
           return self.dataSource.count
       }
 
       func previewController(_ controller: QLPreviewController, previewItemAt index: Int) -> QLPreviewItem {
+        
+         if self.isHidden == false {
+            let videoUrl = URL.init(fileURLWithPath: tempVideoPath)
+            return videoUrl as QLPreviewItem
+         }
           let model = self.dataSource[self.indexPaths.row] as! LZVideoModel
           let videoUrl = URL.init(fileURLWithPath: videoFolder + model.path)
           return videoUrl as QLPreviewItem
@@ -498,4 +492,40 @@ class LZVideoDetailViewController: LZBaseViewController,UICollectionViewDelegate
         }
         
     }
+}
+
+extension LZVideoDetailViewController{
+    
+    func exportFile(){
+
+        startAnimating(lodingSize,type: loadingType, color: COLOR_4990ED)
+        self.paths.removeAll()
+    
+        for pathModel in self.folderModel!.images {
+            let m:LZVideoModel = pathModel 
+            if m.isSelect {
+                paths.append(videoFolder + m.path)
+            }
+        }
+        if self.paths.count == 0 {
+             stopAnimating()
+             self.chrysan.show(.plain, message:LanguageStrins(string: "Please select the compressed file"), hideDelay: HIDE_DELAY)
+            return
+        }
+        if SSZipArchive.createZipFile(atPath:tempVideoPath, withFilesAtPaths: paths) {
+            print("压缩成功")
+            if (rootFileManager.fileExists(atPath: tempVideoPath)) {
+                let vc = QLPreviewController.init()
+                vc.delegate = self
+                vc.dataSource = self
+                self.navigationController?.pushViewController(vc, animated: true)
+            }
+        }else{
+            print("压缩失败")
+            self.chrysan.show(.plain, message:LanguageStrins(string: "Compression failed"), hideDelay: HIDE_DELAY)
+        }
+              
+        stopAnimating()
+    }
+  
 }

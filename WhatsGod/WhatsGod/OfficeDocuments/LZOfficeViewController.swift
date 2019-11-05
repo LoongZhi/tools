@@ -280,9 +280,11 @@ class LZOfficeViewController: LZBaseViewController,UICollectionViewDelegate,UICo
                 return
                }
         if (self.fileType != nil) {
+                self.startAnimating(lodingSize,type: loadingType, color: COLOR_4990ED)
                 let type = fileUrl!.returnFileType(fileUrl: fileUrl!)
                 let path = model.path + "/office" + String(format: "%d.%@",Date().timeIntervalSince1970,type)
                 guard let jsonData = try? Data.init(contentsOf: URL.init(string: fileUrl!)!, options: Data.ReadingOptions.alwaysMapped) else {
+                    self.stopAnimating()
                      return
                 }
                 if LZFileManager.writeOfficeFile(filePath: path, data:jsonData){
@@ -297,6 +299,7 @@ class LZOfficeViewController: LZBaseViewController,UICollectionViewDelegate,UICo
                 DispatchQueue.main.asyncAfter(deadline: .now()+HIDE_DELAY, execute:
                 {
                      self.dismiss(animated: true, completion: nil)
+                     self.stopAnimating()
                 })
                
             }
@@ -514,15 +517,20 @@ extension LZOfficeViewController{
        }
        
        func exportFile(){
-
+            startAnimating(lodingSize,type: loadingType, color: COLOR_4990ED)
            var paths = [String]()
            for Value in self.dataSource {
                let model:LZOfficeFolderModel = Value as! LZOfficeFolderModel
                for pathModel in model.images {
-                   let m:LZOfficeModel = pathModel as! LZOfficeModel
-                   paths.append(videoFolder + m.path)
+                let m:LZOfficeModel = pathModel 
+                   paths.append(officeFolder + m.path)
                }
            }
+            if paths.count == 0 {
+                 stopAnimating()
+                 self.chrysan.show(.plain, message:LanguageStrins(string: "The folder is empty"), hideDelay: HIDE_DELAY)
+                return
+            }
            if SSZipArchive.createZipFile(atPath:tempOfficePath, withFilesAtPaths: paths) {
                print("压缩成功")
                if (rootFileManager.fileExists(atPath: tempOfficePath)) {
@@ -533,8 +541,9 @@ extension LZOfficeViewController{
                }
            }else{
                print("压缩失败")
+                self.chrysan.show(.plain, message:LanguageStrins(string: "Compression failed"), hideDelay: HIDE_DELAY)
            }
-       
+             stopAnimating()
        }
        func numberOfPreviewItems(in controller: QLPreviewController) -> Int {
            return 1
