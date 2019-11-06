@@ -93,6 +93,7 @@ DEPENDENCIES:
   - IBAnimatable
   - IQKeyboardManagerSwift
   - JXPhotoBrowser
+  - Kingfisher
   - LYEmptyView
   - NVActivityIndicatorView
   - RealmSwift
@@ -148,6 +149,6 @@ SPEC CHECKSUMS:
   SnapKit: 0de968a9fec17499afa29683b05d0c775b6d1c29
   SSZipArchive: fa16b8cc4cdeceb698e5e5d9f67e9558532fbf23
 
-PODFILE CHECKSUM: 068fc013c3074e7b9b3daec54f34a1a517af8be2
+PODFILE CHECKSUM: 43d6b03aa8bd5c0b7626ddc0fbb0c16f3e7b5beb
 
 COCOAPODS: 1.6.1

@@ -26,6 +26,7 @@
 "Please select the photograph you need to export" = "Please select the photograph you need to export";
 "Export the photos to the album" = "Export the photos to the album";
 "Save success" = "Save success";
+"Save failed" = "Save failed";
 "Delete success." = "Delete success.";
 "Delete failure." = "Delete failure.";
 "Receive" = "Receive";
@@ -58,3 +59,4 @@
 "Please select the compressed file" = "Please select the compressed file";
 "Compression failed" = "Compression failed";
 "The folder is empty" = "The folder is empty";
+"Please import the file!" = "Please import the file!";

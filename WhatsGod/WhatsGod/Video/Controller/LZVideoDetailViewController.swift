@@ -265,7 +265,9 @@ class LZVideoDetailViewController: LZBaseViewController,UICollectionViewDelegate
                 self.dataSource.append(image)
             }
         }
-      
+      if self.dataSource.count == 0 {
+          self.allBtn.isSelected = false
+      }
         self.collectionView .reloadData()
         self.stopAnimating()
     }
@@ -338,9 +340,12 @@ class LZVideoDetailViewController: LZBaseViewController,UICollectionViewDelegate
        }
 
     @objc func allEvent(btn:UIButton) -> Void {
-        btn.isSelected = !btn.isSelected
         
-    
+        if self.dataSource.count == 0 {
+            self.chrysan.show(.plain, message:LanguageStrins(string: "Please import the file!"), hideDelay: HIDE_DELAY)
+            return
+        }
+        btn.isSelected = !btn.isSelected
         if btn.isSelected {
             for itme in self.dataSource{
             

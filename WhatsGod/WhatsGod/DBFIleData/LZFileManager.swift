@@ -22,6 +22,8 @@ public   let officeFolder = rootFolder + "OfficeFolder/"
 public let albumsCompressedPath = rootFolder + "albumsCompressedPath/" + "album.zip"
 public let videosCompressedPath = rootFolder + "videosCompressedPath"
 public let officesCompressedPath = rootFolder + "officesCompressedPath"
+
+
 class LZFileManager: NSObject {
    
    
@@ -263,4 +265,6 @@ class LZFileManager: NSObject {
             
            return nil
        }
+    
+    
 }

@@ -7,7 +7,7 @@
 //
 
 import UIKit
-
+import Kingfisher
 class LZAlbumDetailsCell: UICollectionViewCell {
     lazy var selectBtn:UIButton = {
         let btn = UIButton.init()
@@ -35,6 +35,8 @@ class LZAlbumDetailsCell: UICollectionViewCell {
     lazy var imageView:UIImageView = {
         let image = UIImageView.init()
         image.layer.masksToBounds = true
+        image.backgroundColor = COLOR_B8B8B8
+        image.contentMode = .scaleAspectFill
         return image
     }()
     
@@ -87,12 +89,21 @@ class LZAlbumDetailsCell: UICollectionViewCell {
           
         }
     }
+   
     public func loadData(model:AnyObject){
         
          if model.isKind(of: LZAlbumImageModel.self) == true {
             
-            self.imageView.image = UIImage.init(data: LZFileManager.getImageFile(filePath: (model as! LZAlbumImageModel).path))
-            self.imageView.contentMode = .scaleAspectFill
+//            self.imageView.image = UIImage.init(data: LZFileManager.getImageFile(filePath: (model as! LZAlbumImageModel).path))
+            let url:URL = URL.init(string: "file://" + albumsFolder + (model as! LZAlbumImageModel).path.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)!
+            self.imageView.kf.indicatorType = .activity
+    
+            self.imageView.kf.setImage(with: url, placeholder: nil, options: [.scaleFactor(UIScreen.main.scale),
+            .transition(.fade(1)),
+            .cacheOriginalImage], progressBlock: nil) { (image, error, type, url) in
+                
+            }
+           
             self.selectBtn.isSelected = (model as! LZAlbumImageModel).isSelect
             self.selectBtn.isHidden = (model as! LZAlbumImageModel).isHidden
             self.nameLabel.text = (model as! LZAlbumImageModel).type
@@ -100,7 +111,11 @@ class LZAlbumDetailsCell: UICollectionViewCell {
          }else if model.isKind(of: LZVideoModel.self) == true{
             
             self.imageView.image = UIImage.init(data: LZFileManager.getViodeFile(filePath: (model as! LZVideoModel).imagePath))
-            self.imageView.contentMode = .scaleAspectFill
+              let url:URL = URL.init(string: "file://" + albumsFolder + (model as! LZVideoModel).imagePath.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)!
+            self.imageView.kf.setImage(with: url, placeholder: nil, options: [.scaleFactor(UIScreen.main.scale),
+                                  .transition(.fade(1)),
+                                  .cacheOriginalImage], progressBlock: nil) { (image, error, type, url) in
+            }
             self.selectBtn.isSelected = (model as! LZVideoModel).isSelect
             self.selectBtn.isHidden = (model as! LZVideoModel).isHidden
             self.nameLabel.text = (model as! LZVideoModel).timer

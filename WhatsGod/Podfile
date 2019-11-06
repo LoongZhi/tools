@@ -50,5 +50,6 @@ target 'WhatsGod' do
    
    pod 'JXPhotoBrowser'
 
+   pod 'Kingfisher'
   
 end

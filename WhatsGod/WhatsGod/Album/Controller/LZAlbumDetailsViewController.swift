@@ -28,7 +28,7 @@ class LZAlbumDetailsViewController: LZBaseViewController,UICollectionViewDelegat
     private var imageDataArr = NSArray()
     private lazy var collectionView:UICollectionView = {
         let layout = UICollectionViewFlowLayout.init()
-        layout.itemSize = CGSize.init(width: SCREEN_WIDTH / 4, height: SCREEN_WIDTH / 4)
+        layout.itemSize = CGSize(width:SCREEN_WIDTH / 4,height:SCREEN_WIDTH / 4)
         layout.minimumLineSpacing = 10
         layout.minimumInteritemSpacing = 0
         layout.sectionInset = UIEdgeInsets.init(top: 0, left: 0, bottom: 0, right: 0)
@@ -38,7 +38,7 @@ class LZAlbumDetailsViewController: LZBaseViewController,UICollectionViewDelegat
         collection.backgroundColor = UIColor.white
         return collection;
     }()
-    private lazy var pickerController:DKImagePickerController = {
+    private  lazy  var  pickerController:DKImagePickerController = {
         let pc = DKImagePickerController.init()
         pc.assetType = .allPhotos
         return pc
@@ -166,7 +166,7 @@ class LZAlbumDetailsViewController: LZBaseViewController,UICollectionViewDelegat
         vProperty.separatorInset = UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 15)
         
         
-        self.menuView = FWMenuView.menu(itemTitles: [LanguageStrins(string: "Add"),LanguageStrins(string: "Edit")], itemImageNames:images as! [UIImage], itemBlock: { (popupView, index, title) in
+        self.menuView = FWMenuView.menu(itemTitles: [LanguageStrins(string: "Add"),LanguageStrins(string: "Edit")], itemImageNames:self.images as! [UIImage], itemBlock: { (popupView, index, title) in
             print("Menu：点击了第\(index)个按钮")
             
             switch (index) {
@@ -232,14 +232,16 @@ class LZAlbumDetailsViewController: LZBaseViewController,UICollectionViewDelegat
         if self.dataSource.count != 0 {
             self.dataSource.removeAll()
         }
-     
+        
         if folderModel!.images.count != 0{
             
             for image in folderModel!.images {
                 self.dataSource.append(image)
             }
         }
-      
+        if self.dataSource.count == 0 {
+            self.allBtn.isSelected = false
+        }
         self.collectionView .reloadData()
         self.stopAnimating()
     }
@@ -313,9 +315,12 @@ class LZAlbumDetailsViewController: LZBaseViewController,UICollectionViewDelegat
        }
 
     @objc func allEvent(btn:UIButton) -> Void {
-        btn.isSelected = !btn.isSelected
         
-    
+        if self.dataSource.count == 0 {
+            self.chrysan.show(.plain, message:LanguageStrins(string: "Please import the file!"), hideDelay: HIDE_DELAY)
+            return
+        }
+        btn.isSelected = !btn.isSelected
         if btn.isSelected {
             for itme in self.dataSource{
             
@@ -344,6 +349,12 @@ class LZAlbumDetailsViewController: LZBaseViewController,UICollectionViewDelegat
                 model.isSelect = btn.isSelected
             }
             let indexPath = IndexPath.init(row: btn.tag, section: 0)
+            let cell = self.collectionView.cellForItem(at: indexPath) as! LZAlbumDetailsCell
+             cell.layer.transform = CATransform3DMakeScale(0.1, 0.1, 1)
+               //设置动画时间为0.25秒，xy方向缩放的最终值为1
+            UIView.animate(withDuration: 0.25, animations: {
+                   cell.layer.transform=CATransform3DMakeScale(1, 1, 1)
+               })
             self.collectionView.reloadItems(at: [indexPath])
             
             
@@ -417,6 +428,20 @@ class LZAlbumDetailsViewController: LZBaseViewController,UICollectionViewDelegat
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
+ 
+        let delegate = JXPhotoBrowserBaseDelegate()
+ 
+        delegate.longPressedCallback = { browser, index, image, gesture in
+            PHPhotoLibrary.shared().performChanges({
+             PHAssetChangeRequest.creationRequestForAsset(from: image!)
+            }) { (isSuccess: Bool, error: Error?) in
+                if isSuccess {
+                    self.chrysan.show(.plain, message:LanguageStrins(string: "Save success"), hideDelay: HIDE_DELAY)
+                } else{
+                    self.chrysan.show(.plain,message:LanguageStrins(string: "Save failed") + "：" + error!.localizedDescription,hideDelay: HIDE_DELAY)
+                }
+            }
+        }
         
         let localData = JXLocalDataSource(numberOfItems: { () -> Int in
                    return self.dataSource.count
@@ -426,7 +451,13 @@ class LZAlbumDetailsViewController: LZBaseViewController,UICollectionViewDelegat
                    return image
         })
         
-        JXPhotoBrowser(dataSource: localData).show(pageIndex: indexPath.item)
+        let trans = JXPhotoBrowserZoomTransitioning { (browser, index, view) -> UIView? in
+            let indexPath = IndexPath(item: index, section: 0)
+            let cell = collectionView.cellForItem(at: indexPath) as? LZAlbumDetailsCell
+            return cell
+        }
+        JXPhotoBrowser(dataSource: localData, delegate: delegate, transDelegate: trans)
+            .show(pageIndex: indexPath.item)
     }
 
 
@@ -474,4 +505,6 @@ extension LZAlbumDetailsViewController{
         return videoUrl as QLPreviewItem
     
     }
+    
+    
 }

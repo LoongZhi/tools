@@ -29,5 +29,4 @@ class LZAlbumImageModel: Object {
     @objc dynamic var isSelect = false
     @objc dynamic var type = ""
     
-    
 }
