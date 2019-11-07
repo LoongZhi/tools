@@ -165,7 +165,7 @@ class LZOfficeDetailViewController: LZBaseViewController,UICollectionViewDelegat
         vProperty.separatorInset = UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 15)
         
         
-        self.menuView = FWMenuView.menu(itemTitles: [LanguageStrins(string: "Add"),LanguageStrins(string: "Edit")], itemImageNames:images as! [UIImage], itemBlock: { (popupView, index, title) in
+        self.menuView = FWMenuView.menu(itemTitles: [LanguageStrins(string: "Add"),LanguageStrins(string: "Edit")], itemImageNames:images as! [UIImage], itemBlock: { [weak self] (popupView, index, title) in
             print("Menu：点击了第\(index)个按钮")
             
             switch (index) {
@@ -173,10 +173,10 @@ class LZOfficeDetailViewController: LZBaseViewController,UICollectionViewDelegat
                 
                 break;
             case 1:
-                let itme = UIBarButtonItem.init(title: LanguageStrins(string: "Completed"), style: .done, target: self, action: #selector(self.leftItmeEvent))
-                self.navigationItem.leftBarButtonItem = itme
-                self.isHidden = false
-                self.setHidden(hidden: self.isHidden)
+                let itme = UIBarButtonItem.init(title: LanguageStrins(string: "Completed"), style: .done, target: self, action: #selector(self!.leftItmeEvent))
+                self!.navigationItem.leftBarButtonItem = itme
+                self!.isHidden = false
+                self!.setHidden(hidden: self!.isHidden)
                 break;
             default:
                 break;
@@ -213,28 +213,9 @@ class LZOfficeDetailViewController: LZBaseViewController,UICollectionViewDelegat
         self.stopAnimating()
     }
     override func rightItmeEvent() {
-        
-//        if self.isRightPhoto() {
+
             self.menuView?.show()
-//        }else{
-//            let alert = FWAlertView.alert(title: LanguageStrins(string: "Tips"), detail: LanguageStrins(string: "Whether you delete the folder"), confirmBlock: { (view, number, str) in
-//
-//                let url = URL(string: UIApplication.openSettingsURLString)
-//                if let url = url, UIApplication.shared.canOpenURL(url) {
-//                    if #available(iOS 10, *) {
-//                        UIApplication.shared.open(url, options: [:],
-//                                                  completionHandler: {
-//                                                    (success) in
-//                        })
-//                    } else {
-//                       UIApplication.shared.openURL(url)
-//                    }
-//                }
-//            }) { (view, number, str) in
-//
-//            }
-//            alert.show()
-//        }
+
          
     }
     override func leftItmeEvent() {
@@ -309,27 +290,27 @@ class LZOfficeDetailViewController: LZBaseViewController,UICollectionViewDelegat
     @objc func delTouch(){
         
         
-        let alert = FWAlertView.alert(title: LanguageStrins(string: "Tips"), detail: LanguageStrins(string: "Remove photos?"), confirmBlock: { (view, num, str) in
+        let alert = FWAlertView.alert(title: LanguageStrins(string: "Tips"), detail: LanguageStrins(string: "Remove photos?"), confirmBlock: { [weak self] (view, num, str) in
             
             var isbool = true
             
-            for (index,itme) in self.dataSource.enumerated(){
+            for (index,itme) in self!.dataSource.enumerated(){
                  let model:LZOfficeModel = itme as! LZOfficeModel
                 if model.isSelect {
                     LZFileManager.deleteOfficeFile(filePath: model.path)
                     try! realm.write {
-                        let indexNum1:Int? =  self.folderModel?.images.index(of: model)
-                        self.folderModel?.images.remove(at: indexNum1!)
+                        let indexNum1:Int? =  self!.folderModel?.images.index(of: model)
+                        self!.folderModel?.images.remove(at: indexNum1!)
                         
                     }
                     isbool = false
                 }
             }
-            self.getDataSource()
+            self!.getDataSource()
             if isbool{
-                self.chrysan.show(.plain, message:LanguageStrins(string: "Please select the photograph to be deleted"), hideDelay: HIDE_DELAY)
+                self!.chrysan.show(.plain, message:LanguageStrins(string: "Please select the photograph to be deleted"), hideDelay: HIDE_DELAY)
             }else{
-                 self.chrysan.show(.plain, message:LanguageStrins(string: "Delete success."), hideDelay: HIDE_DELAY)
+                self!.chrysan.show(.plain, message:LanguageStrins(string: "Delete success."), hideDelay: HIDE_DELAY)
             }
 
         }) { (view, num, str) in

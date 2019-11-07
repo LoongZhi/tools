@@ -69,6 +69,7 @@ PODS:
   - NVActivityIndicatorView (4.8.0):
     - NVActivityIndicatorView/Presenter (= 4.8.0)
   - NVActivityIndicatorView/Presenter (4.8.0)
+  - pop (1.0.12)
   - Realm (3.18.0):
     - Realm/Headers (= 3.18.0)
   - Realm/Headers (3.18.0)
@@ -96,6 +97,7 @@ DEPENDENCIES:
   - Kingfisher
   - LYEmptyView
   - NVActivityIndicatorView
+  - pop
   - RealmSwift
   - SnapKit (~> 4.0.0)
   - SSZipArchive
@@ -118,6 +120,7 @@ SPEC REPOS:
     - Kingfisher
     - LYEmptyView
     - NVActivityIndicatorView
+    - pop
     - Realm
     - RealmSwift
     - SDWebImage
@@ -142,6 +145,7 @@ SPEC CHECKSUMS:
   Kingfisher: c148cd7b47ebde9989f6bc7c27dcaa79d81279a0
   LYEmptyView: b6d418cfa38b78df0cf243f9a9c25ccbdc399922
   NVActivityIndicatorView: d24b7ebcf80af5dcd994adb650e2b6c93379270f
+  pop: d582054913807fd11fd50bfe6a539d91c7e1a55a
   Realm: 7b3d04740facf45e958a514b466a32b04f1113d6
   RealmSwift: c817b5f374668cf08f649afb05f55d92a787649c
   SDWebImage: 96d7f03415ccb28d299d765f93557ff8a617abd8
@@ -149,6 +153,6 @@ SPEC CHECKSUMS:
   SnapKit: 0de968a9fec17499afa29683b05d0c775b6d1c29
   SSZipArchive: fa16b8cc4cdeceb698e5e5d9f67e9558532fbf23
 
-PODFILE CHECKSUM: 43d6b03aa8bd5c0b7626ddc0fbb0c16f3e7b5beb
+PODFILE CHECKSUM: f6075bc315c71e011177228196b25ee82a045d8a
 
 COCOAPODS: 1.6.1

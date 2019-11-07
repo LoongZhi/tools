@@ -106,7 +106,7 @@ class LZVideoViewController: LZBaseViewController,UICollectionViewDelegate,UICol
         vProperty.separatorInset = UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 15)
         
        
-        self.menuView = FWMenuView.menu(itemTitles: [LanguageStrins(string: "New"),LanguageStrins(string: "Export"),LanguageStrins(string: "Edit")], itemImageNames:images as! [UIImage], itemBlock: { (popupView, index, title) in
+        self.menuView = FWMenuView.menu(itemTitles: [LanguageStrins(string: "New"),LanguageStrins(string: "Export"),LanguageStrins(string: "Edit")], itemImageNames:(images as! [UIImage]), itemBlock: {[weak self] (popupView, index, title) in
             print("Menu：点击了第\(index)个按钮")
             
             switch (index) {
@@ -130,7 +130,7 @@ class LZVideoViewController: LZBaseViewController,UICollectionViewDelegate,UICol
                                   as UITextField
                                 if acc.text!.isStringNull() {
                                         
-                                    self.chrysan.show(.plain, message:LanguageStrins(string: "Please enter the filename"), hideDelay: HIDE_DELAY)
+                                    self!.chrysan.show(.plain, message:LanguageStrins(string: "Please enter the filename"), hideDelay: HIDE_DELAY)
                                                                                                            
                                     return
                                                         
@@ -144,20 +144,20 @@ class LZVideoViewController: LZBaseViewController,UICollectionViewDelegate,UICol
                                
                                 try! realm.write {
                                   realm.add(albumModel)
-                                  self.getDataSource()
+                                    self!.getDataSource()
                                 }
                             }
                           alertController.addAction(okAction)
-                          self.present(alertController,animated: true,completion: nil)
+                       self!.present(alertController,animated: true,completion: nil)
                 break;
             case 1:
-                self.exportFile()
+                self!.exportFile()
                 break;
             case 2:
-                let itme = UIBarButtonItem.init(title: LanguageStrins(string: "Completed"), style: .done, target: self, action: #selector(self.leftItmeEvent))
-                self.navigationItem.leftBarButtonItem = itme
-                self.isHidden = false
-                self.setHidden(hidden: self.isHidden)
+                let itme = UIBarButtonItem.init(title: LanguageStrins(string: "Completed"), style: .done, target: self, action: #selector(self!.leftItmeEvent))
+                self!.navigationItem.leftBarButtonItem = itme
+                self!.isHidden = false
+                self!.setHidden(hidden: self!.isHidden)
                 break;
             default:
                 break;

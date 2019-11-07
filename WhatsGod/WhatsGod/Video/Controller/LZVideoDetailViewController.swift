@@ -168,14 +168,13 @@ class LZVideoDetailViewController: LZBaseViewController,UICollectionViewDelegate
         vProperty.separatorInset = UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 15)
         
         
-        self.menuView = FWMenuView.menu(itemTitles: [LanguageStrins(string: "Add"),LanguageStrins(string: "Edit")], itemImageNames:images as! [UIImage], itemBlock: { (popupView, index, title) in
-            print("Menu：点击了第\(index)个按钮")
-            
+        self.menuView = FWMenuView.menu(itemTitles: [LanguageStrins(string: "Add"),LanguageStrins(string: "Edit")], itemImageNames:images as! [UIImage], itemBlock: { [weak self] (popupView, index, title) in
+
             switch (index) {
             case 0:
-                self.pickerController.didSelectAssets = { (assets) in
+                self!.pickerController.didSelectAssets = { (assets) in
                     
-                    self.startAnimating(lodingSize,type: loadingType, color: COLOR_4990ED)
+                    self!.startAnimating(lodingSize,type: loadingType, color: COLOR_4990ED)
                     for (index,itme) in assets.enumerated() {
                         let model:DKAsset = itme
                        
@@ -184,7 +183,7 @@ class LZVideoDetailViewController: LZBaseViewController,UICollectionViewDelegate
                              DispatchQueue.main.async {
                                     let url:String = model.originalAsset?.value(forKey: "filename") as! String
                                     let type = url.returnFileType(fileUrl: url)
-                                    let paths = self.folderModel?.path
+                                let paths = self!.folderModel?.path
                                     let path = paths! + "/Video" + String(format: "%d.%@",Date().timeIntervalSince1970,type)
                                     let ImagePath = paths! + "/Thumb" + String(format: "%d.jpg",Date().timeIntervalSince1970)
                                     if asset == nil{
@@ -198,14 +197,14 @@ class LZVideoDetailViewController: LZBaseViewController,UICollectionViewDelegate
                                     if LZFileManager.writeVideoFile(filePath: path, data:jsonData){
                                         
                                        
-                                            let imgData:Data = self.getVideoFengMian(url: urlAsset.url).jpegData(compressionQuality: 1)!
+                                        let imgData:Data = self!.getVideoFengMian(url: urlAsset.url).jpegData(compressionQuality: 1)!
                                             if LZFileManager.writeVideoFile(filePath: ImagePath, data:imgData){
                                                 print("写入成功")
                                             }else{
                                                 print("写入失败")
                                             }
                                             let videoModel = LZVideoModel.init()
-                                                videoModel.isHidden = self.isHidden
+                                        videoModel.isHidden = self!.isHidden
                                                 videoModel.path = path
                                                 videoModel.type = type
                                                 videoModel.imagePath = ImagePath
@@ -213,10 +212,10 @@ class LZVideoDetailViewController: LZBaseViewController,UICollectionViewDelegate
                                         videoModel.timer = String.init().transToHourMinSecs(time:videoModel.timerscale)
                                                 try! realm.write {
 
-                                                self.folderModel?.images.append(videoModel)
+                                                    self!.folderModel?.images.append(videoModel)
 
                                             }
-                                            self.getDataSource()
+                                        self!.getDataSource()
                                         
                                         }
 
@@ -224,19 +223,19 @@ class LZVideoDetailViewController: LZBaseViewController,UICollectionViewDelegate
 
                             }
                         if assets.count == 0 {
-                            self.stopAnimating()
+                            self!.stopAnimating()
                         }
                     
                     }
                     
                 }
-                self.present(self.pickerController, animated: true, completion: nil)
+                self!.present(self!.pickerController, animated: true, completion: nil)
                 break;
             case 1:
-                let itme = UIBarButtonItem.init(title: LanguageStrins(string: "Completed"), style: .done, target: self, action: #selector(self.leftItmeEvent))
-                self.navigationItem.leftBarButtonItem = itme
-                self.isHidden = false
-                self.setHidden(hidden: self.isHidden)
+                let itme = UIBarButtonItem.init(title: LanguageStrins(string: "Completed"), style: .done, target: self, action: #selector(self!.leftItmeEvent))
+                self!.navigationItem.leftBarButtonItem = itme
+                self!.isHidden = false
+                self!.setHidden(hidden: self!.isHidden)
                 break;
             default:
                 break;

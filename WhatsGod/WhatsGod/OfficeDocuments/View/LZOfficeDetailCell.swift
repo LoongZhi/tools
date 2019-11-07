@@ -80,6 +80,11 @@ class LZOfficeDetailCell: UICollectionViewCell {
                make.right.top.left.bottom.equalToSuperview()
              
            }
+        
+            self.transform = CGAffineTransform(scaleX: 1.4, y: 1.4)
+            UIView.animate(withDuration: 0.5) {
+                self.transform = CGAffineTransform.identity
+            }
        }
        public func loadData(model:LZOfficeModel){
            

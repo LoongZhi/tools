@@ -103,8 +103,9 @@ class LZOfficeViewController: LZBaseViewController,UICollectionViewDelegate,UICo
         vProperty.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white, NSAttributedString.Key.backgroundColor: UIColor.clear, NSAttributedString.Key.font: UIFont.systemFont(ofSize: 15.0)]
         vProperty.separatorInset = UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 15)
         
+        
        
-        self.menuView = FWMenuView.menu(itemTitles: [LanguageStrins(string: "New"),LanguageStrins(string: "Export"),LanguageStrins(string: "Edit")], itemImageNames:images as! [UIImage], itemBlock: { (popupView, index, title) in
+        self.menuView = FWMenuView.menu(itemTitles: [LanguageStrins(string: "New"),LanguageStrins(string: "Export"),LanguageStrins(string: "Edit")], itemImageNames:(images as! [UIImage]), itemBlock: { [weak self] (popupView, index, title) in
             print("Menu：点击了第\(index)个按钮")
             
             switch (index) {
@@ -127,8 +128,8 @@ class LZOfficeViewController: LZBaseViewController,UICollectionViewDelegate,UICo
                                 (alertController.textFields?.first)!
                                   as UITextField
                                 if acc.text!.isStringNull() {
-                                        
-                                    self.chrysan.show(.plain, message:LanguageStrins(string: "Please enter the filename"), hideDelay: HIDE_DELAY)
+                                    
+                                    self!.chrysan.show(.plain, message:LanguageStrins(string: "Please enter the filename"), hideDelay: HIDE_DELAY)
                                                                                                            
                                     return
                                                         
@@ -142,21 +143,21 @@ class LZOfficeViewController: LZBaseViewController,UICollectionViewDelegate,UICo
                                
                                 try! realm.write {
                                   realm.add(officeModel)
-                                  self.getDataSource()
+                                    self!.getDataSource()
                                 }
                             }
                           alertController.addAction(okAction)
-                          self.present(alertController,animated: true,completion: nil)
+                       self!.present(alertController,animated: true,completion: nil)
                 break;
             case 1:
-                self.exportFile()
+                self!.exportFile()
                 break;
             case 2:
                 
-                let itme = UIBarButtonItem.init(title: LanguageStrins(string: "Completed"), style: .done, target: self, action: #selector(self.leftItmeEvent))
-                self.navigationItem.leftBarButtonItem = itme
-                self.isHidden = false
-                self.setHidden(hidden: self.isHidden)
+                let itme = UIBarButtonItem.init(title: LanguageStrins(string: "Completed"), style: .done, target: self, action: #selector(self!.leftItmeEvent))
+                self!.navigationItem.leftBarButtonItem = itme
+                self!.isHidden = false
+                self!.setHidden(hidden: self!.isHidden)
                 break;
             default:
                 break;
@@ -516,8 +517,9 @@ extension LZOfficeViewController{
                      self.present(alertController,animated: true,completion: nil)
        }
        
-       func exportFile(){
-            startAnimating(lodingSize,type: loadingType, color: COLOR_4990ED)
+    func exportFile(){
+        
+       self.startAnimating(lodingSize,type: loadingType, color: COLOR_4990ED)
            var paths = [String]()
            for Value in self.dataSource {
                let model:LZOfficeFolderModel = Value as! LZOfficeFolderModel
@@ -527,8 +529,8 @@ extension LZOfficeViewController{
                }
            }
             if paths.count == 0 {
-                 stopAnimating()
-                 self.chrysan.show(.plain, message:LanguageStrins(string: "The folder is empty"), hideDelay: HIDE_DELAY)
+                 self.stopAnimating()
+                 chrysan.show(.plain, message:LanguageStrins(string: "The folder is empty"), hideDelay: HIDE_DELAY)
                 return
             }
            if SSZipArchive.createZipFile(atPath:tempOfficePath, withFilesAtPaths: paths) {
@@ -543,7 +545,7 @@ extension LZOfficeViewController{
                print("压缩失败")
                 self.chrysan.show(.plain, message:LanguageStrins(string: "Compression failed"), hideDelay: HIDE_DELAY)
            }
-             stopAnimating()
+             self.stopAnimating()
        }
        func numberOfPreviewItems(in controller: QLPreviewController) -> Int {
            return 1

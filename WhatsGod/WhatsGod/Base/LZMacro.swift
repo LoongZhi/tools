@@ -39,6 +39,7 @@ func fileUrlType(type:String) -> FileType{
     
     return false
 }
+
 //数据库对象
  let realm = LZRealmTool.lz_realm
 

@@ -52,4 +52,5 @@ target 'WhatsGod' do
 
    pod 'Kingfisher'
   
+    pod "pop"
 end

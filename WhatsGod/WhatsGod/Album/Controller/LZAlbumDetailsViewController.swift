@@ -29,7 +29,7 @@ class LZAlbumDetailsViewController: LZBaseViewController,UICollectionViewDelegat
     private lazy var collectionView:UICollectionView = {
         let layout = UICollectionViewFlowLayout.init()
         layout.itemSize = CGSize(width:SCREEN_WIDTH / 4,height:SCREEN_WIDTH / 4)
-        layout.minimumLineSpacing = 10
+        layout.minimumLineSpacing = 0
         layout.minimumInteritemSpacing = 0
         layout.sectionInset = UIEdgeInsets.init(top: 0, left: 0, bottom: 0, right: 0)
         let collection = UICollectionView.init(frame: self.view.bounds, collectionViewLayout: layout)
@@ -166,37 +166,37 @@ class LZAlbumDetailsViewController: LZBaseViewController,UICollectionViewDelegat
         vProperty.separatorInset = UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 15)
         
         
-        self.menuView = FWMenuView.menu(itemTitles: [LanguageStrins(string: "Add"),LanguageStrins(string: "Edit")], itemImageNames:self.images as! [UIImage], itemBlock: { (popupView, index, title) in
+        self.menuView = FWMenuView.menu(itemTitles: [LanguageStrins(string: "Add"),LanguageStrins(string: "Edit")], itemImageNames:self.images as! [UIImage], itemBlock: { [weak self] (popupView, index, title) in
             print("Menu：点击了第\(index)个按钮")
             
             switch (index) {
             case 0:
-                self.pickerController.didSelectAssets = { (assets) in
-                    self.startAnimating(lodingSize,type: loadingType, color: COLOR_4990ED)
+                self!.pickerController.didSelectAssets = { (assets) in
+                    self!.startAnimating(lodingSize,type: loadingType, color: COLOR_4990ED)
                     for (index,itme) in assets.enumerated() {
                         let model:DKAsset = itme
                         PHCachingImageManager.default().requestImage(for: model.originalAsset!, targetSize: PHImageManagerMaximumSize, contentMode: .default, options: nil) { (result: UIImage?, dictionry: Dictionary?) in
                             let url:String = model.originalAsset?.value(forKey: "filename") as! String
                             let type = url.returnFileType(fileUrl: url)
-                            let path = self.folderModel!.path + "/image" + String(format: "%d.%@",Date().timeIntervalSince1970,type)
+                            let path = self!.folderModel!.path + "/image" + String(format: "%d.%@",Date().timeIntervalSince1970,type)
                             
                             let img = UIImage.init(data: try! Data.init(contentsOf: dictionry!["PHImageFileURLKey"] as! URL))
                             if LZFileManager.writeImageFile(filePath: path, data:(img!.jpegData(compressionQuality: 1))!){
                                 let imageModel = LZAlbumImageModel.init()
-                                imageModel.isHidden = self.isHidden
+                                imageModel.isHidden = self!.isHidden
                                 imageModel.path = path
                                 imageModel.type = type
                                 try! realm.write {
-                                    self.folderModel?.images.append(imageModel)
+                                    self!.folderModel?.images.append(imageModel)
                                 }
                             }
                             
                             if index == assets.count - 1{
-                                 self.getDataSource()
+                                self!.getDataSource()
                             }
                     }
                         if assets.count == 0 {
-                            self.stopAnimating()
+                            self?.stopAnimating()
                         }
                     
                    
@@ -204,13 +204,13 @@ class LZAlbumDetailsViewController: LZBaseViewController,UICollectionViewDelegat
                     }
                     
                 }
-                self.present(self.pickerController, animated: true, completion: nil)
+                self!.present(self!.pickerController, animated: true, completion: nil)
                 break;
             case 1:
-                let itme = UIBarButtonItem.init(title: LanguageStrins(string: "Completed"), style: .done, target: self, action: #selector(self.leftItmeEvent))
-                self.navigationItem.leftBarButtonItem = itme
-                self.isHidden = false
-                self.setHidden(hidden: self.isHidden)
+                let itme = UIBarButtonItem.init(title: LanguageStrins(string: "Completed"), style: .done, target: self, action: #selector(self!.leftItmeEvent))
+                self!.navigationItem.leftBarButtonItem = itme
+                self!.isHidden = false
+                self!.setHidden(hidden: self!.isHidden)
                 break;
             default:
                 break;
@@ -349,15 +349,9 @@ class LZAlbumDetailsViewController: LZBaseViewController,UICollectionViewDelegat
                 model.isSelect = btn.isSelected
             }
             let indexPath = IndexPath.init(row: btn.tag, section: 0)
-            let cell = self.collectionView.cellForItem(at: indexPath) as! LZAlbumDetailsCell
-             cell.layer.transform = CATransform3DMakeScale(0.1, 0.1, 1)
-               //设置动画时间为0.25秒，xy方向缩放的最终值为1
-            UIView.animate(withDuration: 0.25, animations: {
-                   cell.layer.transform=CATransform3DMakeScale(1, 1, 1)
-               })
+            let selectCell = self.collectionView.cellForItem(at: indexPath) as! LZAlbumDetailsCell
             self.collectionView.reloadItems(at: [indexPath])
-            
-            
+        
         }
     }
     
@@ -423,6 +417,7 @@ class LZAlbumDetailsViewController: LZBaseViewController,UICollectionViewDelegat
         cell.loadData(model: self.dataSource[indexPath.row] as! LZAlbumImageModel)
         cell.selectBtn.tag = indexPath.item
         cell.selectBtn.addTarget(self, action:#selector(touchBtn(btn:)) , for: .touchUpInside)
+      
         return cell
     }
     
@@ -430,17 +425,46 @@ class LZAlbumDetailsViewController: LZBaseViewController,UICollectionViewDelegat
         
  
         let delegate = JXPhotoBrowserBaseDelegate()
- 
+        
         delegate.longPressedCallback = { browser, index, image, gesture in
-            PHPhotoLibrary.shared().performChanges({
-             PHAssetChangeRequest.creationRequestForAsset(from: image!)
-            }) { (isSuccess: Bool, error: Error?) in
-                if isSuccess {
-                    self.chrysan.show(.plain, message:LanguageStrins(string: "Save success"), hideDelay: HIDE_DELAY)
-                } else{
-                    self.chrysan.show(.plain,message:LanguageStrins(string: "Save failed") + "：" + error!.localizedDescription,hideDelay: HIDE_DELAY)
+            let sheerView = FWSheetView.sheet(title: nil, itemTitles: [LanguageStrins(string:"Save"),LanguageStrins(string: "Share")], itemBlock: { (FWPopupViews, Ints, Strings) in
+                //保存
+                if Ints == 0{
+                    PHPhotoLibrary.shared().performChanges({
+                     PHAssetChangeRequest.creationRequestForAsset(from: image!)
+                    }) { (isSuccess: Bool, error: Error?) in
+                        
+                        DispatchQueue.main.async {
+                            if isSuccess {
+                                browser.chrysan.show(.plain, message:LanguageStrins(string: "Save success"), hideDelay: HIDE_DELAY)
+                            } else{
+                                browser.chrysan.show(.plain,message:LanguageStrins(string: "Save failed") + "：" + error!.localizedDescription,hideDelay: HIDE_DELAY)
+                            }
+                        }
+                    }
+                }else{//分享
+                    
+                    let items = [image as Any] as [Any]
+                     let activityVC = UIActivityViewController(
+                         activityItems: items,
+                         applicationActivities: nil)
+                    activityVC.completionWithItemsHandler =  { activity, success, items, error in
+                        
+                        DispatchQueue.main.async {
+                            if success {
+                                browser.chrysan.show(.plain, message:LanguageStrins(string: "Share success"), hideDelay: HIDE_DELAY)
+                            } else{
+                                browser.chrysan.show(.plain,message:LanguageStrins(string: "Share failed"),hideDelay: HIDE_DELAY)
+                            }
+                        }
+                     }
+                    browser.present(activityVC, animated: true, completion: { () -> Void in})
                 }
-            }
+            }, cancelItemTitle: LanguageStrins(string: "Cancel"), cancenlBlock: {
+                
+            }, property: nil)
+            sheerView.show()
+            
         }
         
         let localData = JXLocalDataSource(numberOfItems: { () -> Int in
@@ -461,7 +485,11 @@ class LZAlbumDetailsViewController: LZBaseViewController,UICollectionViewDelegat
     }
 
 
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+       
+    }
 
+    
 }
 extension LZAlbumDetailsViewController{
     

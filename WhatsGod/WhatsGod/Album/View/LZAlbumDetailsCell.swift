@@ -12,7 +12,7 @@ class LZAlbumDetailsCell: UICollectionViewCell {
     lazy var selectBtn:UIButton = {
         let btn = UIButton.init()
         btn.backgroundColor = .clear
-        btn.layer.borderColor  = COLOR_4990ED.cgColor
+        btn.layer.borderColor  = COLOR_F8F8FF.cgColor
         return btn
     }()
     lazy var bottomView:UIView = {
@@ -88,6 +88,10 @@ class LZAlbumDetailsCell: UICollectionViewCell {
             make.right.top.left.bottom.equalToSuperview()
           
         }
+        self.transform = CGAffineTransform(scaleX: 1.4, y: 1.4)
+        UIView.animate(withDuration: 0.5) {
+            self.transform = CGAffineTransform.identity
+        }
     }
    
     public func loadData(model:AnyObject){
@@ -110,8 +114,7 @@ class LZAlbumDetailsCell: UICollectionViewCell {
             self.iconImage.image = Img(url: "tupantubiao")
          }else if model.isKind(of: LZVideoModel.self) == true{
             
-            self.imageView.image = UIImage.init(data: LZFileManager.getViodeFile(filePath: (model as! LZVideoModel).imagePath))
-              let url:URL = URL.init(string: "file://" + albumsFolder + (model as! LZVideoModel).imagePath.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)!
+              let url:URL = URL.init(string: "file://" + videoFolder + (model as! LZVideoModel).imagePath.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)!
             self.imageView.kf.setImage(with: url, placeholder: nil, options: [.scaleFactor(UIScreen.main.scale),
                                   .transition(.fade(1)),
                                   .cacheOriginalImage], progressBlock: nil) { (image, error, type, url) in
