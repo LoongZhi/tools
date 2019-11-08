@@ -131,7 +131,7 @@ class LZSettingsViewController: LZBaseViewController,UITableViewDataSource,UITab
         tableView.deselectRow(at: indexPath, animated: true)
         
         let vc = LZAccountViewController(nibName: "LZAccountViewController", bundle: nil)
-        
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 55

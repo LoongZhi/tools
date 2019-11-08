@@ -8,8 +8,7 @@
 
 import UIKit
 import FWPopupView
-import QuickLook
-class LZAlbumViewController: LZBaseViewController,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,QLPreviewControllerDelegate,QLPreviewControllerDataSource {
+class LZAlbumViewController: LZBaseViewController,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,SSZipArchiveDelegate {
    
     
 
@@ -395,6 +394,7 @@ class LZAlbumViewController: LZBaseViewController,UICollectionViewDelegate,UICol
         })
         
     }
+   
 }
 
 extension LZAlbumViewController{
@@ -526,55 +526,54 @@ extension LZAlbumViewController{
         weak var wekeSelf = self
       
         self.startAnimating(lodingSize,type: loadingType, color: COLOR_4990ED)
-        
-        var paths = [String]()
-        for Value in wekeSelf!.dataSource {
-            let model:LZAlbumModel = Value as! LZAlbumModel
-            for pathModel in model.images {
-                let m:LZAlbumImageModel = pathModel
-                paths.append("\(albumsFolder)\(m.path)")
-            }
-            
-        }
-        
-        if paths.count == 0 {
+
+        if self.dataSource.count == 0 {
             wekeSelf!.stopAnimating()
              wekeSelf!.chrysan.show(.plain, message:LanguageStrins(string: "The folder is empty"), hideDelay: HIDE_DELAY)
             return
         }
-        let group = DispatchGroup.init()
-        let myQueue = DispatchQueue(label: "com.myQueue", qos: .default, attributes: .concurrent, autoreleaseFrequency: .workItem, target: nil)//并行队列
-        myQueue.async(group: group, qos: .default, flags: []) {
-            if SSZipArchive.createZipFile(atPath:tempAlbumPath, withFilesAtPaths: paths) {
-                       print("压缩成功")
-                       if (rootFileManager.fileExists(atPath: tempAlbumPath)) {
-                           let vc = QLPreviewController.init()
-                           vc.delegate = wekeSelf!
-                           vc.dataSource = wekeSelf!
-                           wekeSelf!.navigationController?.pushViewController(vc, animated: true)
-                       }
-                   }else{
-                       print("压缩失败")
-                       wekeSelf!.chrysan.show(.plain, message:LanguageStrins(string: "Compression failed"), hideDelay: HIDE_DELAY)
-                   }
-        }
-       
+      
+         let queue = DispatchQueue(label: "queueName", attributes: .concurrent)
         
-        group.notify(queue: myQueue) {
+            queue.async {
+                
+//                SSZipArchive.createZipFile(atPath: tempAlbumPath, withContentsOfDirectory: albumsFolder)
+                SSZipArchive.createZipFile(atPath: <#T##String#>, withContentsOfDirectory: <#T##String#>, keepParentDirectory: <#T##Bool#>, withPassword: <#T##String?#>) { (<#UInt#>, <#UInt#>) in
+                    <#code#>
+                }
+               
+            }
+
+        DispatchGroup.init().notify(qos: .default, flags: .barrier, queue: queue) {
             DispatchQueue.main.async {
+                if (rootFileManager.fileExists(atPath: tempAlbumPath)) {
+                    let items = [URL.init(fileURLWithPath: tempAlbumPath) as Any] as [Any]
+                     let activityVC = UIActivityViewController(
+                         activityItems: items,
+                         applicationActivities: nil)
+                    activityVC.completionWithItemsHandler =  { activity, success, items, error in
+                        
+                        DispatchQueue.main.async {
+                            if success {
+                                wekeSelf!.chrysan.show(.plain, message:LanguageStrins(string: "Share success"), hideDelay: HIDE_DELAY)
+                            } else{
+                                wekeSelf!.chrysan.show(.plain,message:LanguageStrins(string: "Share failed"),hideDelay: HIDE_DELAY)
+                            }
+                        }
+                     }
+                    wekeSelf!.present(activityVC, animated: true, completion: { () -> Void in})
+                }else{
+                    print("压缩失败")
+                    wekeSelf!.chrysan.show(.plain, message:LanguageStrins(string: "Compression failed"), hideDelay: HIDE_DELAY)
+                }
                 wekeSelf!.stopAnimating()
             }
         }
+        
        
     }
-    func numberOfPreviewItems(in controller: QLPreviewController) -> Int {
-        return 1
-    }
-    func previewController(_ controller: QLPreviewController, previewItemAt index: Int) -> QLPreviewItem {
-        
-        let videoUrl = URL.init(fileURLWithPath: tempAlbumPath)
-        return videoUrl as QLPreviewItem
-    
-    }
    
+  func zipArchiveProgressEvent(_ loaded: UInt64, total: UInt64) {
+           print("\(loaded)------\(total)")
+       }
 }

@@ -8,8 +8,8 @@
 
 import UIKit
 import FWPopupView
-import QuickLook
-class LZOfficeViewController: LZBaseViewController,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,QLPreviewControllerDelegate,QLPreviewControllerDataSource{
+
+class LZOfficeViewController: LZBaseViewController,UICollectionViewDelegate,UICollectionViewDataSource{
    
     
 
@@ -518,42 +518,47 @@ extension LZOfficeViewController{
        }
        
     func exportFile(){
-        
-       self.startAnimating(lodingSize,type: loadingType, color: COLOR_4990ED)
-           var paths = [String]()
-           for Value in self.dataSource {
-               let model:LZOfficeFolderModel = Value as! LZOfficeFolderModel
-               for pathModel in model.images {
-                let m:LZOfficeModel = pathModel 
-                   paths.append(officeFolder + m.path)
-               }
-           }
-            if paths.count == 0 {
-                 self.stopAnimating()
-                 chrysan.show(.plain, message:LanguageStrins(string: "The folder is empty"), hideDelay: HIDE_DELAY)
-                return
+            
+            weak var weakSelf = self
+             weakSelf!.startAnimating(lodingSize,type: loadingType, color: COLOR_4990ED)
+            
+             if weakSelf!.dataSource.count == 0 {
+                      weakSelf!.stopAnimating()
+                      weakSelf!.chrysan.show(.plain, message:LanguageStrins(string: "The folder is empty"), hideDelay: HIDE_DELAY)
+                     return
+                 }
+             let queue = DispatchQueue(label: "queueName", attributes: .concurrent)
+
+             queue.async {
+                 SSZipArchive.createZipFile(atPath: tempOfficePath, withContentsOfDirectory: officeFolder)
+             }
+        DispatchGroup.init().notify(qos: .default, flags: .barrier, queue: queue) {
+            DispatchQueue.main.async {
+                if (rootFileManager.fileExists(atPath: tempOfficePath)) {
+                    let items = [URL.init(fileURLWithPath: tempOfficePath) as Any] as [Any]
+                     let activityVC = UIActivityViewController(
+                         activityItems: items,
+                         applicationActivities: nil)
+                    activityVC.completionWithItemsHandler =  { activity, success, items, error in
+                        
+                        DispatchQueue.main.async {
+                            if success {
+                                weakSelf!.chrysan.show(.plain, message:LanguageStrins(string: "Share success"), hideDelay: HIDE_DELAY)
+                            } else{
+                                weakSelf!.chrysan.show(.plain,message:LanguageStrins(string: "Share failed"),hideDelay: HIDE_DELAY)
+                            }
+                        }
+                     }
+                    weakSelf!.present(activityVC, animated: true, completion: { () -> Void in})
+                    
+                }else{
+                    print("压缩失败")
+                     self.chrysan.show(.plain, message:LanguageStrins(string: "Compression failed"), hideDelay: HIDE_DELAY)
+                }
+                  self.stopAnimating()
             }
-           if SSZipArchive.createZipFile(atPath:tempOfficePath, withFilesAtPaths: paths) {
-               print("压缩成功")
-               if (rootFileManager.fileExists(atPath: tempOfficePath)) {
-                   let vc = QLPreviewController.init()
-                   vc.delegate = self
-                   vc.dataSource = self
-                   self.navigationController?.pushViewController(vc, animated: true)
-               }
-           }else{
-               print("压缩失败")
-                self.chrysan.show(.plain, message:LanguageStrins(string: "Compression failed"), hideDelay: HIDE_DELAY)
-           }
-             self.stopAnimating()
+            
+        }
+          
        }
-       func numberOfPreviewItems(in controller: QLPreviewController) -> Int {
-           return 1
-       }
-       func previewController(_ controller: QLPreviewController, previewItemAt index: Int) -> QLPreviewItem {
-           
-           let videoUrl = URL.init(fileURLWithPath: tempOfficePath)
-           return videoUrl as QLPreviewItem
-       
-         }
 }
