@@ -530,7 +530,13 @@ extension LZOfficeViewController{
              let queue = DispatchQueue(label: "queueName", attributes: .concurrent)
 
              queue.async {
-                 SSZipArchive.createZipFile(atPath: tempOfficePath, withContentsOfDirectory: officeFolder)
+                SSZipArchive.createZipFile(atPath: tempOfficePath, withContentsOfDirectory: officeFolder, keepParentDirectory: false, withPassword: nil, andProgressHandler:{(t1:UInt?,t2:UInt?) -> Void in
+                                   DispatchQueue.main.async {
+                                       LZPercentProgressView.shared().startProgress(avaiNumber: CGFloat(t1!), totalNumber: CGFloat(t2!))
+                                   }
+                               }
+                               
+                           )
              }
         DispatchGroup.init().notify(qos: .default, flags: .barrier, queue: queue) {
             DispatchQueue.main.async {
@@ -555,7 +561,7 @@ extension LZOfficeViewController{
                     print("压缩失败")
                      self.chrysan.show(.plain, message:LanguageStrins(string: "Compression failed"), hideDelay: HIDE_DELAY)
                 }
-                  self.stopAnimating()
+                LZPercentProgressView.shared().stopProgress()
             }
             
         }

@@ -175,7 +175,7 @@ extension LZSettingsViewController{
          DispatchQueue.main.asyncAfter(deadline: .now()+0.5, execute:
          {
              
-             self.progressView!.setProgress(Int(avai / total * 100), animated: true)
+            self.progressView!.setProgress(CGFloat(Int(avai / total * 100)), animated: true)
              self.diskLabel.animate(fromValue: 0.0, toValue: avai / total * 100 ,str: "%", duration: 0.55)
             self.textLabel3.animate(fromValue: 0, toValue: Double(LZFileManager.fileSizeAtPath(path: albumsFolder) ), str: "MB", duration: 0.55)
             self.textLabel4.animate(fromValue: 0, toValue: Double(LZFileManager.fileSizeAtPath(path: rootFolder + "VideoFolder") ), str: "MB", duration: 0.55)

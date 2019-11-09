@@ -19,9 +19,9 @@ import UIKit
     //进度条路径（整个圆圈）
     let path = UIBezierPath()
     
-    var pro:Int = 0
+    var pro:CGFloat = 0
     //当前进度
-    @IBInspectable var progress: Int = 0 {
+    @IBInspectable var progress: CGFloat = 0 {
         didSet {
             if progress > 100 {
                 progress = 100
@@ -69,13 +69,13 @@ import UIKit
     }
     
     //设置进度（可以设置是否播放动画）
-    func setProgress(_ pro: Int,animated anim: Bool) {
+    func setProgress(_ pro: CGFloat,animated anim: Bool) {
        
         setProgress(pro, animated: anim, withDuration: 0.55)
     }
     
     //设置进度（可以设置是否播放动画，以及动画时间）
-    func setProgress(_ pro: Int,animated anim: Bool, withDuration duration: Double) {
+    func setProgress(_ pro: CGFloat,animated anim: Bool, withDuration duration: Double) {
         progress = pro
         //进度条动画
         CATransaction.begin()

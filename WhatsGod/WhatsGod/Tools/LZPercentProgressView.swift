@@ -57,6 +57,7 @@ class LZPercentProgressView: UIView {
         
         self.progressView.addSubview(self.diskLabel)
         self.progressView.addSubview(self.diskTitleLabel)
+        self.addSubview(self.progressView)
         self.diskLabel.snp.makeConstraints { (make) in
            
             make.top.equalToSuperview().offset(35)
@@ -73,13 +74,15 @@ class LZPercentProgressView: UIView {
         }
     }
     
-   public func startProgress(avaiNumber:Int,totalNumber:Int){
+   public func startProgress(avaiNumber:CGFloat,totalNumber:CGFloat){
     
         self.isHidden = false
-        self.progressView.setProgress(avaiNumber, animated: true)
-        self.diskLabel.text = "\(avaiNumber) %"
-        self.diskTitleLabel.text = "\(self.avaiNumber) / \(self.totalNumber)"
-  
+        DispatchQueue.main.async {
+            self.progressView.setProgress(CGFloat(avaiNumber / totalNumber * 100), animated: true)
+            self.diskLabel.text = "\(String(format: "%.0f",avaiNumber / totalNumber * 100)) %"
+            self.diskTitleLabel.text = String(format: "%.0f / %.0f",avaiNumber,totalNumber)
+        }
+        
     }
     
    public func stopProgress(){

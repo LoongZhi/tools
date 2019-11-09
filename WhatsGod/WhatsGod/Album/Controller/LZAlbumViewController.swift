@@ -525,7 +525,7 @@ extension LZAlbumViewController{
         
         weak var wekeSelf = self
       
-        self.startAnimating(lodingSize,type: loadingType, color: COLOR_4990ED)
+//        self.startAnimating(lodingSize,type: loadingType, color: COLOR_4990ED)
 
         if self.dataSource.count == 0 {
             wekeSelf!.stopAnimating()
@@ -537,11 +537,13 @@ extension LZAlbumViewController{
         
             queue.async {
                 
-//                SSZipArchive.createZipFile(atPath: tempAlbumPath, withContentsOfDirectory: albumsFolder)
-                SSZipArchive.createZipFile(atPath: <#T##String#>, withContentsOfDirectory: <#T##String#>, keepParentDirectory: <#T##Bool#>, withPassword: <#T##String?#>) { (<#UInt#>, <#UInt#>) in
-                    <#code#>
-                }
-               
+                SSZipArchive.createZipFile(atPath: tempAlbumPath, withContentsOfDirectory: albumsFolder, keepParentDirectory: false, withPassword: nil, andProgressHandler:{(t1:UInt?,t2:UInt?) -> Void in
+                        DispatchQueue.main.async {
+                            LZPercentProgressView.shared().startProgress(avaiNumber: CGFloat(t1!), totalNumber: CGFloat(t2!))
+                        }
+                    }
+                    
+                )
             }
 
         DispatchGroup.init().notify(qos: .default, flags: .barrier, queue: queue) {
@@ -566,7 +568,7 @@ extension LZAlbumViewController{
                     print("压缩失败")
                     wekeSelf!.chrysan.show(.plain, message:LanguageStrins(string: "Compression failed"), hideDelay: HIDE_DELAY)
                 }
-                wekeSelf!.stopAnimating()
+                LZPercentProgressView.shared().stopProgress()
             }
         }
         

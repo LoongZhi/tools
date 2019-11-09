@@ -551,8 +551,7 @@ extension LZVideoViewController{
        func exportFile(){
         
         weak var weakSelf = self
-        weakSelf!.startAnimating(lodingSize,type: loadingType, color: COLOR_4990ED)
-       
+      
         if weakSelf!.dataSource.count == 0 {
                  weakSelf!.stopAnimating()
                  weakSelf!.chrysan.show(.plain, message:LanguageStrins(string: "The folder is empty"), hideDelay: HIDE_DELAY)
@@ -561,7 +560,13 @@ extension LZVideoViewController{
         let queue = DispatchQueue(label: "queueName", attributes: .concurrent)
 
         queue.async {
-            SSZipArchive.createZipFile(atPath: tempVideoPath, withContentsOfDirectory: videoFolder)
+            SSZipArchive.createZipFile(atPath: tempVideoPath, withContentsOfDirectory: videoFolder, keepParentDirectory: false, withPassword: nil, andProgressHandler:{(t1:UInt?,t2:UInt?) -> Void in
+                    DispatchQueue.main.async {
+                        LZPercentProgressView.shared().startProgress(avaiNumber: CGFloat(t1!), totalNumber: CGFloat(t2!))
+                    }
+                }
+                
+            )
         }
         DispatchGroup.init().notify(qos: .default, flags: .barrier, queue: queue) {
             DispatchQueue.main.async {
@@ -585,7 +590,7 @@ extension LZVideoViewController{
                     print("压缩失败")
                     weakSelf!.chrysan.show(.plain, message:LanguageStrins(string: "Compression failed"), hideDelay: HIDE_DELAY)
                 }
-                 weakSelf!.stopAnimating()
+                LZPercentProgressView.shared().stopProgress()
             }
             
         }

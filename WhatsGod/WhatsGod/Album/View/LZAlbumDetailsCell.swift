@@ -15,6 +15,8 @@ class LZAlbumDetailsCell: UICollectionViewCell {
         btn.layer.borderColor  = COLOR_F8F8FF.cgColor
         return btn
     }()
+    var albumIcon = Img(url: "tupantubiao")
+    var videoIcon = Img(url: "shexiang")
     lazy var bottomView:UIView = {
         let view = UIView.init()
         view.backgroundColor = .clear
@@ -92,26 +94,28 @@ class LZAlbumDetailsCell: UICollectionViewCell {
         UIView.animate(withDuration: 0.5) {
             self.transform = CGAffineTransform.identity
         }
+        self.imageView.kf.indicatorType = .activity
+        
+        self.layer.shouldRasterize = true
+        self.layer.rasterizationScale = UIScreen.main.scale
+        
     }
    
     public func loadData(model:AnyObject){
         
          if model.isKind(of: LZAlbumImageModel.self) == true {
-            
-//            self.imageView.image = UIImage.init(data: LZFileManager.getImageFile(filePath: (model as! LZAlbumImageModel).path))
+
             let url:URL = URL.init(string: "file://" + albumsFolder + (model as! LZAlbumImageModel).path.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)!
-            self.imageView.kf.indicatorType = .activity
-    
-            self.imageView.kf.setImage(with: url, placeholder: nil, options: [.scaleFactor(UIScreen.main.scale),
-            .transition(.fade(1)),
+            self.imageView.kf.setImage(with: url, placeholder: nil, options: [.scaleFactor(80),
+                                                                              .transition(.fade(0.01)),
             .cacheOriginalImage], progressBlock: nil) { (image, error, type, url) in
-                
+
             }
-           
+        
             self.selectBtn.isSelected = (model as! LZAlbumImageModel).isSelect
             self.selectBtn.isHidden = (model as! LZAlbumImageModel).isHidden
             self.nameLabel.text = (model as! LZAlbumImageModel).type
-            self.iconImage.image = Img(url: "tupantubiao")
+            self.iconImage.image = self.albumIcon
          }else if model.isKind(of: LZVideoModel.self) == true{
             
               let url:URL = URL.init(string: "file://" + videoFolder + (model as! LZVideoModel).imagePath.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)!
@@ -122,7 +126,7 @@ class LZAlbumDetailsCell: UICollectionViewCell {
             self.selectBtn.isSelected = (model as! LZVideoModel).isSelect
             self.selectBtn.isHidden = (model as! LZVideoModel).isHidden
             self.nameLabel.text = (model as! LZVideoModel).timer
-            self.iconImage.image = Img(url: "shexiang")
+            self.iconImage.image = self.videoIcon
          }
         if self.selectBtn.isSelected {
             self.bottomView.backgroundColor = COLOR_4990ED
@@ -135,4 +139,7 @@ class LZAlbumDetailsCell: UICollectionViewCell {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
 }
+
+
