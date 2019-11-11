@@ -47,6 +47,7 @@
 		8841C016236850790009FBAB /* LZLanguageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8841C014236850790009FBAB /* LZLanguageViewController.xib */; };
 		8841C019236850980009FBAB /* LZAboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8841C017236850980009FBAB /* LZAboutViewController.swift */; };
 		8841C01A236850980009FBAB /* LZAboutViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8841C018236850980009FBAB /* LZAboutViewController.xib */; };
+		8844ADFF2379973B00DAD127 /* ExtensionImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8844ADFE2379973B00DAD127 /* ExtensionImage.swift */; };
 		88613A09233636250089C402 /* LZBaseNavController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88613A08233636240089C402 /* LZBaseNavController.swift */; };
 		88613A10233639990089C402 /* BubbleTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88613A0C233639990089C402 /* BubbleTabBar.swift */; };
 		88613A11233639990089C402 /* .gitkeep in Resources */ = {isa = PBXBuildFile; fileRef = 88613A0D233639990089C402 /* .gitkeep */; };
@@ -128,6 +129,7 @@
 		8841C014236850790009FBAB /* LZLanguageViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LZLanguageViewController.xib; sourceTree = "<group>"; };
 		8841C017236850980009FBAB /* LZAboutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LZAboutViewController.swift; sourceTree = "<group>"; };
 		8841C018236850980009FBAB /* LZAboutViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LZAboutViewController.xib; sourceTree = "<group>"; };
+		8844ADFE2379973B00DAD127 /* ExtensionImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionImage.swift; sourceTree = "<group>"; };
 		88613A08233636240089C402 /* LZBaseNavController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LZBaseNavController.swift; sourceTree = "<group>"; };
 		88613A0C233639990089C402 /* BubbleTabBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BubbleTabBar.swift; sourceTree = "<group>"; };
 		88613A0D233639990089C402 /* .gitkeep */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
@@ -297,6 +299,7 @@
 				882A81CD23462F4200A97ADC /* ExtensionView.swift */,
 				8821799623477C4E002C32B1 /* ExtensionString.swift */,
 				88222FFA23632D4600FBFD58 /* LZExtensionColor.swift */,
+				8844ADFE2379973B00DAD127 /* ExtensionImage.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -748,6 +751,7 @@
 				88223C822355A19400163FD2 /* LZVideoDetailViewController.swift in Sources */,
 				88613A1A233647A70089C402 /* LZAlbumViewController.swift in Sources */,
 				88BD9B3C233B9BB40098B8FB /* LZRealmTool.swift in Sources */,
+				8844ADFF2379973B00DAD127 /* ExtensionImage.swift in Sources */,
 				882A81CE23462F4200A97ADC /* ExtensionView.swift in Sources */,
 				883A46C12352062E004A9DDC /* CKWaveCollectionViewAnimator.swift in Sources */,
 				883A46BD23520224004A9DDC /* UICollectionViewExtension.swift in Sources */,

@@ -64,16 +64,19 @@ class LZAlbumCollectionViewCell: UICollectionViewCell {
  
     
     
-    self.title.snp.makeConstraints { (make) in
-        make.bottom.right.left.equalTo(0)
-        make.height.equalTo(20)
-    }
+        self.title.snp.makeConstraints { (make) in
+            make.bottom.right.left.equalTo(0)
+            make.height.equalTo(20)
+        }
         self.delBtn.snp.makeConstraints { (make) in
             make.width.equalTo(25)
             make.height.equalTo(25)
             make.top.equalTo(5)
             make.right.equalTo(-10)
         }
+    
+  
+    
     }
     
     

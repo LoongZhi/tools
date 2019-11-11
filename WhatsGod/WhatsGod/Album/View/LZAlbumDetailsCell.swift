@@ -105,7 +105,7 @@ class LZAlbumDetailsCell: UICollectionViewCell {
         
          if model.isKind(of: LZAlbumImageModel.self) == true {
 
-            let url:URL = URL.init(string: "file://" + albumsFolder + (model as! LZAlbumImageModel).path.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)!
+            let url:URL = URL.init(string: "file://" + albumsFolder + (model as! LZAlbumImageModel).thumbnailPath.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)!
             self.imageView.kf.setImage(with: url, placeholder: nil, options: [.scaleFactor(80),
                                                                               .transition(.fade(0.01)),
             .cacheOriginalImage], progressBlock: nil) { (image, error, type, url) in

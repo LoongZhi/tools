@@ -28,5 +28,6 @@ class LZAlbumImageModel: Object {
     @objc dynamic var isHidden = true
     @objc dynamic var isSelect = false
     @objc dynamic var type = ""
+    @objc dynamic var thumbnailPath = ""
     
 }

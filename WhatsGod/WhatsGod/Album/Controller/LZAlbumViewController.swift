@@ -220,7 +220,6 @@ class LZAlbumViewController: LZBaseViewController,UICollectionViewDelegate,UICol
                     if LZFileManager.deleteImageFile(filePath: model.path){
                         realm.delete(model)
                         self.getDataSource()
-                        self.collectionView.reloadData()
                         self.chrysan.show(.plain, message:LanguageStrins(string: "Delete success."), hideDelay: HIDE_DELAY)
                     }else{
                          self.chrysan.show(.plain, message:LanguageStrins(string: "Delete failure."), hideDelay: HIDE_DELAY)

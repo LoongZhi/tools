@@ -179,13 +179,19 @@ class LZAlbumDetailsViewController: LZBaseViewController,UICollectionViewDelegat
                             let url:String = model.originalAsset?.value(forKey: "filename") as! String
                             let type = url.returnFileType(fileUrl: url)
                             let path = self!.folderModel!.path + "/image" + String(format: "%d.%@",Date().timeIntervalSince1970,type)
+                            let thumbnailPath = self!.folderModel!.path + "/Thumbnail" + String(format: "%d.%@",Date().timeIntervalSince1970,type)
                             
                             let img = UIImage.init(data: try! Data.init(contentsOf: dictionry!["PHImageFileURLKey"] as! URL))
-                            if LZFileManager.writeImageFile(filePath: path, data:(img!.jpegData(compressionQuality: 1))!){
+                            
+                            let thumbnailImage = img?.compressImageMid(maxLength: 500 * 1024)
+                            
+                            if (LZFileManager.writeImageFile(filePath: path, data:(img!.jpegData(compressionQuality: 1))!) && LZFileManager.writeImageFile(filePath: thumbnailPath, data:(thumbnailImage!))){
+                                
                                 let imageModel = LZAlbumImageModel.init()
                                 imageModel.isHidden = self!.isHidden
                                 imageModel.path = path
                                 imageModel.type = type
+                                imageModel.thumbnailPath = thumbnailPath
                                 try! realm.write {
                                     self!.folderModel?.images.append(imageModel)
                                 }
