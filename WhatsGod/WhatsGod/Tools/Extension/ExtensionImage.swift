@@ -55,7 +55,7 @@ extension UIImage {
         if data.count < maxLength {
             return data
         }
-        print("压缩前kb", data.count / 1024, "KB")
+       
         var max: CGFloat = 1
         var min: CGFloat = 0
         for _ in 0..<6 {
@@ -70,10 +70,12 @@ extension UIImage {
             }
         }
         var resultImage: UIImage = UIImage(data: data)!
+         print("压缩后kb", data.count / 1024, "KB")
         if data.count < maxLength {
         return data
         }
         return data
     }
+    
 }
 

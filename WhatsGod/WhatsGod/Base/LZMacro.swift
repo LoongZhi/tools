@@ -71,6 +71,23 @@ func availableRAM() -> Double {
 func Img(url:String) -> UIImage{
     return UIImage.init(named: url) ?? UIImage.init()
 }
+//图片采样
+func downsample(imageAt imageURL: URL, to pointSize: CGSize, scale: CGFloat) -> UIImage {
+         
+         //生成CGImageSourceRef 时，不需要先解码。
+         let imageSourceOptions = [kCGImageSourceShouldCache: false] as CFDictionary
+         let imageSource = CGImageSourceCreateWithURL(imageURL as CFURL, imageSourceOptions)!
+         let maxDimensionInPixels = max(pointSize.width, pointSize.height) * scale
+         
+         //在创建Thumbnail时直接解码
+         let downsampleOptions = [kCGImageSourceCreateThumbnailFromImageAlways: true,
+                                  kCGImageSourceShouldCacheImmediately: true,
+                                  kCGImageSourceCreateThumbnailWithTransform: true,
+                                  kCGImageSourceThumbnailMaxPixelSize: maxDimensionInPixels] as CFDictionary
+         //生成UIImage，强制解码
+         let downsampledImage = CGImageSourceCreateThumbnailAtIndex(imageSource, 0, downsampleOptions)!
+         return UIImage(cgImage: downsampledImage)
+   }
 //语言本地化
 public func LanguageStrins(string:String) ->String{
     return NSLocalizedString(string, comment: "")

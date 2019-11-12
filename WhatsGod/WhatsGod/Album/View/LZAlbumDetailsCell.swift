@@ -24,7 +24,6 @@ class LZAlbumDetailsCell: UICollectionViewCell {
     }()
     lazy var iconImage:UIImageView = {
         let image = UIImageView.init()
-        image.layer.masksToBounds = true
         return image
     }()
     lazy var nameLabel:UILabel = {
@@ -36,9 +35,9 @@ class LZAlbumDetailsCell: UICollectionViewCell {
     }()
     lazy var imageView:UIImageView = {
         let image = UIImageView.init()
-        image.layer.masksToBounds = true
         image.backgroundColor = COLOR_B8B8B8
         image.contentMode = .scaleAspectFill
+        image.kf.indicatorType = .activity
         return image
     }()
     
@@ -90,14 +89,14 @@ class LZAlbumDetailsCell: UICollectionViewCell {
             make.right.top.left.bottom.equalToSuperview()
           
         }
-        self.transform = CGAffineTransform(scaleX: 1.4, y: 1.4)
-        UIView.animate(withDuration: 0.5) {
-            self.transform = CGAffineTransform.identity
-        }
-        self.imageView.kf.indicatorType = .activity
+//        self.transform = CGAffineTransform(scaleX: 1.4, y: 1.4)
+//        UIView.animate(withDuration: 0.5) {
+//            self.transform = CGAffineTransform.identity
+//        }
         
-        self.layer.shouldRasterize = true
-        self.layer.rasterizationScale = UIScreen.main.scale
+        
+//        self.layer.shouldRasterize = true
+//        self.layer.rasterizationScale = UIScreen.main.scale
         
     }
    
@@ -105,13 +104,21 @@ class LZAlbumDetailsCell: UICollectionViewCell {
         
          if model.isKind(of: LZAlbumImageModel.self) == true {
 
-            let url:URL = URL.init(string: "file://" + albumsFolder + (model as! LZAlbumImageModel).thumbnailPath.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)!
-            self.imageView.kf.setImage(with: url, placeholder: nil, options: [.scaleFactor(80),
-                                                                              .transition(.fade(0.01)),
-            .cacheOriginalImage], progressBlock: nil) { (image, error, type, url) in
-
-            }
-        
+//            self.imageView.kf.setImage(with: url, placeholder: nil, options: [.scaleFactor(80),
+//                                                                              .transition(.fade(0.01)),
+//            .cacheOriginalImage], progressBlock: nil) { (image, error, type, url) in
+//
+//            }
+            
+            let url:URL = URL.init(string:"file://\(albumsFolder)\((model as! LZAlbumImageModel).thumbnailPath.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)")!
+//            DispatchQueue.global().async {
+                 
+                let img = downsample(imageAt: url, to: CGSize(width: SCREEN_WIDTH / 4, height: SCREEN_WIDTH / 4), scale: 3)
+//                DispatchQueue.main.async {
+                    
+                    self.imageView.image = img
+//                }
+//            }
             self.selectBtn.isSelected = (model as! LZAlbumImageModel).isSelect
             self.selectBtn.isHidden = (model as! LZAlbumImageModel).isHidden
             self.nameLabel.text = (model as! LZAlbumImageModel).type
@@ -136,6 +143,7 @@ class LZAlbumDetailsCell: UICollectionViewCell {
             self.selectBtn.layer.borderWidth = 0
         }
     }
+  
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

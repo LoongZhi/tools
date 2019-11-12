@@ -524,8 +524,7 @@ extension LZAlbumViewController{
         
         weak var wekeSelf = self
       
-//        self.startAnimating(lodingSize,type: loadingType, color: COLOR_4990ED)
-
+//
         if self.dataSource.count == 0 {
             wekeSelf!.stopAnimating()
              wekeSelf!.chrysan.show(.plain, message:LanguageStrins(string: "The folder is empty"), hideDelay: HIDE_DELAY)

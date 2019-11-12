@@ -15,6 +15,7 @@ import AssetsLibrary
 import Photos
 import JXPhotoBrowser
 import QuickLook
+import Kingfisher
 class LZAlbumDetailsViewController: LZBaseViewController,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,QLPreviewControllerDelegate,QLPreviewControllerDataSource  {
 
     var  menuView:FWMenuView? = nil
@@ -173,41 +174,56 @@ class LZAlbumDetailsViewController: LZBaseViewController,UICollectionViewDelegat
             case 0:
                 self!.pickerController.didSelectAssets = { (assets) in
                     self!.startAnimating(lodingSize,type: loadingType, color: COLOR_4990ED)
+   
+                    let queue = DispatchQueue(label: "queueName", attributes: .concurrent)
                     for (index,itme) in assets.enumerated() {
                         let model:DKAsset = itme
                         PHCachingImageManager.default().requestImage(for: model.originalAsset!, targetSize: PHImageManagerMaximumSize, contentMode: .default, options: nil) { (result: UIImage?, dictionry: Dictionary?) in
-                            let url:String = model.originalAsset?.value(forKey: "filename") as! String
-                            let type = url.returnFileType(fileUrl: url)
-                            let path = self!.folderModel!.path + "/image" + String(format: "%d.%@",Date().timeIntervalSince1970,type)
-                            let thumbnailPath = self!.folderModel!.path + "/Thumbnail" + String(format: "%d.%@",Date().timeIntervalSince1970,type)
-                            
-                            let img = UIImage.init(data: try! Data.init(contentsOf: dictionry!["PHImageFileURLKey"] as! URL))
-                            
-                            let thumbnailImage = img?.compressImageMid(maxLength: 500 * 1024)
-                            
-                            if (LZFileManager.writeImageFile(filePath: path, data:(img!.jpegData(compressionQuality: 1))!) && LZFileManager.writeImageFile(filePath: thumbnailPath, data:(thumbnailImage!))){
-                                
-                                let imageModel = LZAlbumImageModel.init()
-                                imageModel.isHidden = self!.isHidden
-                                imageModel.path = path
-                                imageModel.type = type
-                                imageModel.thumbnailPath = thumbnailPath
-                                try! realm.write {
-                                    self!.folderModel?.images.append(imageModel)
+                            let pathUrl = self!.folderModel!.path
+                            queue.async {
+                                let url:String = model.originalAsset?.value(forKey: "filename") as! String
+                                let type = url.returnFileType(fileUrl: url)
+                                let path = "\(pathUrl)/image\(String(format: "%d.%@",Date().timeIntervalSince1970,type))"
+                                let thumbnailPath = "\(pathUrl)/Thumbnail\(String(format: "%d.%@",Date().timeIntervalSince1970,type))"
+                                if dictionry!["PHImageFileURLKey"] == nil{
+                                    return
+                                }
+                                let img = downsample(imageAt: dictionry!["PHImageFileURLKey"] as! URL, to: CGSize(width: SCREEN_WIDTH, height: SCREEN_HEIGHT), scale: 1)
+
+                                let thumbnailImage = downsample(imageAt: dictionry!["PHImageFileURLKey"] as! URL, to: CGSize(width: SCREEN_WIDTH / 4, height: SCREEN_WIDTH / 4), scale: 3)
+                                if (LZFileManager.writeImageFile(filePath: path, data:(img.jpegData(compressionQuality: 1))!) && LZFileManager.writeImageFile(filePath: thumbnailPath, data:(thumbnailImage.jpegData(compressionQuality: 1)!))){
+                                    DispatchQueue.main.async {
+                                        let imageModel = LZAlbumImageModel.init()
+                                        imageModel.isHidden = self!.isHidden
+                                        imageModel.path = path
+                                        imageModel.type = type
+                                        imageModel.thumbnailPath = thumbnailPath
+                                        try! realm.write {
+                                            self!.folderModel?.images.append(imageModel)
+                                            self!.dataSource.append(imageModel)
+                                        }
+                                    }
+                                    
                                 }
                             }
-                            
-                            if index == assets.count - 1{
-                                self!.getDataSource()
+                            DispatchGroup.init().notify(qos: .default, flags: .barrier, queue: queue) {
+                                DispatchQueue.main.async {
+                                    if index == assets.count - 1{
+                                        self!.getDataSource()
+                                    }
+                                    
+                                }
+                                
                             }
-                    }
-                        if assets.count == 0 {
-                            self?.stopAnimating()
+                            
                         }
-                    
-                   
-                   
+
                     }
+                    
+                     
+                        if assets.count == 0 {
+                        self?.stopAnimating()
+                     }
                     
                 }
                 self!.present(self!.pickerController, animated: true, completion: nil)
@@ -495,6 +511,9 @@ class LZAlbumDetailsViewController: LZBaseViewController,UICollectionViewDelegat
        
     }
 
+    override func didReceiveMemoryWarning() {
+        ImageCache.default.clearMemoryCache()
+    }
     
 }
 extension LZAlbumDetailsViewController{
