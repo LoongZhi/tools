@@ -79,8 +79,9 @@ class LZBaseViewController: UIViewController,NVActivityIndicatorViewable {
     }
 
     deinit {
-        print("释放内存")
+        print("释放")
     }
+    
     /*
     // MARK: - Navigation
 

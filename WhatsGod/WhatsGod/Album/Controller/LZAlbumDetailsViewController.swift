@@ -254,18 +254,24 @@ class LZAlbumDetailsViewController: LZBaseViewController,UICollectionViewDelegat
         if self.dataSource.count != 0 {
             self.dataSource.removeAll()
         }
-        
-        if folderModel!.images.count != 0{
-            
-            for image in folderModel!.images {
-                self.dataSource.append(image)
+        DispatchQueue.global().async {
+          
+            DispatchQueue.main.async {
+                if self.folderModel!.images.count != 0{
+                              
+                              for image in self.folderModel!.images {
+                                  self.dataSource.append(image)
+                              }
+                          }
+                if self.dataSource.count == 0 {
+                    self.allBtn.isSelected = false
+                }
+                self.collectionView .reloadData()
+                self.stopAnimating()
             }
         }
-        if self.dataSource.count == 0 {
-            self.allBtn.isSelected = false
-        }
-        self.collectionView .reloadData()
-        self.stopAnimating()
+        
+        
     }
     override func rightItmeEvent() {
         
@@ -510,7 +516,7 @@ class LZAlbumDetailsViewController: LZBaseViewController,UICollectionViewDelegat
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
        
     }
-
+    
     override func didReceiveMemoryWarning() {
         ImageCache.default.clearMemoryCache()
     }

@@ -64,3 +64,6 @@
 "Share" = "Share";
 "Share success"  = "Share success";
 "Share failed" = "Share failed";
+"Password error." = "Password error.";
+"Please enter the private folder password." = "Please enter the private folder password.";
+"Please enter the correct password" = "Please enter the correct password";

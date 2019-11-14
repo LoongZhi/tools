@@ -53,8 +53,6 @@ class LZAlbumViewController: LZBaseViewController,UICollectionViewDelegate,UICol
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
-        
         readyView()
         
         if self.dataSource.count != 0{
@@ -251,20 +249,10 @@ class LZAlbumViewController: LZBaseViewController,UICollectionViewDelegate,UICol
         cell.loadData(model: self.dataSource[indexPath.row] as! LZAlbumModel)
         cell.delBtn.tag = indexPath.row
         cell.delBtn.addTarget(self, action: #selector(delBtn(btn:)), for: .touchUpInside)
-        self.perform(#selector(runloopAnimCell(cell:)), with: cell, afterDelay: 0.0, inModes: [.common])
         
         return cell
     }
-    @objc func runloopAnimCell(cell:LZAlbumCollectionViewCell){
-        if !self.isHidden {
-            
-           
-            cell.layer.add(cell.anim, forKey: "SpringboardShake")
-        }else {
-            cell.layer.removeAllAnimations()
-            
-        }
-    }
+    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
         let model = self.dataSource[indexPath.row] as! LZAlbumModel
@@ -306,9 +294,39 @@ class LZAlbumViewController: LZBaseViewController,UICollectionViewDelegate,UICol
             return
         }
         
-        let vc = LZAlbumDetailsViewController()
-        vc.folderModel = model
-        self.navigationController?.pushViewController(vc, animated: true)
+        if !model.password.isStringNull() {
+           
+            let alertController = UIAlertController(title: LanguageStrins(string:"Tips"),message:LanguageStrins(string: "Please enter the private folder password."),preferredStyle: .alert)
+            alertController.addTextField {
+                    (textField: UITextField!) -> Void in
+                    textField.placeholder = LanguageStrins(string: "Please enter the password")
+                     textField.keyboardType = .numberPad
+                     textField.isSecureTextEntry = true
+            }
+            let cancelAction = UIAlertAction(title: LanguageStrins(string: "Cancel"),style: .cancel,handler: nil)
+            alertController.addAction(cancelAction)
+            let okAction = UIAlertAction(title: LanguageStrins(string: "OK"),style: UIAlertAction.Style.default) {
+              [weak self](action: UIAlertAction!) -> Void in
+                    let acc:UITextField =
+                        (alertController.textFields?.first)!
+                          as UITextField
+                    if acc.text == model.password {
+                        let vc = LZAlbumDetailsViewController()
+                        vc.folderModel = model
+                        self?.navigationController?.pushViewController(vc, animated: true)
+                    }else{
+                        self!.chrysan.show(.plain, message:LanguageStrins(string: "Please enter the correct password"), hideDelay: HIDE_DELAY)
+                        return
+                    }
+            }
+            alertController.addAction(okAction)
+            self.present(alertController,animated: true,completion: nil)
+        }else{
+            let vc = LZAlbumDetailsViewController()
+            vc.folderModel = model
+            self.navigationController?.pushViewController(vc, animated: true)
+        }
+        
     }
     func collectionView(_ collectionView: UICollectionView, canMoveItemAt indexPath: IndexPath) -> Bool {
         return true
@@ -408,22 +426,29 @@ extension LZAlbumViewController{
             if !albumModel.password.isStringNull() {
                 message = LanguageStrins(string: "Please enter a new password to be modified")
                 title = LanguageStrins(string: "Change password")
-                let itme = FWPopupItem.init(title: LanguageStrins(string: "Cancel"), itemType: .normal, isCancel: true, canAutoHide: false) { (FWPopupViews, Ints, Strings) in
-                    
+                let alertController = UIAlertController(title: LanguageStrins(string:"Tips"),message:LanguageStrins(string:"Please enter the private folder password."),preferredStyle: .alert)
+                alertController.addTextField {
+                        (textField: UITextField!) -> Void in
+                        textField.placeholder = LanguageStrins(string: "Confirm the password")
+                         textField.keyboardType = .numberPad
+                         textField.isSecureTextEntry = true
                 }
-                let itme2 = FWPopupItem.init(title: LanguageStrins(string: "OK"), itemType: .normal, isCancel: false, canAutoHide: false) { (FWPopupViews, Ints, Strings) in
-                    
-                }
-                let alert = FWAlertView.alert(title: LanguageStrins(string: ""), detail: LanguageStrins(string: ""), inputPlaceholder: LanguageStrins(string: ""), keyboardType: .numberPad, isSecureTextEntry: true, customView: nil, items: [itme,itme2], vProperty: nil)
-                alert.show()
-                alert.inputBlock = { (text) in
-                    if !itme2.isCancel {
-                        if text == albumModel.password {
-                            self.changeAndAddPass(title: title, message: message)
-                        }
+                let cancelAction = UIAlertAction(title: LanguageStrins(string: "Cancel"),style: .cancel,handler: nil)
+                alertController.addAction(cancelAction)
+                let okAction = UIAlertAction(title: LanguageStrins(string: "OK"),style: UIAlertAction.Style.default) {
+                  [weak self](action: UIAlertAction!) -> Void in
+                let acc:UITextField =
+                    (alertController.textFields?.first)!
+                      as UITextField
+                if acc.text == albumModel.password {
+                        self!.changeAndAddPass(title: title, message: message)
+                    }else{
+                        self!.chrysan.show(.plain, message:LanguageStrins(string: "Please enter the correct password"), hideDelay: HIDE_DELAY)
+                        return
                     }
-                    alert.hide()
                 }
+                alertController.addAction(okAction)
+                self.present(alertController,animated: true,completion: nil)
             }else{
                 self.changeAndAddPass(title: title, message: message)
             }
@@ -510,11 +535,8 @@ extension LZAlbumViewController{
                             albumModel.password = acc.text!
                           self.getDataSource()
                         }
-                        if albumModel.password.isStringNull(){
-                            self.chrysan.show(.plain, message:LanguageStrins(string: "Add a password successful"), hideDelay: HIDE_DELAY)
-                        }else{
-                             self.chrysan.show(.plain, message:LanguageStrins(string: "The password was modified successfully"), hideDelay: HIDE_DELAY)
-                        }
+                       self.chrysan.show(.plain, message:LanguageStrins(string: "Add a password successful"), hideDelay: HIDE_DELAY)
+                      
                     }
                   alertController.addAction(okAction)
                   self.present(alertController,animated: true,completion: nil)
@@ -573,7 +595,4 @@ extension LZAlbumViewController{
        
     }
    
-  func zipArchiveProgressEvent(_ loaded: UInt64, total: UInt64) {
-           print("\(loaded)------\(total)")
-       }
 }

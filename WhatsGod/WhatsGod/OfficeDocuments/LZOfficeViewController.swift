@@ -306,9 +306,39 @@ class LZOfficeViewController: LZBaseViewController,UICollectionViewDelegate,UICo
             }
             return
         }
-        let vc = LZOfficeDetailViewController()
-        vc.folderModel = model
-        self.navigationController?.pushViewController(vc, animated: true)
+        
+        if !model.password.isStringNull() {
+           
+            let alertController = UIAlertController(title: LanguageStrins(string:"Tips"),message:LanguageStrins(string: "Please enter the private folder password."),preferredStyle: .alert)
+            alertController.addTextField {
+                    (textField: UITextField!) -> Void in
+                    textField.placeholder = LanguageStrins(string: "Please enter the password")
+                     textField.keyboardType = .numberPad
+                     textField.isSecureTextEntry = true
+            }
+            let cancelAction = UIAlertAction(title: LanguageStrins(string: "Cancel"),style: .cancel,handler: nil)
+            alertController.addAction(cancelAction)
+            let okAction = UIAlertAction(title: LanguageStrins(string: "OK"),style: UIAlertAction.Style.default) {
+              [weak self](action: UIAlertAction!) -> Void in
+                    let acc:UITextField =
+                        (alertController.textFields?.first)!
+                          as UITextField
+                    if acc.text == model.password {
+                        let vc = LZOfficeDetailViewController()
+                        vc.folderModel = model
+                        self?.navigationController?.pushViewController(vc, animated: true)
+                    }else{
+                        self!.chrysan.show(.plain, message:LanguageStrins(string: "Please enter the correct password"), hideDelay: HIDE_DELAY)
+                        return
+                    }
+            }
+            alertController.addAction(okAction)
+            self.present(alertController,animated: true,completion: nil)
+        }else{
+           let vc = LZOfficeDetailViewController()
+           vc.folderModel = model
+           self.navigationController?.pushViewController(vc, animated: true)
+        }
     }
 
     //MARK: - 长按动作
@@ -395,8 +425,9 @@ class LZOfficeViewController: LZBaseViewController,UICollectionViewDelegate,UICo
 }
 
 extension LZOfficeViewController{
+   
     private func changeData(type:Int){
-           let officeModel:LZOfficeFolderModel = self.dataSource[self.indexPath!.row] as! LZOfficeFolderModel
+             let officeModel:LZOfficeFolderModel = self.dataSource[self.indexPath!.row] as! LZOfficeFolderModel
            
            switch type {
            case 0:
@@ -405,22 +436,29 @@ extension LZOfficeViewController{
                if !officeModel.password.isStringNull() {
                    message = LanguageStrins(string: "Please enter a new password to be modified")
                    title = LanguageStrins(string: "Change password")
-                   let itme = FWPopupItem.init(title: LanguageStrins(string: "Cancel"), itemType: .normal, isCancel: true, canAutoHide: false) { (FWPopupViews, Ints, Strings) in
-                       
+                   let alertController = UIAlertController(title: LanguageStrins(string:"Tips"),message:LanguageStrins(string:"Please enter the private folder password."),preferredStyle: .alert)
+                   alertController.addTextField {
+                           (textField: UITextField!) -> Void in
+                           textField.placeholder = LanguageStrins(string: "Confirm the password")
+                            textField.keyboardType = .numberPad
+                            textField.isSecureTextEntry = true
                    }
-                   let itme2 = FWPopupItem.init(title: LanguageStrins(string: "OK"), itemType: .normal, isCancel: false, canAutoHide: false) { (FWPopupViews, Ints, Strings) in
-                       
-                   }
-                   let alert = FWAlertView.alert(title: LanguageStrins(string: ""), detail: LanguageStrins(string: ""), inputPlaceholder: LanguageStrins(string: ""), keyboardType: .numberPad, isSecureTextEntry: true, customView: nil, items: [itme,itme2], vProperty: nil)
-                   alert.show()
-                   alert.inputBlock = { (text) in
-                       if !itme2.isCancel {
-                           if text == officeModel.password {
-                               self.changeAndAddPass(title: title, message: message)
-                           }
+                   let cancelAction = UIAlertAction(title: LanguageStrins(string: "Cancel"),style: .cancel,handler: nil)
+                   alertController.addAction(cancelAction)
+                   let okAction = UIAlertAction(title: LanguageStrins(string: "OK"),style: UIAlertAction.Style.default) {
+                     [weak self](action: UIAlertAction!) -> Void in
+                   let acc:UITextField =
+                       (alertController.textFields?.first)!
+                         as UITextField
+                   if acc.text == officeModel.password {
+                           self!.changeAndAddPass(title: title, message: message)
+                       }else{
+                           self!.chrysan.show(.plain, message:LanguageStrins(string: "Please enter the correct password"), hideDelay: HIDE_DELAY)
+                           return
                        }
-                       alert.hide()
                    }
+                   alertController.addAction(okAction)
+                   self.present(alertController,animated: true,completion: nil)
                }else{
                    self.changeAndAddPass(title: title, message: message)
                }
@@ -451,9 +489,9 @@ extension LZOfficeViewController{
                                                        
                                }
                                                    
-                           let officeModel:LZOfficeFolderModel = self.dataSource[self.indexPath!.row] as! LZOfficeFolderModel
+                           let albumModel:LZAlbumModel = self.dataSource[self.indexPath!.row] as! LZAlbumModel
                                try! realm.write {
-                                   officeModel.finderName = acc.text!
+                                   albumModel.finderName = acc.text!
                                  self.getDataSource()
                                }
                            }
@@ -465,7 +503,6 @@ extension LZOfficeViewController{
            }
     
        }
-       
        private func changeAndAddPass(title:String,message:String){
            
            let officeModel:LZOfficeFolderModel = self.dataSource[self.indexPath!.row] as! LZOfficeFolderModel

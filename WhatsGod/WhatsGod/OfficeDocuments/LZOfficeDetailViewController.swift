@@ -199,18 +199,22 @@ class LZOfficeDetailViewController: LZBaseViewController,UICollectionViewDelegat
             self.dataSource.removeAll()
         }
      
-        if folderModel!.images.count != 0{
-            
-            for image in folderModel!.images {
-                self.dataSource.append(image)
+        DispatchQueue.global().async {
+            DispatchQueue.main.async {
+                 if self.folderModel!.images.count != 0{
+                           
+                    for image in self.folderModel!.images {
+                          self.dataSource.append(image)
+                      }
+                  }
+                
+                  if self.dataSource.count == 0 {
+                      self.allBtn.isSelected = false
+                  }
+                  self.collectionView .reloadData()
+                  self.stopAnimating()
             }
         }
-      
-        if self.dataSource.count == 0 {
-            self.allBtn.isSelected = false
-        }
-        self.collectionView .reloadData()
-        self.stopAnimating()
     }
     override func rightItmeEvent() {
 

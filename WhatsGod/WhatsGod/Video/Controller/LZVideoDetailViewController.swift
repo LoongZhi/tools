@@ -183,9 +183,10 @@ class LZVideoDetailViewController: LZBaseViewController,UICollectionViewDelegate
                              DispatchQueue.main.async {
                                     let url:String = model.originalAsset?.value(forKey: "filename") as! String
                                     let type = url.returnFileType(fileUrl: url)
-                                let paths = self!.folderModel?.path
-                                    let path = paths! + "/Video" + String(format: "%d.%@",Date().timeIntervalSince1970,type)
-                                    let ImagePath = paths! + "/Thumb" + String(format: "%d.jpg",Date().timeIntervalSince1970)
+                                    let paths = self!.folderModel?.path
+                                    
+                                    let path = "\(paths!)/Video\(String(format: "%d.%@",Date().timeIntervalSince1970,type))"
+                                    let ImagePath = "\(paths!)/Thumb\(String(format: "%d.jpg",Date().timeIntervalSince1970))"
                                     if asset == nil{
                                         return
                                     }
@@ -257,18 +258,22 @@ class LZVideoDetailViewController: LZBaseViewController,UICollectionViewDelegate
         if self.dataSource.count != 0 {
             self.dataSource.removeAll()
         }
-     
-        if folderModel!.images.count != 0{
-            
-            for image in folderModel!.images {
-                self.dataSource.append(image)
+     DispatchQueue.global().async {
+             
+            DispatchQueue.main.async {
+                if self.folderModel!.images.count != 0{
+                    for image in self.folderModel!.images {
+                        self.dataSource.append(image)
+                    }
+                }
+                if self.dataSource.count == 0 {
+                    self.allBtn.isSelected = false
+                }
+                self.collectionView .reloadData()
+                self.stopAnimating()
             }
-        }
-      if self.dataSource.count == 0 {
-          self.allBtn.isSelected = false
-      }
-        self.collectionView .reloadData()
-        self.stopAnimating()
+    }
+       
     }
     override func rightItmeEvent() {
         
@@ -440,7 +445,7 @@ class LZVideoDetailViewController: LZBaseViewController,UICollectionViewDelegate
         
         let reuseIdentifier = "LZAlbumDetailsCell"
         let cell:LZAlbumDetailsCell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! LZAlbumDetailsCell
-        cell.loadData(model: self.dataSource[indexPath.row] as! LZVideoModel)
+        cell.loadDataVideoModel(model: self.dataSource[indexPath.row] as! LZVideoModel)
         cell.selectBtn.tag = indexPath.item
         cell.selectBtn.addTarget(self, action:#selector(touchBtn(btn:)) , for: .touchUpInside)
         return cell
