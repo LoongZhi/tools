@@ -20,10 +20,11 @@ class LZOfficeFolderModel: Object {
 
 class LZOfficeModel: Object {
     @objc dynamic var path = ""
-    @objc dynamic var imageDes = ""
+    @objc dynamic var Des = ""
     @objc dynamic var isHidden = true
     @objc dynamic var isSelect = false
     @objc dynamic var imagePath = ""
     @objc dynamic var format = ""
     @objc dynamic var type = ""
+     @objc dynamic var name = ""
 }

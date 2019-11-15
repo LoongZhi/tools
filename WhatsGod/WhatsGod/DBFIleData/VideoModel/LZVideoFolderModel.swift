@@ -22,12 +22,12 @@ class LZVideoFolderModel: Object {
 
 class LZVideoModel: Object {
     @objc dynamic var path = ""
-    @objc dynamic var imageDes = ""
+    @objc dynamic var Des = ""
     @objc dynamic var isHidden = true
     @objc dynamic var isSelect = false
     @objc dynamic var imagePath = ""
     @objc dynamic var type = ""
     @objc dynamic var timerscale:Int = 0
     @objc dynamic var timer = ""
-    
+     @objc dynamic var name = ""
 }

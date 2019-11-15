@@ -24,10 +24,11 @@ class LZAlbumModel: Object {
 
 class LZAlbumImageModel: Object {
     @objc dynamic var path = ""
-    @objc dynamic var imageDes = ""
+    @objc dynamic var Des = ""
     @objc dynamic var isHidden = true
     @objc dynamic var isSelect = false
     @objc dynamic var type = ""
     @objc dynamic var thumbnailPath = ""
+     @objc dynamic var name = ""
     
 }

@@ -40,7 +40,7 @@ target 'WhatsGod' do
   
   pod 'DKImagePickerController'
   
-   pod 'IBAnimatable'
+  pod 'IBAnimatable'
    
    pod 'Chrysan'
    
@@ -52,5 +52,8 @@ target 'WhatsGod' do
 
    pod 'Kingfisher'
   
-    pod "pop"
+   pod "pop"
+   
+   pod 'SJVideoPlayer'
+   pod 'SJRouter'
 end

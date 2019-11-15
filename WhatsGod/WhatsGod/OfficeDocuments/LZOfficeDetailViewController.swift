@@ -16,7 +16,7 @@ import Photos
 import JXPhotoBrowser
 import QuickLook
 
-class LZOfficeDetailViewController: LZBaseViewController,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,QLPreviewControllerDelegate,QLPreviewControllerDataSource{
+class LZOfficeDetailViewController: LZBaseViewController,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,QLPreviewControllerDelegate,QLPreviewControllerDataSource,UIDocumentPickerDelegate{
 
     var  menuView:FWMenuView? = nil
     var  isHidden:Bool = true
@@ -170,7 +170,7 @@ class LZOfficeDetailViewController: LZBaseViewController,UICollectionViewDelegat
             
             switch (index) {
             case 0:
-                
+                self!.selectUploadFileFromICouldDrive()
                 break;
             case 1:
                 let itme = UIBarButtonItem.init(title: LanguageStrins(string: "Completed"), style: .done, target: self, action: #selector(self!.leftItmeEvent))
@@ -430,4 +430,33 @@ extension LZOfficeDetailViewController{
         stopAnimating()
     
     }
+    
+    private func selectUploadFileFromICouldDrive()  {
+        let documentTypes = ["public.content",
+                             "public.text",
+                             "public.source-code",
+                             "public.image",
+                             "public.audiovisual-content",
+                             "com.adobe.pdf",
+                             "com.apple.keynote.key",
+                             "com.microsoft.word.doc",
+                             "com.microsoft.excel.xls",
+                             "com.microsoft.powerpoint.ppt"]
+
+         let document = UIDocumentPickerViewController.init(documentTypes: documentTypes, in: .open)
+         document.delegate = self
+         self.present(document, animated:true, completion:nil)
+    }
+    func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
+           let fileName = urls.last!.lastPathComponent
+           if ICouldManager.iCouldEnable() {
+                ICouldManager.downloadFile(WithDocumentUrl: urls.last!) { (fileData) in
+                   
+               }
+           }
+           controller.dismiss(animated: true, completion: nil)
+    }
+  
+    
+
 }

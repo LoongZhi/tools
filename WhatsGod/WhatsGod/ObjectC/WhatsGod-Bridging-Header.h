@@ -5,3 +5,6 @@
 #import <LYEmptyView/LYEmptyViewHeader.h>
 #import "SSZipArchive.h"
 #import "POP.h"
+#import "SJVideoPlayer.h"
+#import "SJRouter.h"
+

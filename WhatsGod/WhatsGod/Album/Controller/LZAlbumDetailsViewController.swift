@@ -183,7 +183,7 @@ class LZAlbumDetailsViewController: LZBaseViewController,UICollectionViewDelegat
                             queue.async {
                                 let url:String = model.originalAsset?.value(forKey: "filename") as! String
                                 let type = url.returnFileType(fileUrl: url)
-                                let path = "\(pathUrl)/image\(String(format: "%d.%@",Date().timeIntervalSince1970,type))"
+                                let path = "\(pathUrl)/\(url)"
                                 let thumbnailPath = "\(pathUrl)/Thumbnail\(String(format: "%d.%@",Date().timeIntervalSince1970,type))"
                                 if dictionry!["PHImageFileURLKey"] == nil{
                                     return

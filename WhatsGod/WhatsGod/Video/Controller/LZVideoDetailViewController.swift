@@ -38,7 +38,13 @@ class LZVideoDetailViewController: LZBaseViewController,UICollectionViewDelegate
         collection.dataSource = self
         collection.delegate = self
         collection.backgroundColor = UIColor.white
-        return collection;
+        return collection
+    }()
+    private lazy var videoPlayer:SJVideoPlayer = {
+        let player = SJVideoPlayer.init()
+        player.view.frame = self.view.bounds
+//        self.view.addSubview(player.view)
+        return player
     }()
     private lazy var pickerController:DKImagePickerController = {
         let pc = DKImagePickerController.init()
@@ -184,8 +190,7 @@ class LZVideoDetailViewController: LZBaseViewController,UICollectionViewDelegate
                                     let url:String = model.originalAsset?.value(forKey: "filename") as! String
                                     let type = url.returnFileType(fileUrl: url)
                                     let paths = self!.folderModel?.path
-                                    
-                                    let path = "\(paths!)/Video\(String(format: "%d.%@",Date().timeIntervalSince1970,type))"
+                                let path = "\(paths!)/\(url)"
                                     let ImagePath = "\(paths!)/Thumb\(String(format: "%d.jpg",Date().timeIntervalSince1970))"
                                     if asset == nil{
                                         return
@@ -223,12 +228,12 @@ class LZVideoDetailViewController: LZBaseViewController,UICollectionViewDelegate
                             }
 
                             }
-                        if assets.count == 0 {
-                            self!.stopAnimating()
-                        }
+                       
                     
                     }
-                    
+                    if assets.count == 0 {
+                        self!.stopAnimating()
+                    }
                 }
                 self!.present(self!.pickerController, animated: true, completion: nil)
                 break;
@@ -453,12 +458,21 @@ class LZVideoDetailViewController: LZBaseViewController,UICollectionViewDelegate
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
-        
+        let model = self.dataSource[indexPath.row] as! LZVideoModel
+        let videoUrl = URL.init(fileURLWithPath: videoFolder + model.path)
+        self.videoPlayer.urlAsset = SJVideoPlayerURLAsset.init(url: videoUrl)
+        self.videoPlayer.urlAsset?.title = "ereww"
+        self.videoPlayer.autoManageViewToFitOnScreenOrRotation = true
+
+        self.videoPlayer.resumePlaybackWhenAppDidEnterForeground = true
+
+        self.videoPlayer.assetDeallocExeBlock = {(videoPlayer) in
+
+        }
+        self.videoPlayer.play()
+        self.view.addSubview(self.videoPlayer.view)
         self.indexPaths = indexPath
-        let vc = QLPreviewController.init()
-        vc.delegate = self
-        vc.dataSource = self
-        self.navigationController?.pushViewController(vc, animated: true)
+
     }
 
     func numberOfPreviewItems(in controller: QLPreviewController) -> Int {

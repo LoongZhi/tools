@@ -32,6 +32,8 @@
 		88261CCA23320D7B005CE69D /* LZMainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88261CC923320D7B005CE69D /* LZMainViewController.swift */; };
 		88262D6023509D3B006A305C /* LZFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88262D5F23509D3B006A305C /* LZFileManager.swift */; };
 		8826C7CE23545BBF00C40B6A /* LZVideoFolderModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8826C7CD23545BBF00C40B6A /* LZVideoFolderModel.swift */; };
+		8829AEBB237E8104001E1040 /* LZDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8829AEBA237E8104001E1040 /* LZDocument.swift */; };
+		8829AEBD237E813E001E1040 /* IcouldManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8829AEBC237E813E001E1040 /* IcouldManager.swift */; };
 		882A029A23742EA20080A471 /* LZCostomPresentAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 882A029923742EA20080A471 /* LZCostomPresentAnimation.swift */; };
 		882A81CE23462F4200A97ADC /* ExtensionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 882A81CD23462F4200A97ADC /* ExtensionView.swift */; };
 		883A46BB23520224004A9DDC /* UIViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 883A46B723520224004A9DDC /* UIViewControllerExtension.swift */; };
@@ -113,6 +115,8 @@
 		88261CC923320D7B005CE69D /* LZMainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LZMainViewController.swift; sourceTree = "<group>"; };
 		88262D5F23509D3B006A305C /* LZFileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LZFileManager.swift; sourceTree = "<group>"; };
 		8826C7CD23545BBF00C40B6A /* LZVideoFolderModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LZVideoFolderModel.swift; sourceTree = "<group>"; };
+		8829AEBA237E8104001E1040 /* LZDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LZDocument.swift; sourceTree = "<group>"; };
+		8829AEBC237E813E001E1040 /* IcouldManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IcouldManager.swift; sourceTree = "<group>"; };
 		882A029923742EA20080A471 /* LZCostomPresentAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LZCostomPresentAnimation.swift; sourceTree = "<group>"; };
 		882A81CD23462F4200A97ADC /* ExtensionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionView.swift; sourceTree = "<group>"; };
 		883A46B723520224004A9DDC /* UIViewControllerExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewControllerExtension.swift; sourceTree = "<group>"; };
@@ -369,6 +373,8 @@
 				8825CD7423670359007AB209 /* ContentLabel.swift */,
 				882A029923742EA20080A471 /* LZCostomPresentAnimation.swift */,
 				8824370C23759627000D6055 /* LZPercentProgressView.swift */,
+				8829AEBA237E8104001E1040 /* LZDocument.swift */,
+				8829AEBC237E813E001E1040 /* IcouldManager.swift */,
 			);
 			path = Tools;
 			sourceTree = "<group>";
@@ -668,11 +674,17 @@
 				"${BUILT_PRODUCTS_DIR}/JXPhotoBrowser/JXPhotoBrowser.framework",
 				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
 				"${BUILT_PRODUCTS_DIR}/LYEmptyView/LYEmptyView.framework",
+				"${BUILT_PRODUCTS_DIR}/Masonry/Masonry.framework",
 				"${BUILT_PRODUCTS_DIR}/NVActivityIndicatorView/NVActivityIndicatorView.framework",
+				"${BUILT_PRODUCTS_DIR}/Reachability/Reachability.framework",
 				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
 				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
 				"${BUILT_PRODUCTS_DIR}/SDWebImageFLPlugin/SDWebImageFLPlugin.framework",
+				"${BUILT_PRODUCTS_DIR}/SJBaseVideoPlayer/SJBaseVideoPlayer.framework",
+				"${BUILT_PRODUCTS_DIR}/SJRouter/SJRouter.framework",
+				"${BUILT_PRODUCTS_DIR}/SJUIKit/SJUIKit.framework",
+				"${BUILT_PRODUCTS_DIR}/SJVideoPlayer/SJVideoPlayer.framework",
 				"${BUILT_PRODUCTS_DIR}/SSZipArchive/SSZipArchive.framework",
 				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
 				"${BUILT_PRODUCTS_DIR}/pop/pop.framework",
@@ -696,11 +708,17 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/JXPhotoBrowser.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/LYEmptyView.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Masonry.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NVActivityIndicatorView.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Reachability.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImageFLPlugin.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SJBaseVideoPlayer.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SJRouter.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SJUIKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SJVideoPlayer.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SSZipArchive.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/pop.framework",
@@ -752,6 +770,8 @@
 				88613A1A233647A70089C402 /* LZAlbumViewController.swift in Sources */,
 				88BD9B3C233B9BB40098B8FB /* LZRealmTool.swift in Sources */,
 				8844ADFF2379973B00DAD127 /* ExtensionImage.swift in Sources */,
+				8829AEBD237E813E001E1040 /* IcouldManager.swift in Sources */,
+				8829AEBB237E8104001E1040 /* LZDocument.swift in Sources */,
 				882A81CE23462F4200A97ADC /* ExtensionView.swift in Sources */,
 				883A46C12352062E004A9DDC /* CKWaveCollectionViewAnimator.swift in Sources */,
 				883A46BD23520224004A9DDC /* UICollectionViewExtension.swift in Sources */,
