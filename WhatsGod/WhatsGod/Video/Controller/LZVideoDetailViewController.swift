@@ -30,8 +30,8 @@ class LZVideoDetailViewController: LZBaseViewController,UICollectionViewDelegate
     private var imageDataArr = NSArray()
     private lazy var collectionView:UICollectionView = {
         let layout = UICollectionViewFlowLayout.init()
-        layout.itemSize = CGSize.init(width: SCREEN_WIDTH / 3, height: SCREEN_WIDTH / 3)
-        layout.minimumLineSpacing = 10
+        layout.itemSize = CGSize.init(width: SCREEN_WIDTH, height: SCREEN_HEIGHT / 3)
+        layout.minimumLineSpacing = 0
         layout.minimumInteritemSpacing = 0
         layout.sectionInset = UIEdgeInsets.init(top: 0, left: 0, bottom: 0, right: 0)
         let collection = UICollectionView.init(frame: self.view.bounds, collectionViewLayout: layout)
@@ -40,12 +40,7 @@ class LZVideoDetailViewController: LZBaseViewController,UICollectionViewDelegate
         collection.backgroundColor = UIColor.white
         return collection
     }()
-    private lazy var videoPlayer:SJVideoPlayer = {
-        let player = SJVideoPlayer.init()
-        player.view.frame = self.view.bounds
-//        self.view.addSubview(player.view)
-        return player
-    }()
+   
     private lazy var pickerController:DKImagePickerController = {
         let pc = DKImagePickerController.init()
         pc.assetType = .allVideos
@@ -87,7 +82,10 @@ class LZVideoDetailViewController: LZBaseViewController,UICollectionViewDelegate
         label.font = UIFont.systemFont(ofSize: 20)
         return label
     }()
-  
+    private lazy var videoPlayer:SJVideoPlayer = {
+            let player = SJVideoPlayer.init()
+            return player
+        }()
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -101,8 +99,8 @@ class LZVideoDetailViewController: LZBaseViewController,UICollectionViewDelegate
         
         self.view.addSubview(self.collectionView)
         self.view.addSubview(self.bottomView)
-        
-          self.bottomView.snp.makeConstraints { (make) in
+       
+        self.bottomView.snp.makeConstraints { (make) in
               make.right.left.equalTo(0)
               make.height.equalTo(49)
               make.bottom.equalTo(-lzBottomSafeHeight)
@@ -210,12 +208,13 @@ class LZVideoDetailViewController: LZBaseViewController,UICollectionViewDelegate
                                                 print("写入失败")
                                             }
                                             let videoModel = LZVideoModel.init()
-                                        videoModel.isHidden = self!.isHidden
+                                                videoModel.isHidden = self!.isHidden
                                                 videoModel.path = path
                                                 videoModel.type = type
+                                                videoModel.name = url
                                                 videoModel.imagePath = ImagePath
                                                 videoModel.timerscale = Int(urlAsset.duration.seconds)
-                                        videoModel.timer = String.init().transToHourMinSecs(time:videoModel.timerscale)
+                                                videoModel.timer = String.init().transToHourMinSecs(time:videoModel.timerscale)
                                                 try! realm.write {
 
                                                     self!.folderModel?.images.append(videoModel)
@@ -260,12 +259,13 @@ class LZVideoDetailViewController: LZBaseViewController,UICollectionViewDelegate
     
     private func getDataSource(){
         
-        if self.dataSource.count != 0 {
-            self.dataSource.removeAll()
-        }
+       
      DispatchQueue.global().async {
              
             DispatchQueue.main.async {
+                if self.dataSource.count != 0 {
+                           self.dataSource.removeAll()
+                       }
                 if self.folderModel!.images.count != 0{
                     for image in self.folderModel!.images {
                         self.dataSource.append(image)
@@ -389,7 +389,17 @@ class LZVideoDetailViewController: LZBaseViewController,UICollectionViewDelegate
             
         }
     }
-    
+    @objc func playerBtn(btn:UIButton){
+        let indexPath = IndexPath.init(row: btn.tag - 10000, section: 0)
+        let cell = self.collectionView.cellForItem(at: indexPath) as! LZAlbumDetailsCell
+        let model = self.dataSource[indexPath.row] as! LZVideoModel
+        let playModel = SJPlayModel.uiCollectionViewCellPlayModel(withPlayerSuperviewTag: cell.imageView.tag, at: indexPath, collectionView: self.collectionView)
+        let videoUrl = URL.init(fileURLWithPath: videoFolder + model.path)
+        self.videoPlayer.urlAsset = SJVideoPlayerURLAsset.init(url: videoUrl, specifyStartTime: TimeInterval(model.StartTime), playModel: playModel)
+         self.videoPlayer.showMoreItemToTopControlLayer = true
+        self.videoPlayer.urlAsset?.title = model.name
+        self.videoPlayer.setFitOnScreen(true, animated: true)
+    }
     @objc func delTouch(){
         
         
@@ -452,25 +462,33 @@ class LZVideoDetailViewController: LZBaseViewController,UICollectionViewDelegate
         let cell:LZAlbumDetailsCell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! LZAlbumDetailsCell
         cell.loadDataVideoModel(model: self.dataSource[indexPath.row] as! LZVideoModel)
         cell.selectBtn.tag = indexPath.item
+        cell.imageView.tag = 3000 + indexPath.item
         cell.selectBtn.addTarget(self, action:#selector(touchBtn(btn:)) , for: .touchUpInside)
+        cell.playerBtn.tag = 10000 + indexPath.item
+        cell.playerBtn.addTarget(self, action: #selector(playerBtn(btn:)), for: .touchUpInside)
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
         let model = self.dataSource[indexPath.row] as! LZVideoModel
-        let videoUrl = URL.init(fileURLWithPath: videoFolder + model.path)
-        self.videoPlayer.urlAsset = SJVideoPlayerURLAsset.init(url: videoUrl)
-        self.videoPlayer.urlAsset?.title = "ereww"
-        self.videoPlayer.autoManageViewToFitOnScreenOrRotation = true
-
-        self.videoPlayer.resumePlaybackWhenAppDidEnterForeground = true
-
-        self.videoPlayer.assetDeallocExeBlock = {(videoPlayer) in
-
-        }
-        self.videoPlayer.play()
-        self.view.addSubview(self.videoPlayer.view)
+//        let videoUrl = URL.init(fileURLWithPath: videoFolder + model.path)
+//        self.videoPlayer.urlAsset = SJVideoPlayerURLAsset.init(url: videoUrl)
+//        self.videoPlayer.urlAsset?.title = "ereww"
+//        self.videoPlayer.autoManageViewToFitOnScreenOrRotation = true
+//        self.videoPlayer.isFitOnScreen = true
+//        self.videoPlayer.resumePlaybackWhenAppDidEnterForeground = true
+//        self.videoPlayer.rotationManager.rotate()
+//        self.videoPlayer.assetDeallocExeBlock = {(videoPlayer) in
+//
+//        }
+//        self.videoPlayer.play()
+//        let cell = collectionView.cellForItem(at: indexPath) as! LZAlbumDetailsCell
+//        let playModel = SJPlayModel.uiCollectionViewCellPlayModel(withPlayerSuperviewTag: cell.imageView.tag, at: indexPath, collectionView: collectionView)
+//        let videoUrl = URL.init(fileURLWithPath: videoFolder + model.path)
+//        self.videoPlayer.urlAsset = SJVideoPlayerURLAsset.init(url: videoUrl, specifyStartTime: TimeInterval(model.StartTime), playModel: playModel)
+//        self.videoPlayer.urlAsset?.title = model.name
+    
         self.indexPaths = indexPath
 
     }

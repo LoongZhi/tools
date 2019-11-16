@@ -61,4 +61,14 @@ class LZBaseNavController: UINavigationController,UINavigationControllerDelegate
     }
     */
 
+//    override var shouldAutorotate: Bool{
+//        return self.topViewController!.shouldAutorotate
+//    }
+//    override var supportedInterfaceOrientations: UIInterfaceOrientationMask{
+//        return self.topViewController!.supportedInterfaceOrientations
+//    }
+//    override var preferredInterfaceOrientationForPresentation: UIInterfaceOrientation{
+//        return self.topViewController!.preferredInterfaceOrientationForPresentation
+//    }
+    
 }

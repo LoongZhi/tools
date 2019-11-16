@@ -23,12 +23,23 @@ class LZBaseViewController: UIViewController,NVActivityIndicatorViewable {
         view.delegate = (self as! UITableViewDelegate)
         return view
     }()
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if AppLock.password.isStringNull() {
+            AppLock.set(controller: self)
+        }else if (UserDefaults.standard.object(forKey: "VCPassword") as! Bool == true){
+            AppLock.verify(controller: self)
+            UserDefaults.standard.set(false, forKey: "VCPassword")
+        }
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
         create()
         readyView()
+        
+       
     }
     
     func create() -> Void {

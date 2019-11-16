@@ -56,4 +56,6 @@ target 'WhatsGod' do
    
    pod 'SJVideoPlayer'
    pod 'SJRouter'
+   
+   pod 'GesturePassword'
 end

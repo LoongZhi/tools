@@ -30,4 +30,5 @@ class LZVideoModel: Object {
     @objc dynamic var timerscale:Int = 0
     @objc dynamic var timer = ""
      @objc dynamic var name = ""
+    @objc dynamic var StartTime = 0
 }

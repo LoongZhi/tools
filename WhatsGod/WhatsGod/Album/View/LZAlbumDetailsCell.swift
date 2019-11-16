@@ -34,13 +34,30 @@ class LZAlbumDetailsCell: UICollectionViewCell {
         return label
     }()
     lazy var imageView:UIImageView = {
-        let image = UIImageView.init(frame: self.contentView.bounds)
+        let image = UIImageView.init()
         image.backgroundColor = COLOR_B8B8B8
         image.contentMode = .scaleAspectFill
         image.kf.indicatorType = .activity
         return image
     }()
-    
+     lazy var videoPlayer:SJVideoPlayer = {
+           let player = SJVideoPlayer.init()
+           return player
+       }()
+    lazy var playerBtn:UIButton = {
+           let btn = UIButton.init(frame: CGRect(x: self.contentView.bounds.size.width / 2 - 30, y: self.contentView.bounds.size.height / 2 - 30, width: 60, height: 60))
+            btn.setBackgroundImage(Img(url: "db_play_big"), for: .normal)
+           btn.backgroundColor = UIColor.clear
+           return btn
+       }()
+    lazy var contentLabel:UILabel = {
+        let label = UILabel.init()
+        label.font = UIFont.systemFont(ofSize: 14)
+        label.numberOfLines = 2
+        label.textColor = .white
+        label.isHidden = true
+        return label
+    }()
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -56,10 +73,15 @@ class LZAlbumDetailsCell: UICollectionViewCell {
         self.contentView.addSubview(self.bottomView)
         self.bottomView.addSubview(self.iconImage)
         self.bottomView.addSubview(self.nameLabel)
-//        self.imageView.snp.makeConstraints { (make) in
-//            make.left.right.top.bottom.equalToSuperview()
-//        }
-        
+        self.contentView.addSubview(self.playerBtn)
+        self.contentView.addSubview(self.contentLabel)
+        self.imageView.snp.makeConstraints { (make) in
+            make.left.right.top.bottom.equalToSuperview()
+        }
+        self.contentLabel.snp.makeConstraints { (make) in
+            make.top.left.right.equalTo(10)
+          
+        }
 //        self.bottomView.snp.makeConstraints { (make) in
 //            make.left.bottom.right.equalToSuperview()
 //            make.height.equalTo(25)
@@ -123,8 +145,12 @@ class LZAlbumDetailsCell: UICollectionViewCell {
             DispatchQueue.main.async {
                 
                 self.imageView.image = downsample(imageAt: url, to: CGSize(width: SCREEN_WIDTH / 4, height: SCREEN_WIDTH / 4), scale: 3)
+              
             }
         }
+        self.bottomView.isHidden = true
+        self.contentLabel.isHidden = false
+        self.contentLabel.text = model.name
         self.selectBtn.isSelected = model.isSelect
         self.selectBtn.isHidden = model.isHidden
         

@@ -34,6 +34,7 @@
 		8826C7CE23545BBF00C40B6A /* LZVideoFolderModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8826C7CD23545BBF00C40B6A /* LZVideoFolderModel.swift */; };
 		8829AEBB237E8104001E1040 /* LZDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8829AEBA237E8104001E1040 /* LZDocument.swift */; };
 		8829AEBD237E813E001E1040 /* IcouldManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8829AEBC237E813E001E1040 /* IcouldManager.swift */; };
+		8829AEBF23802AAD001E1040 /* Lock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8829AEBE23802AAD001E1040 /* Lock.swift */; };
 		882A029A23742EA20080A471 /* LZCostomPresentAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 882A029923742EA20080A471 /* LZCostomPresentAnimation.swift */; };
 		882A81CE23462F4200A97ADC /* ExtensionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 882A81CD23462F4200A97ADC /* ExtensionView.swift */; };
 		883A46BB23520224004A9DDC /* UIViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 883A46B723520224004A9DDC /* UIViewControllerExtension.swift */; };
@@ -117,6 +118,7 @@
 		8826C7CD23545BBF00C40B6A /* LZVideoFolderModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LZVideoFolderModel.swift; sourceTree = "<group>"; };
 		8829AEBA237E8104001E1040 /* LZDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LZDocument.swift; sourceTree = "<group>"; };
 		8829AEBC237E813E001E1040 /* IcouldManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IcouldManager.swift; sourceTree = "<group>"; };
+		8829AEBE23802AAD001E1040 /* Lock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Lock.swift; sourceTree = "<group>"; };
 		882A029923742EA20080A471 /* LZCostomPresentAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LZCostomPresentAnimation.swift; sourceTree = "<group>"; };
 		882A81CD23462F4200A97ADC /* ExtensionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionView.swift; sourceTree = "<group>"; };
 		883A46B723520224004A9DDC /* UIViewControllerExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewControllerExtension.swift; sourceTree = "<group>"; };
@@ -366,6 +368,7 @@
 		88613A0A2336397E0089C402 /* Tools */ = {
 			isa = PBXGroup;
 			children = (
+				8829AEBE23802AAD001E1040 /* Lock.swift */,
 				88222FF42363015E00FBFD58 /* OProgressView.swift */,
 				882A81CC23462EE800A97ADC /* Extension */,
 				88BD9B3A233B9B840098B8FB /* DB */,
@@ -668,6 +671,7 @@
 				"${BUILT_PRODUCTS_DIR}/DKPhotoGallery/DKPhotoGallery.framework",
 				"${BUILT_PRODUCTS_DIR}/FLAnimatedImage/FLAnimatedImage.framework",
 				"${BUILT_PRODUCTS_DIR}/FWPopupView/FWPopupView.framework",
+				"${BUILT_PRODUCTS_DIR}/GesturePassword/GesturePassword.framework",
 				"${BUILT_PRODUCTS_DIR}/Hue/Hue.framework",
 				"${BUILT_PRODUCTS_DIR}/IBAnimatable/IBAnimatable.framework",
 				"${BUILT_PRODUCTS_DIR}/IQKeyboardManagerSwift/IQKeyboardManagerSwift.framework",
@@ -702,6 +706,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DKPhotoGallery.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FLAnimatedImage.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FWPopupView.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GesturePassword.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Hue.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/IBAnimatable.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/IQKeyboardManagerSwift.framework",
@@ -770,6 +775,7 @@
 				88613A1A233647A70089C402 /* LZAlbumViewController.swift in Sources */,
 				88BD9B3C233B9BB40098B8FB /* LZRealmTool.swift in Sources */,
 				8844ADFF2379973B00DAD127 /* ExtensionImage.swift in Sources */,
+				8829AEBF23802AAD001E1040 /* Lock.swift in Sources */,
 				8829AEBD237E813E001E1040 /* IcouldManager.swift in Sources */,
 				8829AEBB237E8104001E1040 /* LZDocument.swift in Sources */,
 				882A81CE23462F4200A97ADC /* ExtensionView.swift in Sources */,

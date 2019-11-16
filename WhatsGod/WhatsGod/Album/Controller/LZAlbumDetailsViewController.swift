@@ -53,6 +53,7 @@ class LZAlbumDetailsViewController: LZBaseViewController,UICollectionViewDelegat
         
         return view;
     }()
+   
     private lazy var allBtn:UIButton = {
         let btn = UIButton.init()
         btn.setImage(Img(url: "xuanze"), for: .normal)
@@ -382,7 +383,7 @@ class LZAlbumDetailsViewController: LZBaseViewController,UICollectionViewDelegat
         
         }
     }
-    
+   
     @objc func delTouch(){
         
         
@@ -445,7 +446,6 @@ class LZAlbumDetailsViewController: LZBaseViewController,UICollectionViewDelegat
         cell.loadData(model: self.dataSource[indexPath.row] as! LZAlbumImageModel)
         cell.selectBtn.tag = indexPath.item
         cell.selectBtn.addTarget(self, action:#selector(touchBtn(btn:)) , for: .touchUpInside)
-      
         return cell
     }
     

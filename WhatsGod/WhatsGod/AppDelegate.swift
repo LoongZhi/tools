@@ -28,6 +28,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UIDocumentInteractionContr
         IQKeyboardManager.shared.enable = true
         // Override point for customization after application launch.
         configRealm()
+        
+        UserDefaults.standard.set(true, forKey: "VCPassword")
         return true
     }
 
@@ -150,6 +152,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UIDocumentInteractionContr
     //点击预览窗口的“Done”(完成)按钮时调用
     func documentInteractionControllerDidEndPreview(_ controller: UIDocumentInteractionController) {
         
+    }
+    func application(_ application: UIApplication, supportedInterfaceOrientationsFor window: UIWindow?) -> UIInterfaceOrientationMask {
+        return .all
     }
     func applicationWillResignActive(_ application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.

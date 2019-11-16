@@ -41,7 +41,7 @@ class LZBaseTabBarController: BubbleTabBarController {
         self.viewControllers = [albumNav, videoNav, noteBookNav, settingsNav]
         self.tabBar.tintColor = #colorLiteral(red: 0.1579992771, green: 0.1818160117, blue: 0.5072338581, alpha: 1)
       
-       
+        
     }
     /*
     // MARK: - Navigation
@@ -52,5 +52,19 @@ class LZBaseTabBarController: BubbleTabBarController {
         // Pass the selected object to the new view controller.
     }
     */
-
+//   func sj_topViewController() -> UIViewController{
+//        if self.selectedIndex == NSNotFound {
+//            return (self.viewControllers?.first)!
+//        }
+//    return self.selectedViewController!
+//    }
+//    override var shouldAutorotate: Bool{
+//        return self.sj_topViewController().shouldAutorotate
+//    }
+//    override var supportedInterfaceOrientations: UIInterfaceOrientationMask{
+//        return self.sj_topViewController().supportedInterfaceOrientations
+//    }
+//    override var preferredInterfaceOrientationForPresentation: UIInterfaceOrientation{
+//        return self.sj_topViewController().preferredInterfaceOrientationForPresentation
+//    }
 }
