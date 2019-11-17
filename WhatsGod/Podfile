@@ -21,7 +21,6 @@ target 'WhatsGod' do
 
   pod 'RealmSwift'
   
-  pod 'LYEmptyView'
   
   pod 'SnapKit', '~> 4.0.0'
   # Pods for WhatsGod
@@ -29,7 +28,7 @@ target 'WhatsGod' do
   pod 'FWPopupView'
 
   pod 'Hue'
-
+  pod "LYEmptyView"
   pod 'NVActivityIndicatorView'
   
   pod 'CryptoSwift'

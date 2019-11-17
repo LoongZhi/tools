@@ -283,8 +283,9 @@ class LZVideoViewController: LZBaseViewController,UICollectionViewDelegate,UICol
             
             self.startAnimating(lodingSize,type: loadingType, color: COLOR_4990ED)
             let type = fileUrl!.returnFileType(fileUrl: fileUrl!)
-            let path = model.path + "/Video" + String(format: "%d.@",Date().timeIntervalSince1970,type)
+            let path = model.path + "/Video" + String(format: "%d.%@",(fileUrl?.components(separatedBy: "/").last)!,type)
             let ImagePath = model.path + "/Thumb" + String(format: "%d.jpg",Date().timeIntervalSince1970)
+
             guard let jsonData = try? Data.init(contentsOf: URL.init(string: fileUrl!)!, options: Data.ReadingOptions.alwaysMapped) else {
                 self.stopAnimating()
                  return
@@ -302,6 +303,7 @@ class LZVideoViewController: LZBaseViewController,UICollectionViewDelegate,UICol
                      videoModel.isHidden = self.isHidden
                      videoModel.path = path
                      videoModel.type = type
+                videoModel.name = (fileUrl?.components(separatedBy: "/").last)!
                      videoModel.imagePath = ImagePath
                      try! realm.write {
 
@@ -355,7 +357,7 @@ class LZVideoViewController: LZBaseViewController,UICollectionViewDelegate,UICol
     func getVideoFengMian(url:URL) -> UIImage {
            if url == nil {
                //默认封面图
-               return UIImage(named: "")!
+               return UIImage(named: "db_play_big")!
            }
            let aset = AVURLAsset(url: url, options: nil)
            let assetImg = AVAssetImageGenerator(asset: aset)
@@ -368,7 +370,7 @@ class LZVideoViewController: LZBaseViewController,UICollectionViewDelegate,UICol
                
                
            }catch{
-               return UIImage(named: "")!
+               return UIImage(named: "db_play_big")!
            }
            
        }

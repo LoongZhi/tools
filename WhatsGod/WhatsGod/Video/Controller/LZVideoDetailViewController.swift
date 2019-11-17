@@ -188,17 +188,23 @@ class LZVideoDetailViewController: LZBaseViewController,UICollectionViewDelegate
                                     let url:String = model.originalAsset?.value(forKey: "filename") as! String
                                     let type = url.returnFileType(fileUrl: url)
                                     let paths = self!.folderModel?.path
-                                let path = "\(paths!)/\(url)"
+                                let path = "\(paths!)/Video\(String(format: "%d.%@",Date().timeIntervalSince1970,type))"
                                     let ImagePath = "\(paths!)/Thumb\(String(format: "%d.jpg",Date().timeIntervalSince1970))"
                                     if asset == nil{
+                                        self!.stopAnimating()
                                         return
                                     }
                                     let urlAsset:AVURLAsset = asset as! AVURLAsset
-                                    guard let jsonData = try? Data.init(contentsOf: urlAsset.url, options: Data.ReadingOptions.alwaysMapped) else {
-                                         return
-                                    }
+                                let strUrl = urlAsset.url
+                                print(strUrl)
+                                let data:NSData = try! NSData(contentsOf: strUrl as URL)
+//                                let jsonData = Data.ini
+//                                guard let jsonData = try? Data.init(contentsOf: strUrl, options: Data.ReadingOptions.alwaysMapped) else {
+//                                        self!.stopAnimating()
+//                                         return
+//                                    }
 
-                                    if LZFileManager.writeVideoFile(filePath: path, data:jsonData){
+                                    if LZFileManager.writeVideoFile(filePath: path, data:Data(data)){
                                         
                                        
                                         let imgData:Data = self!.getVideoFengMian(url: urlAsset.url).jpegData(compressionQuality: 1)!
@@ -220,11 +226,11 @@ class LZVideoDetailViewController: LZBaseViewController,UICollectionViewDelegate
                                                     self!.folderModel?.images.append(videoModel)
 
                                             }
-                                        self!.getDataSource()
                                         
                                         }
 
                             }
+                             self!.getDataSource()
 
                             }
                        
