@@ -7,3 +7,4 @@
 #import "POP.h"
 #import "SJVideoPlayer.h"
 #import "SJRouter.h"
+#import <MobileVLCKit/MobileVLCKit.h>

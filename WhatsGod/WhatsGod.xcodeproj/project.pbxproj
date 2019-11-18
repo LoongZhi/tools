@@ -975,7 +975,43 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 93924VE78H;
+				DEVELOPMENT_TEAM = ST2ZGD9TBQ;
+				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/Chrysan\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/ComplimentaryGradientView\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/CropViewController\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/CryptoSwift\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/DKCamera\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/DKImagePickerController\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/DKPhotoGallery\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/FLAnimatedImage\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/FWPopupView\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/GesturePassword\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/Hue\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/IBAnimatable\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/IQKeyboardManagerSwift\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/JXPhotoBrowser\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/Kingfisher\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/LYEmptyView\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/Masonry\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/NVActivityIndicatorView\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/Reachability\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/Realm\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/RealmSwift\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/SDWebImage\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/SDWebImageFLPlugin\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/SJBaseVideoPlayer\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/SJRouter\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/SJUIKit\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/SJVideoPlayer\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/SSZipArchive\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/SnapKit\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/pop\"",
+					"\"${PODS_ROOT}/MobileVLCKit\"",
+					"\"${PODS_ROOT}/Pods/MobileVLCKit/MobileVLCKit.framework\"",
+				);
 				INFOPLIST_FILE = WhatsGod/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -997,7 +1033,43 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 93924VE78H;
+				DEVELOPMENT_TEAM = M89H9AC67P;
+				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/Chrysan\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/ComplimentaryGradientView\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/CropViewController\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/CryptoSwift\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/DKCamera\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/DKImagePickerController\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/DKPhotoGallery\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/FLAnimatedImage\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/FWPopupView\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/GesturePassword\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/Hue\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/IBAnimatable\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/IQKeyboardManagerSwift\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/JXPhotoBrowser\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/Kingfisher\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/LYEmptyView\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/Masonry\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/NVActivityIndicatorView\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/Reachability\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/Realm\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/RealmSwift\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/SDWebImage\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/SDWebImageFLPlugin\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/SJBaseVideoPlayer\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/SJRouter\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/SJUIKit\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/SJVideoPlayer\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/SSZipArchive\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/SnapKit\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/pop\"",
+					"\"${PODS_ROOT}/MobileVLCKit\"",
+					"\"${PODS_ROOT}/Pods/MobileVLCKit/MobileVLCKit.framework\"",
+				);
 				INFOPLIST_FILE = WhatsGod/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

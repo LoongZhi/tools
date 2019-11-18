@@ -16,8 +16,8 @@ import Photos
 import JXPhotoBrowser
 
 import QuickLook
-class LZVideoDetailViewController: LZBaseViewController,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,QLPreviewControllerDelegate,QLPreviewControllerDataSource {
-
+class LZVideoDetailViewController: LZBaseViewController,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,QLPreviewControllerDelegate,QLPreviewControllerDataSource,VLCMediaPlayerDelegate {
+    var movieView: UIView!
     var  menuView:FWMenuView? = nil
     var  isHidden:Bool = true
      var indexPaths = IndexPath.init(row: 0, section: 0)
@@ -26,6 +26,7 @@ class LZVideoDetailViewController: LZBaseViewController,UICollectionViewDelegate
 //    var indexs:Array = Array<Int>()
     var exCount = 0
     var paths = [String]()
+    let mediaPlayer = VLCMediaPlayer.init(options: nil)
     public  var folderModel:LZVideoFolderModel? = nil
     private var imageDataArr = NSArray()
     private lazy var collectionView:UICollectionView = {
@@ -93,6 +94,11 @@ class LZVideoDetailViewController: LZBaseViewController,UICollectionViewDelegate
         
         // Do any additional setup after loading the view.
         readyView()
+        NotificationCenter.default.addObserver(
+                  self,
+                  selector: #selector(rotated),
+                  name: UIDevice.orientationDidChangeNotification,
+                  object: nil)
     }
     
     @objc override func readyView(){
@@ -399,12 +405,25 @@ class LZVideoDetailViewController: LZBaseViewController,UICollectionViewDelegate
         let indexPath = IndexPath.init(row: btn.tag - 10000, section: 0)
         let cell = self.collectionView.cellForItem(at: indexPath) as! LZAlbumDetailsCell
         let model = self.dataSource[indexPath.row] as! LZVideoModel
-        let playModel = SJPlayModel.uiCollectionViewCellPlayModel(withPlayerSuperviewTag: cell.imageView.tag, at: indexPath, collectionView: self.collectionView)
+//        let playModel = SJPlayModel.uiCollectionViewCellPlayModel(withPlayerSuperviewTag: cell.imageView.tag, at: indexPath, collectionView: self.collectionView)
         let videoUrl = URL.init(fileURLWithPath: videoFolder + model.path)
-        self.videoPlayer.urlAsset = SJVideoPlayerURLAsset.init(url: videoUrl, specifyStartTime: TimeInterval(model.StartTime), playModel: playModel)
-         self.videoPlayer.showMoreItemToTopControlLayer = true
-        self.videoPlayer.urlAsset?.title = model.name
-        self.videoPlayer.setFitOnScreen(true, animated: true)
+        //"http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4"
+//        self.videoPlayer.urlAsset = SJVideoPlayerURLAsset.init(url: videoUrl, specifyStartTime: TimeInterval(model.StartTime), playModel: playModel)
+//         self.videoPlayer.showMoreItemToTopControlLayer = true
+//        self.videoPlayer.urlAsset?.title = model.name
+//        self.videoPlayer.setFitOnScreen(true, animated: true)
+        
+        movieView = UIView.init(frame:CGRect(x: 0, y: 0, width: SCREEN_WIDTH, height: 400))
+        movieView.backgroundColor = .orange
+        UIApplication.shared.keyWindow!.addSubview(movieView)
+        let playModel = VLCMedia.init(url: videoUrl)
+        
+        
+        mediaPlayer!.media = playModel
+        mediaPlayer!.delegate = self
+        mediaPlayer!.drawable = view
+        mediaPlayer!.play()
+//        self.view.addSubview(mediaPlayer)
     }
     @objc func delTouch(){
         
@@ -575,4 +594,36 @@ extension LZVideoDetailViewController{
         stopAnimating()
     }
   
+    @objc func rotated() {
+
+           let orientation = UIDevice.current.orientation
+
+        if (orientation.isLandscape) {
+               print("Switched to landscape")
+           }
+        else if(orientation.isPortrait) {
+               print("Switched to portrait")
+           }
+
+           //Always fill entire screen
+           self.movieView.frame = self.view.frame
+
+       }
+
+       @objc func movieViewTapped(_ sender: UITapGestureRecognizer) {
+
+        if mediaPlayer!.isPlaying {
+            mediaPlayer!.pause()
+
+            let remaining = mediaPlayer?.remainingTime
+            let time = mediaPlayer!.time
+
+               print("Paused at \(time?.stringValue ?? "nil") with \(remaining?.stringValue ?? "nil") time remaining")
+           }
+           else {
+            mediaPlayer!.play()
+               print("Playing")
+           }
+           
+       }
 }
