@@ -331,7 +331,7 @@ DEPENDENCIES:
   - SSZipArchive
 
 SPEC REPOS:
-  https://github.com/cocoapods/specs.git:
+  trunk:
     - Chrysan
     - ComplimentaryGradientView
     - CropViewController
@@ -397,6 +397,6 @@ SPEC CHECKSUMS:
   SnapKit: 0de968a9fec17499afa29683b05d0c775b6d1c29
   SSZipArchive: fa16b8cc4cdeceb698e5e5d9f67e9558532fbf23
 
-PODFILE CHECKSUM: 1a0d5da4994d153b5195ff13b9a8e4b55e1d4261
+PODFILE CHECKSUM: 3f83b1e6ded96eba69afba0623ffdcbd6ba36214
 
-COCOAPODS: 1.6.1
+COCOAPODS: 1.8.4
