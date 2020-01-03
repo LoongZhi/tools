@@ -75,6 +75,9 @@ class LZAlbumDetailsCell: UICollectionViewCell {
         self.bottomView.addSubview(self.nameLabel)
         self.contentView.addSubview(self.playerBtn)
         self.contentView.addSubview(self.contentLabel)
+        
+        self.selectBtn.layer.borderColor = COLOR_4990ED.cgColor;
+        
         self.imageView.snp.makeConstraints { (make) in
             make.left.right.top.bottom.equalToSuperview()
         }
@@ -115,7 +118,7 @@ class LZAlbumDetailsCell: UICollectionViewCell {
     }
    
     public func loadData(model:LZAlbumImageModel){
-    
+        self.playerBtn.isHidden = true;
             let url:URL = URL.init(string:"file://\(albumsFolder)\(model.thumbnailPath.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)")!
             DispatchQueue.global().async {
                 
@@ -132,9 +135,11 @@ class LZAlbumDetailsCell: UICollectionViewCell {
         if self.selectBtn.isSelected {
             self.bottomView.backgroundColor = COLOR_4990ED
             self.selectBtn.layer.borderWidth = 3
+          
         }else{
             self.bottomView.backgroundColor = .black
             self.selectBtn.layer.borderWidth = 0
+       
         }
     }
     public func loadDataVideoModel(model:LZVideoModel){

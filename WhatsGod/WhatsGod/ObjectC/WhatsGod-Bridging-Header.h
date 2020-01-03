@@ -8,3 +8,5 @@
 #import "SJVideoPlayer.h"
 #import "SJRouter.h"
 #import <MobileVLCKit/MobileVLCKit.h>
+
+#import "SCVideoMainViewController.h"

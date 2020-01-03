@@ -31,7 +31,7 @@ class LZVideoDetailViewController: LZBaseViewController,UICollectionViewDelegate
     private var imageDataArr = NSArray()
     private lazy var collectionView:UICollectionView = {
         let layout = UICollectionViewFlowLayout.init()
-        layout.itemSize = CGSize.init(width: SCREEN_WIDTH, height: SCREEN_HEIGHT / 3)
+        layout.itemSize = CGSize.init(width: SCREEN_WIDTH, height: SCREEN_HEIGHT / 4)
         layout.minimumLineSpacing = 0
         layout.minimumInteritemSpacing = 0
         layout.sectionInset = UIEdgeInsets.init(top: 0, left: 0, bottom: 0, right: 0)
@@ -94,11 +94,11 @@ class LZVideoDetailViewController: LZBaseViewController,UICollectionViewDelegate
         
         // Do any additional setup after loading the view.
         readyView()
-        NotificationCenter.default.addObserver(
-                  self,
-                  selector: #selector(rotated),
-                  name: UIDevice.orientationDidChangeNotification,
-                  object: nil)
+//        NotificationCenter.default.addObserver(
+//                  self,
+//                  selector: #selector(rotated),
+//                  name: UIDevice.orientationDidChangeNotification,
+//                  object: nil)
     }
     
     @objc override func readyView(){
@@ -185,12 +185,13 @@ class LZVideoDetailViewController: LZBaseViewController,UICollectionViewDelegate
                 self!.pickerController.didSelectAssets = { (assets) in
                     
                     self!.startAnimating(lodingSize,type: loadingType, color: COLOR_4990ED)
+                     let queue = DispatchQueue(label: "queueName", attributes: .concurrent)
                     for (index,itme) in assets.enumerated() {
                         let model:DKAsset = itme
                        
                         PHCachingImageManager.default().requestAVAsset(forVideo: model.originalAsset!, options: nil) { (asset:AVAsset?, minx:AVAudioMix?, info:[AnyHashable : Any]?) in
                             
-                             DispatchQueue.main.async {
+                             queue.async {
                                     let url:String = model.originalAsset?.value(forKey: "filename") as! String
                                     let type = url.returnFileType(fileUrl: url)
                                     let paths = self!.folderModel?.path
@@ -203,14 +204,14 @@ class LZVideoDetailViewController: LZBaseViewController,UICollectionViewDelegate
                                     let urlAsset:AVURLAsset = asset as! AVURLAsset
                                 let strUrl = urlAsset.url
                                 print(strUrl)
-                                let data:NSData = try! NSData(contentsOf: strUrl as URL)
-//                                let jsonData = Data.ini
-//                                guard let jsonData = try? Data.init(contentsOf: strUrl, options: Data.ReadingOptions.alwaysMapped) else {
-//                                        self!.stopAnimating()
-//                                         return
-//                                    }
+//                                let data:NSData = try! NSData(contentsOf: strUrl as URL)
 
-                                    if LZFileManager.writeVideoFile(filePath: path, data:Data(data)){
+                                guard let jsonData = try? Data.init(contentsOf: strUrl, options: Data.ReadingOptions.alwaysMapped) else {
+                                        self!.stopAnimating()
+                                         return
+                                    }
+
+                                    if LZFileManager.writeVideoFile(filePath: path, data:Data(jsonData)){
                                         
                                        
                                         let imgData:Data = self!.getVideoFengMian(url: urlAsset.url).jpegData(compressionQuality: 1)!
@@ -236,7 +237,15 @@ class LZVideoDetailViewController: LZBaseViewController,UICollectionViewDelegate
                                         }
 
                             }
-                             self!.getDataSource()
+                              DispatchGroup.init().notify(qos: .default, flags: .barrier, queue: queue) {
+                                DispatchQueue.main.async {
+                                        if index == assets.count - 1{
+                                            self!.getDataSource()
+                                        }
+                                        
+                                    }
+                                    
+                                }
 
                             }
                        
@@ -405,25 +414,27 @@ class LZVideoDetailViewController: LZBaseViewController,UICollectionViewDelegate
         let indexPath = IndexPath.init(row: btn.tag - 10000, section: 0)
         let cell = self.collectionView.cellForItem(at: indexPath) as! LZAlbumDetailsCell
         let model = self.dataSource[indexPath.row] as! LZVideoModel
-//        let playModel = SJPlayModel.uiCollectionViewCellPlayModel(withPlayerSuperviewTag: cell.imageView.tag, at: indexPath, collectionView: self.collectionView)
+        let playModel = SJPlayModel.uiCollectionViewCellPlayModel(withPlayerSuperviewTag: cell.imageView.tag, at: indexPath, collectionView: self.collectionView)
+//        let videoUrl:URL = URL(string: "file://\(videoFolder)\(model.path.addingPercentEncoding(withAllowedCharacters:.urlQueryAllowed)!)")!
         let videoUrl = URL.init(fileURLWithPath: videoFolder + model.path)
         //"http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4"
 //        self.videoPlayer.urlAsset = SJVideoPlayerURLAsset.init(url: videoUrl, specifyStartTime: TimeInterval(model.StartTime), playModel: playModel)
 //         self.videoPlayer.showMoreItemToTopControlLayer = true
 //        self.videoPlayer.urlAsset?.title = model.name
 //        self.videoPlayer.setFitOnScreen(true, animated: true)
-        
-        movieView = UIView.init(frame:CGRect(x: 0, y: 0, width: SCREEN_WIDTH, height: 400))
-        movieView.backgroundColor = .orange
-        UIApplication.shared.keyWindow!.addSubview(movieView)
-        let playModel = VLCMedia.init(url: videoUrl)
-        
-        
-        mediaPlayer!.media = playModel
-        mediaPlayer!.delegate = self
-        mediaPlayer!.drawable = view
-        mediaPlayer!.play()
-//        self.view.addSubview(mediaPlayer)
+//        self.videoPlayer.play();
+//        movieView = UIView.init(frame:CGRect(x: 0, y: 0, width: SCREEN_WIDTH, height: SCREEN_HEIGHT))
+//        movieView.backgroundColor = .orange
+//        UIApplication.shared.keyWindow?.addSubview(movieView);
+//        let playModel = VLCMedia.init(url:videoUrl)
+//
+//
+//        mediaPlayer!.media = playModel
+//        mediaPlayer!.delegate = self
+//        mediaPlayer!.drawable = movieView;
+//        mediaPlayer!.play()
+        let vc = SCVideoMainViewController.init(url:videoFolder + model.path)
+        self.present(vc!, animated: true, completion: nil)
     }
     @objc func delTouch(){
         
@@ -594,21 +605,21 @@ extension LZVideoDetailViewController{
         stopAnimating()
     }
   
-    @objc func rotated() {
-
-           let orientation = UIDevice.current.orientation
-
-        if (orientation.isLandscape) {
-               print("Switched to landscape")
-           }
-        else if(orientation.isPortrait) {
-               print("Switched to portrait")
-           }
-
-           //Always fill entire screen
-           self.movieView.frame = self.view.frame
-
-       }
+//    @objc func rotated() {
+//
+//           let orientation = UIDevice.current.orientation
+//
+//        if (orientation.isLandscape) {
+//               print("Switched to landscape")
+//           }
+//        else if(orientation.isPortrait) {
+//               print("Switched to portrait")
+//           }
+//
+//           //Always fill entire screen
+//           self.movieView.frame = self.view.frame
+//
+//       }
 
        @objc func movieViewTapped(_ sender: UITapGestureRecognizer) {
 

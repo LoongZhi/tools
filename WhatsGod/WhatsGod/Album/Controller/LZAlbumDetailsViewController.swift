@@ -201,7 +201,7 @@ class LZAlbumDetailsViewController: LZBaseViewController,UICollectionViewDelegat
                                         imageModel.thumbnailPath = thumbnailPath
                                         try! realm.write {
                                             self!.folderModel?.images.append(imageModel)
-                                            self!.dataSource.append(imageModel)
+                                            
                                         }
                                     }
                                     
@@ -255,23 +255,18 @@ class LZAlbumDetailsViewController: LZBaseViewController,UICollectionViewDelegat
         if self.dataSource.count != 0 {
             self.dataSource.removeAll()
         }
-        DispatchQueue.global().async {
-          
-            DispatchQueue.main.async {
-                if self.folderModel!.images.count != 0{
-                              
-                              for image in self.folderModel!.images {
-                                  self.dataSource.append(image)
-                              }
-                          }
-                if self.dataSource.count == 0 {
-                    self.allBtn.isSelected = false
-                }
-                self.collectionView .reloadData()
-                self.stopAnimating()
-            }
+
+        if self.folderModel!.images.count != 0{
+                      
+                      for image in self.folderModel!.images {
+                          self.dataSource.append(image)
+                      }
+                  }
+        if self.dataSource.count == 0 {
+            self.allBtn.isSelected = false
         }
-        
+        self.collectionView .reloadData()
+        self.stopAnimating()
         
     }
     override func rightItmeEvent() {
@@ -397,7 +392,9 @@ class LZAlbumDetailsViewController: LZBaseViewController,UICollectionViewDelegat
                     LZFileManager.deleteImageFile(filePath: model.path)
                     try! realm.write {
                         let indexNum1:Int? =  self.folderModel?.images.index(of: model)
-                        self.folderModel?.images.remove(at: indexNum1!)
+                        if indexNum1 != nil{
+                            self.folderModel?.images.remove(at: indexNum1!)
+                        }
                         
                     }
                     isbool = false
