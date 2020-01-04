@@ -46,4 +46,6 @@
 - (void)stopPlaying {
     [_player stop];
 }
+
+
 @end

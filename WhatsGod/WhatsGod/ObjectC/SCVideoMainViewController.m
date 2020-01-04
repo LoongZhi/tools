@@ -24,6 +24,7 @@
 @interface SCVideoMainViewController ()
 {
     NSString        *m_playURL;
+    NSString *m_name;
 }
 
 /**
@@ -59,12 +60,13 @@
 
 @implementation SCVideoMainViewController
 
-- (instancetype)initWithURL:(NSString *)url;
+- (instancetype)initWithURL:(NSString *)url videoName:(NSString*)name;
 {
     self = [super init];
     if (self)
     {
         m_playURL = url;//[NSURL fileURLWithPath:url];//[NSURL fileURLWithPath:url];
+        m_name = name;
         self.bPortrait = YES;
         self.videoAllTime = 0;
     }
@@ -128,7 +130,7 @@
     
     [self addObserver];
     self.vlcPlayerView.playView.image = [self thumbnailImageRequest:1];
-    self.vlcPlayerView.videoName = @"视频名称测试";
+    self.vlcPlayerView.videoName = m_name;
     
 }
 

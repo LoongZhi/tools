@@ -59,4 +59,6 @@ target 'WhatsGod' do
    pod 'GesturePassword'
    
    pod 'MobileVLCKit'
+   
+#   pod 'Google-Mobile-Ads-SDK'
 end

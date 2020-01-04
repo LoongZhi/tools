@@ -18,6 +18,9 @@ class LZBaseViewController: UIViewController,NVActivityIndicatorViewable {
     public var dataSource = [Any]()
     lazy public var tableView:UITableView = {
         let view = UITableView.init()
+        view.estimatedRowHeight = 0
+        view.estimatedSectionHeaderHeight = 0
+        view.estimatedSectionFooterHeight = 0
         view.tableFooterView = UIView.init()
         view.dataSource = (self as! UITableViewDataSource)
         view.delegate = (self as! UITableViewDelegate)

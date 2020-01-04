@@ -182,6 +182,7 @@ class LZVideoDetailViewController: LZBaseViewController,UICollectionViewDelegate
 
             switch (index) {
             case 0:
+                let paths = self!.folderModel?.path
                 self!.pickerController.didSelectAssets = { (assets) in
                     
                     self!.startAnimating(lodingSize,type: loadingType, color: COLOR_4990ED)
@@ -194,7 +195,7 @@ class LZVideoDetailViewController: LZBaseViewController,UICollectionViewDelegate
                              queue.async {
                                     let url:String = model.originalAsset?.value(forKey: "filename") as! String
                                     let type = url.returnFileType(fileUrl: url)
-                                    let paths = self!.folderModel?.path
+                                    
                                 let path = "\(paths!)/Video\(String(format: "%d.%@",Date().timeIntervalSince1970,type))"
                                     let ImagePath = "\(paths!)/Thumb\(String(format: "%d.jpg",Date().timeIntervalSince1970))"
                                     if asset == nil{
@@ -214,7 +215,7 @@ class LZVideoDetailViewController: LZBaseViewController,UICollectionViewDelegate
                                     if LZFileManager.writeVideoFile(filePath: path, data:Data(jsonData)){
                                         
                                        
-                                        let imgData:Data = self!.getVideoFengMian(url: urlAsset.url).jpegData(compressionQuality: 1)!
+                                        let imgData:Data = getVideoFengMian(url: urlAsset.url).jpegData(compressionQuality: 1)!
                                             if LZFileManager.writeVideoFile(filePath: ImagePath, data:imgData){
                                                 print("写入成功")
                                             }else{
@@ -228,11 +229,13 @@ class LZVideoDetailViewController: LZBaseViewController,UICollectionViewDelegate
                                                 videoModel.imagePath = ImagePath
                                                 videoModel.timerscale = Int(urlAsset.duration.seconds)
                                                 videoModel.timer = String.init().transToHourMinSecs(time:videoModel.timerscale)
-                                                try! realm.write {
+                                                DispatchQueue.main.async {
+                                                    try! realm.write {
 
-                                                    self!.folderModel?.images.append(videoModel)
+                                                            self!.folderModel?.images.append(videoModel)
 
-                                            }
+                                                    }
+                                                }
                                         
                                         }
 
@@ -295,7 +298,7 @@ class LZVideoDetailViewController: LZBaseViewController,UICollectionViewDelegate
                 if self.dataSource.count == 0 {
                     self.allBtn.isSelected = false
                 }
-                self.collectionView .reloadData()
+                self.collectionView .reloadDataSmoothly()
                 self.stopAnimating()
             }
     }
@@ -350,7 +353,7 @@ class LZVideoDetailViewController: LZBaseViewController,UICollectionViewDelegate
            }
             
           
-           self.collectionView.reloadData()
+           self.collectionView.reloadDataSmoothly()
        }
     // 相机权限
        func isRightCamera() -> Bool {
@@ -394,7 +397,7 @@ class LZVideoDetailViewController: LZBaseViewController,UICollectionViewDelegate
             }
         }
         
-        self.collectionView.reloadData()
+        self.collectionView.reloadDataSmoothly()
     }
     @objc func touchBtn(btn:UIButton) -> Void {
         if self.dataSource.count != 0 {
@@ -406,7 +409,15 @@ class LZVideoDetailViewController: LZBaseViewController,UICollectionViewDelegate
             }
             let indexPath = IndexPath.init(row: btn.tag, section: 0)
             self.collectionView.reloadItems(at: [indexPath])
-            
+            var isbool = true
+            for obj in self.dataSource {
+               let model:LZVideoModel =  obj as! LZVideoModel
+                if model.isSelect == false {
+                    isbool = false
+                    break;
+                }
+            }
+            self.allBtn.isSelected = isbool;
             
         }
     }
@@ -414,26 +425,7 @@ class LZVideoDetailViewController: LZBaseViewController,UICollectionViewDelegate
         let indexPath = IndexPath.init(row: btn.tag - 10000, section: 0)
         let cell = self.collectionView.cellForItem(at: indexPath) as! LZAlbumDetailsCell
         let model = self.dataSource[indexPath.row] as! LZVideoModel
-        let playModel = SJPlayModel.uiCollectionViewCellPlayModel(withPlayerSuperviewTag: cell.imageView.tag, at: indexPath, collectionView: self.collectionView)
-//        let videoUrl:URL = URL(string: "file://\(videoFolder)\(model.path.addingPercentEncoding(withAllowedCharacters:.urlQueryAllowed)!)")!
-        let videoUrl = URL.init(fileURLWithPath: videoFolder + model.path)
-        //"http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4"
-//        self.videoPlayer.urlAsset = SJVideoPlayerURLAsset.init(url: videoUrl, specifyStartTime: TimeInterval(model.StartTime), playModel: playModel)
-//         self.videoPlayer.showMoreItemToTopControlLayer = true
-//        self.videoPlayer.urlAsset?.title = model.name
-//        self.videoPlayer.setFitOnScreen(true, animated: true)
-//        self.videoPlayer.play();
-//        movieView = UIView.init(frame:CGRect(x: 0, y: 0, width: SCREEN_WIDTH, height: SCREEN_HEIGHT))
-//        movieView.backgroundColor = .orange
-//        UIApplication.shared.keyWindow?.addSubview(movieView);
-//        let playModel = VLCMedia.init(url:videoUrl)
-//
-//
-//        mediaPlayer!.media = playModel
-//        mediaPlayer!.delegate = self
-//        mediaPlayer!.drawable = movieView;
-//        mediaPlayer!.play()
-        let vc = SCVideoMainViewController.init(url:videoFolder + model.path)
+        let vc = SCVideoMainViewController.init(url:videoFolder + model.path,videoName: model.name)
         self.present(vc!, animated: true, completion: nil)
     }
     @objc func delTouch(){
@@ -468,7 +460,7 @@ class LZVideoDetailViewController: LZBaseViewController,UICollectionViewDelegate
         }
         
         alert.show()
-        self.collectionView.reloadData()
+        self.collectionView.reloadDataSmoothly()
     }
     @objc func exploitTouch(){
       
@@ -547,28 +539,6 @@ class LZVideoDetailViewController: LZBaseViewController,UICollectionViewDelegate
           return videoUrl as QLPreviewItem
     
       }
-    
-
-    func getVideoFengMian(url:URL) -> UIImage {
-        if url == nil {
-            //默认封面图
-            return UIImage(named: "")!
-        }
-        let aset = AVURLAsset(url: url, options: nil)
-        let assetImg = AVAssetImageGenerator(asset: aset)
-        assetImg.appliesPreferredTrackTransform = true
-        assetImg.apertureMode = AVAssetImageGenerator.ApertureMode.encodedPixels
-        do{
-            let cgimgref = try assetImg.copyCGImage(at: CMTime(seconds: 10, preferredTimescale: 50), actualTime: nil)
-            let img = UIImage(cgImage: cgimgref)
-            return img
-            
-            
-        }catch{
-            return UIImage(named: "")!
-        }
-        
-    }
 }
 
 extension LZVideoDetailViewController{

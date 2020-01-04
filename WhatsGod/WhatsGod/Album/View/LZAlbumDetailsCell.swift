@@ -149,7 +149,7 @@ class LZAlbumDetailsCell: UICollectionViewCell {
        
             DispatchQueue.main.async {
                 
-                self.imageView.image = downsample(imageAt: url, to: CGSize(width: SCREEN_WIDTH / 4, height: SCREEN_WIDTH / 4), scale: 3)
+                self.imageView.image = downsample(imageAt: url, to: CGSize(width: SCREEN_WIDTH / 3, height: SCREEN_WIDTH / 3), scale: 3)
               
             }
         }

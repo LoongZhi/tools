@@ -21,51 +21,14 @@
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         BreakpointExtensionID = "Xcode.Breakpoint.ExceptionBreakpoint">
          <BreakpointContent
-            uuid = "EE35A4EC-BDDB-438A-91ED-4A97A214F22F"
+            uuid = "5C7DABF1-C898-4F0B-B946-CDC1570032CA"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "WhatsGod/Album/Controller/LZAlbumDetailsViewController.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "184"
-            endingLineNumber = "184"
-            landmarkName = "readyView()"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "EE35A4EC-BDDB-438A-91ED-4A97A214F22F - 418bb187d91ed243"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (Swift.Optional&lt;__C.UIImage&gt;, Swift.Optional&lt;Swift.Dictionary&lt;Swift.AnyHashable, Any&gt;&gt;) -&gt; () in closure #1 (Swift.Array&lt;DKImagePickerController.DKAsset&gt;) -&gt; () in closure #7 (FWPopupView.FWPopupView, Swift.Int, Swift.Optional&lt;Swift.String&gt;) -&gt; () in WhatsGod.LZAlbumDetailsViewController.readyView() -&gt; ()"
-                  moduleName = "WhatsGod"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/mj/tools/WhatsGod/WhatsGod/Album/Controller/LZAlbumDetailsViewController.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "184"
-                  endingLineNumber = "184"
-                  offsetFromSymbolStart = "1152">
-               </Location>
-               <Location
-                  uuid = "EE35A4EC-BDDB-438A-91ED-4A97A214F22F - aa71e15331d3aabd"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 () -&gt; () in closure #1 (Swift.Optional&lt;__C.UIImage&gt;, Swift.Optional&lt;Swift.Dictionary&lt;Swift.AnyHashable, Any&gt;&gt;) -&gt; () in closure #1 (Swift.Array&lt;DKImagePickerController.DKAsset&gt;) -&gt; () in closure #7 (FWPopupView.FWPopupView, Swift.Int, Swift.Optional&lt;Swift.String&gt;) -&gt; () in WhatsGod.LZAlbumDetailsViewController.readyView() -&gt; ()"
-                  moduleName = "WhatsGod"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/mj/tools/WhatsGod/WhatsGod/Album/Controller/LZAlbumDetailsViewController.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "171"
-                  endingLineNumber = "171"
-                  offsetFromSymbolStart = "404">
-               </Location>
-            </Locations>
+            scope = "1"
+            stopOnStyle = "0">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

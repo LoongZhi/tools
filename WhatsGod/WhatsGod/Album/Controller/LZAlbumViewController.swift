@@ -47,7 +47,7 @@ class LZAlbumViewController: LZBaseViewController,UICollectionViewDelegate,UICol
     }()
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.collectionView.reloadData()
+        self.collectionView.reloadDataSmoothly()
     }
 //    let menuView
     override func viewDidLoad() {
@@ -174,7 +174,7 @@ class LZAlbumViewController: LZBaseViewController,UICollectionViewDelegate,UICol
         for albumModel in models {
             self.dataSource.append(albumModel)
         }
-        self.collectionView .reloadData()
+        self.collectionView .reloadDataSmoothly()
     }
     override func rightItmeEvent(){
         
@@ -206,7 +206,7 @@ class LZAlbumViewController: LZBaseViewController,UICollectionViewDelegate,UICol
             
         }
         
-        self.collectionView.reloadData()
+        self.collectionView.reloadDataSmoothly()
     }
     
     @objc func delBtn(btn:UIButton){

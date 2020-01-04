@@ -47,7 +47,7 @@ class LZOfficeViewController: LZBaseViewController,UICollectionViewDelegate,UICo
     }()
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.collectionView.reloadData()
+        self.collectionView.reloadDataSmoothly()
     }
 //    let menuView
     override func viewDidLoad() {
@@ -174,7 +174,7 @@ class LZOfficeViewController: LZBaseViewController,UICollectionViewDelegate,UICo
         for albumModel in models {
             self.dataSource.append(albumModel)
         }
-        self.collectionView .reloadData()
+        self.collectionView.reloadDataSmoothly()
     }
     override func rightItmeEvent(){
         
@@ -205,7 +205,7 @@ class LZOfficeViewController: LZBaseViewController,UICollectionViewDelegate,UICo
             
         }
         
-        self.collectionView.reloadData()
+        self.collectionView.reloadDataSmoothly()
     }
     
     @objc func delBtn(btn:UIButton){
@@ -217,7 +217,7 @@ class LZOfficeViewController: LZBaseViewController,UICollectionViewDelegate,UICo
                     if LZFileManager.deleteOfficeFile(filePath: model.path){
                         realm.delete(model)
                         self.getDataSource()
-                        self.collectionView.reloadData()
+                        self.collectionView.reloadDataSmoothly()
                         self.chrysan.show(.plain, message:LanguageStrins(string: "Delete success."), hideDelay: HIDE_DELAY)
                     }else{
                          self.chrysan.show(.plain, message:LanguageStrins(string: "Delete failure."), hideDelay: HIDE_DELAY)

@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2D18396E23C0CBD900A97DB6 /* ExtensionTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D18396D23C0CBD900A97DB6 /* ExtensionTableView.swift */; };
+		2D18397023C0CCA800A97DB6 /* ExtensionCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D18396F23C0CCA800A97DB6 /* ExtensionCollection.swift */; };
 		2D3ABBD923BE03A1002A5B49 /* SCVideoMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D3ABBD723BE03A1002A5B49 /* SCVideoMainViewController.m */; };
 		2D3ABBEE23BE0474002A5B49 /* ic_jt_bf@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2D3ABBDB23BE0474002A5B49 /* ic_jt_bf@2x.png */; };
 		2D3ABBEF23BE0474002A5B49 /* ic_sp_xz@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2D3ABBDC23BE0474002A5B49 /* ic_sp_xz@2x.png */; };
@@ -101,6 +103,8 @@
 
 /* Begin PBXFileReference section */
 		237F0DF970AA48B3BF36B833 /* Pods-WhatsGod.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WhatsGod.debug.xcconfig"; path = "Target Support Files/Pods-WhatsGod/Pods-WhatsGod.debug.xcconfig"; sourceTree = "<group>"; };
+		2D18396D23C0CBD900A97DB6 /* ExtensionTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionTableView.swift; sourceTree = "<group>"; };
+		2D18396F23C0CCA800A97DB6 /* ExtensionCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionCollection.swift; sourceTree = "<group>"; };
 		2D3ABBD723BE03A1002A5B49 /* SCVideoMainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCVideoMainViewController.m; sourceTree = "<group>"; };
 		2D3ABBD823BE03A1002A5B49 /* SCVideoMainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCVideoMainViewController.h; sourceTree = "<group>"; };
 		2D3ABBDB23BE0474002A5B49 /* ic_jt_bf@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_jt_bf@2x.png"; sourceTree = "<group>"; };
@@ -373,6 +377,8 @@
 				8821799623477C4E002C32B1 /* ExtensionString.swift */,
 				88222FFA23632D4600FBFD58 /* LZExtensionColor.swift */,
 				8844ADFE2379973B00DAD127 /* ExtensionImage.swift */,
+				2D18396D23C0CBD900A97DB6 /* ExtensionTableView.swift */,
+				2D18396F23C0CCA800A97DB6 /* ExtensionCollection.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -792,6 +798,7 @@
 				8826C7CE23545BBF00C40B6A /* LZVideoFolderModel.swift in Sources */,
 				8841C019236850980009FBAB /* LZAboutViewController.swift in Sources */,
 				8817EA54235AEC74007395DD /* LZOfficeFolderModel.swift in Sources */,
+				2D18396E23C0CBD900A97DB6 /* ExtensionTableView.swift in Sources */,
 				88613A09233636250089C402 /* LZBaseNavController.swift in Sources */,
 				88223C822355A19400163FD2 /* LZVideoDetailViewController.swift in Sources */,
 				88613A1A233647A70089C402 /* LZAlbumViewController.swift in Sources */,
@@ -800,6 +807,7 @@
 				8829AEBF23802AAD001E1040 /* Lock.swift in Sources */,
 				8829AEBD237E813E001E1040 /* IcouldManager.swift in Sources */,
 				8829AEBB237E8104001E1040 /* LZDocument.swift in Sources */,
+				2D18397023C0CCA800A97DB6 /* ExtensionCollection.swift in Sources */,
 				882A81CE23462F4200A97ADC /* ExtensionView.swift in Sources */,
 				2D3ABBD923BE03A1002A5B49 /* SCVideoMainViewController.m in Sources */,
 				883A46C12352062E004A9DDC /* CKWaveCollectionViewAnimator.swift in Sources */,

@@ -21,7 +21,7 @@ func fileUrlType(type:String) -> FileType{
     if (maxComparison(type1:type,type2:"jpg") || maxComparison(type1:type,type2:"png") || maxComparison(type1:type,type2:"jpeg") || maxComparison(type1:type,type2:"pic") || maxComparison(type1:type,type2:"gif")){
         return .AlbumType
     }
-    if (maxComparison(type1:type,type2:"mp4") || maxComparison(type1:type,type2:"avi") || maxComparison(type1:type,type2:"mpg4") || maxComparison(type1:type,type2:"vfw") || maxComparison(type1:type,type2:"mpg")  || maxComparison(type1:type,type2:"mov") || maxComparison(type1:type,type2:"m3u8")) || maxComparison(type1:type,type2:"3gp") || maxComparison(type1: type, type2: "rmvb"){
+    if (maxComparison(type1:type,type2:"mp4") || maxComparison(type1:type,type2:"avi") || maxComparison(type1:type,type2:"mpg4") || maxComparison(type1:type,type2:"vfw") || maxComparison(type1:type,type2:"mpg")  || maxComparison(type1:type,type2:"mov") || maxComparison(type1:type,type2:"m3u8")) || maxComparison(type1:type,type2:"3gp") || maxComparison(type1: type, type2: "rmvb") || maxComparison(type1: type, type2: "flv"){
         return .VideoType
     }
     if (maxComparison(type1:type,type2:"xml") || maxComparison(type1:type,type2:"text") || maxComparison(type1:type,type2:"html") || maxComparison(type1:type,type2:"txt") || maxComparison(type1:type,type2:"rtf") || maxComparison(type1:type,type2:"pdf") || maxComparison(type1:type,type2:"doc") || maxComparison(type1:type,type2:"xls") || maxComparison(type1:type,type2:"ppt") || maxComparison(type1:type,type2:"pptx") || maxComparison(type1:type,type2:"wav") || maxComparison(type1:type,type2:"wave") || maxComparison(type1:type,type2:"wvx") || maxComparison(type1:type,type2:"wax") || maxComparison(type1:type,type2:"zip") || maxComparison(type1:type,type2:"tgz") || maxComparison(type1:type,type2:"rar") || maxComparison(type1:type,type2:"docx") || maxComparison(type1:type,type2:"mp3") || maxComparison(type1:type,type2:"mpg3") || maxComparison(type1:type,type2:"ape") || maxComparison(type1:type,type2:"AAC")){
@@ -30,7 +30,45 @@ func fileUrlType(type:String) -> FileType{
     
     return .WrongType
 }
-
+/// 将颜色转换为图片
+///
+/// - Parameter color: 颜色
+/// - Returns: UIImage
+func getImageWithColor(color: UIColor) -> UIImage {
+    
+    let rect = CGRect(x: 0, y: 0, width: 1, height: 1)
+    UIGraphicsBeginImageContext(rect.size)
+    let context = UIGraphicsGetCurrentContext()
+    context!.setFillColor(color.cgColor)
+    context!.fill(rect)
+    let image = UIGraphicsGetImageFromCurrentImageContext()
+    UIGraphicsEndImageContext()
+    return image!
+}
+//获取视频截图
+func getVideoFengMian(url:URL) -> UIImage {
+          if url == nil {
+              //默认封面图
+              return Img(url: "playBack")
+          }
+      let type:String = url.absoluteString.returnFileType(fileUrl: url.absoluteString)
+       if !maxComparison(type1:type,type2:"mp4") && !maxComparison(type1:type,type2:"3gpp2") && !maxComparison(type1:type,type2:"x-m4v") && !maxComparison(type1:type,type2:"avi") && !maxComparison(type1:type,type2:"3gpp"){
+            return Img(url: "playBack")
+       }
+          let aset = AVURLAsset(url: url, options: nil)
+          let assetImg = AVAssetImageGenerator(asset: aset)
+          assetImg.appliesPreferredTrackTransform = true
+          assetImg.apertureMode = AVAssetImageGenerator.ApertureMode.encodedPixels
+          do{
+              let cgimgref = try assetImg.copyCGImage(at: CMTime(seconds: 0, preferredTimescale: 600), actualTime: nil)
+              let img = UIImage(cgImage: cgimgref)
+              return img
+              
+          }catch{
+               return Img(url: "playBack")
+          }
+          
+      }
  func maxComparison(type1:String,type2:String) -> Bool{
     
     if type1.uppercased() == type2.uppercased() {

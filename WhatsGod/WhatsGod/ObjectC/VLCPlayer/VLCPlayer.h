@@ -43,4 +43,6 @@
  *  暂停播放
  */
 - (void)stopPlaying;
+
+
 @end

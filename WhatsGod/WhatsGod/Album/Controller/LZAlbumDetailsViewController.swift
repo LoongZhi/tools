@@ -265,7 +265,7 @@ class LZAlbumDetailsViewController: LZBaseViewController,UICollectionViewDelegat
         if self.dataSource.count == 0 {
             self.allBtn.isSelected = false
         }
-        self.collectionView .reloadData()
+        self.collectionView.reloadDataSmoothly()
         self.stopAnimating()
         
     }
@@ -319,7 +319,7 @@ class LZAlbumDetailsViewController: LZBaseViewController,UICollectionViewDelegat
            }
             
           
-           self.collectionView.reloadData()
+           self.collectionView.reloadDataSmoothly()
        }
     // 相机权限
        func isRightCamera() -> Bool {
@@ -363,7 +363,7 @@ class LZAlbumDetailsViewController: LZBaseViewController,UICollectionViewDelegat
             }
         }
         
-        self.collectionView.reloadData()
+        self.collectionView.reloadDataSmoothly()
     }
     @objc func touchBtn(btn:UIButton) -> Void {
         if self.dataSource.count != 0 {
@@ -412,7 +412,7 @@ class LZAlbumDetailsViewController: LZBaseViewController,UICollectionViewDelegat
         }
         
         alert.show()
-        self.collectionView.reloadData()
+        self.collectionView.reloadDataSmoothly()
     }
     @objc func exploitTouch(){
       

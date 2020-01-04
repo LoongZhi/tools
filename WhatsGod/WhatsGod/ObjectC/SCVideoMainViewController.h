@@ -10,6 +10,6 @@
 
 @interface SCVideoMainViewController : UIViewController
 
-- (instancetype)initWithURL:(NSString *)url;
+- (instancetype)initWithURL:(NSString *)url videoName:(NSString*)name;
 
 @end

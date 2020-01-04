@@ -10,6 +10,7 @@ import UIKit
 import FWPopupView
 import AVFoundation
 import AVKit
+
 class LZVideoViewController: LZBaseViewController,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout {
    
     
@@ -48,7 +49,7 @@ class LZVideoViewController: LZBaseViewController,UICollectionViewDelegate,UICol
     }()
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.collectionView.reloadData()
+        self.getDataSource()
     }
 //    let menuView
     override func viewDidLoad() {
@@ -86,7 +87,7 @@ class LZVideoViewController: LZBaseViewController,UICollectionViewDelegate,UICol
         self.collectionView.register(LZAlbumCollectionViewCell.classForCoder(), forCellWithReuseIdentifier: "LZAlbumCollectionViewCell")
         self.view.addSubview(self.collectionView)
         
-        self.getDataSource()
+        
         
         let vProperty = FWMenuViewProperty()
         vProperty.popupCustomAlignment = .topRight
@@ -173,7 +174,7 @@ class LZVideoViewController: LZBaseViewController,UICollectionViewDelegate,UICol
         for albumModel in models {
             self.dataSource.append(albumModel)
         }
-        self.collectionView .reloadData()
+        self.collectionView.reloadDataSmoothly()
     }
     override func rightItmeEvent(){
         
@@ -204,7 +205,7 @@ class LZVideoViewController: LZBaseViewController,UICollectionViewDelegate,UICol
             
         }
         
-        self.collectionView.reloadData()
+        self.collectionView.reloadDataSmoothly()
     }
     
     @objc func delBtn(btn:UIButton){
@@ -216,7 +217,7 @@ class LZVideoViewController: LZBaseViewController,UICollectionViewDelegate,UICol
                     if LZFileManager.deleteViodeFile(filePath: model.path){
                         realm.delete(model)
                         self.getDataSource()
-                        self.collectionView.reloadData()
+                        self.collectionView.reloadDataSmoothly()
                         self.chrysan.show(.plain, message:LanguageStrins(string: "Delete success."), hideDelay: HIDE_DELAY)
                     }else{
                          self.chrysan.show(.plain, message:LanguageStrins(string: "Delete failure."), hideDelay: HIDE_DELAY)
@@ -292,19 +293,24 @@ class LZVideoViewController: LZBaseViewController,UICollectionViewDelegate,UICol
             }
             if LZFileManager.writeVideoFile(filePath: path, data:jsonData){
              
-            
-                 let imgData:Data = self.getVideoFengMian(url: URL.init(string: fileUrl!)!).jpegData(compressionQuality: 1)!
+                
+                 let imgData:Data = getVideoFengMian(url: URL.init(fileURLWithPath: fileUrl!)).jpegData(compressionQuality: 1)!
                  if LZFileManager.writeVideoFile(filePath: ImagePath, data:imgData){
                      print("写入成功")
                  }else{
                      print("写入失败")
                  }
+                let urlAsset:AVURLAsset = AVURLAsset.init(url: URL.init(fileURLWithPath: fileUrl!), options: nil);
+                
                  let videoModel = LZVideoModel.init()
                      videoModel.isHidden = self.isHidden
                      videoModel.path = path
                      videoModel.type = type
-                videoModel.name = (fileUrl?.components(separatedBy: "/").last)!
-                     videoModel.imagePath = ImagePath
+                    videoModel.name = (fileUrl?.components(separatedBy: "/").last)!
+                         videoModel.imagePath = ImagePath
+                    videoModel.timerscale = Int(urlAsset.duration.seconds)
+                                                                   
+                    videoModel.timer = String.init().transToHourMinSecs(time:videoModel.timerscale)
                      try! realm.write {
 
                      model.images.append(videoModel)
@@ -315,6 +321,7 @@ class LZVideoViewController: LZBaseViewController,UICollectionViewDelegate,UICol
               DispatchQueue.main.asyncAfter(deadline: .now()+HIDE_DELAY, execute:
                           {
                                 self.stopAnimating()
+                                self.getDataSource()
                                self.dismiss(animated: true, completion: nil)
                           })
             return
@@ -354,26 +361,7 @@ class LZVideoViewController: LZBaseViewController,UICollectionViewDelegate,UICol
                }
     }
 
-    func getVideoFengMian(url:URL) -> UIImage {
-           if url == nil {
-               //默认封面图
-               return UIImage(named: "db_play_big")!
-           }
-           let aset = AVURLAsset(url: url, options: nil)
-           let assetImg = AVAssetImageGenerator(asset: aset)
-           assetImg.appliesPreferredTrackTransform = true
-           assetImg.apertureMode = AVAssetImageGenerator.ApertureMode.encodedPixels
-           do{
-               let cgimgref = try assetImg.copyCGImage(at: CMTime(seconds: 10, preferredTimescale: 50), actualTime: nil)
-               let img = UIImage(cgImage: cgimgref)
-               return img
-               
-               
-           }catch{
-               return UIImage(named: "db_play_big")!
-           }
-           
-       }
+   
     
     //MARK: - 长按动作
        @objc func longPressGesture(_ tap: UILongPressGestureRecognizer) {

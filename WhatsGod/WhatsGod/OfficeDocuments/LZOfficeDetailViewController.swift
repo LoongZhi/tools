@@ -199,22 +199,18 @@ class LZOfficeDetailViewController: LZBaseViewController,UICollectionViewDelegat
             self.dataSource.removeAll()
         }
      
-        DispatchQueue.global().async {
-            DispatchQueue.main.async {
-                 if self.folderModel!.images.count != 0{
-                           
-                    for image in self.folderModel!.images {
-                          self.dataSource.append(image)
-                      }
-                  }
-                
-                  if self.dataSource.count == 0 {
-                      self.allBtn.isSelected = false
-                  }
-                  self.collectionView .reloadData()
-                  self.stopAnimating()
-            }
-        }
+        if self.folderModel!.images.count != 0{
+                   
+            for image in self.folderModel!.images {
+                  self.dataSource.append(image)
+              }
+          }
+        
+          if self.dataSource.count == 0 {
+              self.allBtn.isSelected = false
+          }
+          self.collectionView .reloadDataSmoothly()
+          self.stopAnimating()
     }
     override func rightItmeEvent() {
 
@@ -247,7 +243,7 @@ class LZOfficeDetailViewController: LZBaseViewController,UICollectionViewDelegat
            }
             
           
-           self.collectionView.reloadData()
+           self.collectionView.reloadDataSmoothly()
        }
 
     @objc func allEvent(btn:UIButton) -> Void {
@@ -276,7 +272,7 @@ class LZOfficeDetailViewController: LZBaseViewController,UICollectionViewDelegat
             }
         }
         
-        self.collectionView.reloadData()
+        self.collectionView.reloadDataSmoothly()
     }
     @objc func touchBtn(btn:UIButton) -> Void {
         if self.dataSource.count != 0 {
@@ -322,7 +318,7 @@ class LZOfficeDetailViewController: LZBaseViewController,UICollectionViewDelegat
         }
         
         alert.show()
-        self.collectionView.reloadData()
+        self.collectionView.reloadDataSmoothly()
     }
     @objc func exploitTouch(){
       
@@ -449,11 +445,39 @@ extension LZOfficeDetailViewController{
     }
     func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
            let fileName = urls.last!.lastPathComponent
-           if ICouldManager.iCouldEnable() {
-                ICouldManager.downloadFile(WithDocumentUrl: urls.last!) { (fileData) in
-                   
+//           if ICouldManager.iCouldEnable() {
+            self.startAnimating(lodingSize,type: loadingType, color: COLOR_4990ED)
+            let paths = self.folderModel?.path
+            let queue = DispatchQueue(label: "queueName", attributes: .concurrent)
+                ICouldManager.downloadFile(WithDocumentUrl: urls.last!) { [weak self] (fileData) in
+                    queue.async {
+                                                                        
+                        let type = fileName.returnFileType(fileUrl: fileName)
+                       
+                        let path = "\(paths!)/\(String(format: "%@",fileName))"
+                        if LZFileManager.writeOfficeFile(filePath: path, data:fileData){
+                            let OfficeModel = LZOfficeModel.init()
+                            OfficeModel.isHidden = self!.isHidden
+                            OfficeModel.path = path
+                            OfficeModel.type = type
+                            OfficeModel.name = fileName
+                            DispatchQueue.main.async {
+                                try! realm.write {
+                                    self!.folderModel?.images.append(OfficeModel)
+                                }
+                            }
+                            
+                        }
+
+                    }
+                    DispatchGroup.init().notify(qos: .default, flags: .barrier, queue: queue) {
+                        DispatchQueue.main.async {
+                                self!.getDataSource()
+                            }
+
+                    }
                }
-           }
+//           }
            controller.dismiss(animated: true, completion: nil)
     }
   
