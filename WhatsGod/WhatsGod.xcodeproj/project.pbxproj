@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2D0A166023C3506C008E0FD7 /* LZPassViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D0A165F23C3506C008E0FD7 /* LZPassViewController.swift */; };
 		2D18396E23C0CBD900A97DB6 /* ExtensionTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D18396D23C0CBD900A97DB6 /* ExtensionTableView.swift */; };
 		2D18397023C0CCA800A97DB6 /* ExtensionCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D18396F23C0CCA800A97DB6 /* ExtensionCollection.swift */; };
 		2D3ABBD923BE03A1002A5B49 /* SCVideoMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D3ABBD723BE03A1002A5B49 /* SCVideoMainViewController.m */; };
@@ -51,7 +52,6 @@
 		8826C7CE23545BBF00C40B6A /* LZVideoFolderModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8826C7CD23545BBF00C40B6A /* LZVideoFolderModel.swift */; };
 		8829AEBB237E8104001E1040 /* LZDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8829AEBA237E8104001E1040 /* LZDocument.swift */; };
 		8829AEBD237E813E001E1040 /* IcouldManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8829AEBC237E813E001E1040 /* IcouldManager.swift */; };
-		8829AEBF23802AAD001E1040 /* Lock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8829AEBE23802AAD001E1040 /* Lock.swift */; };
 		882A029A23742EA20080A471 /* LZCostomPresentAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 882A029923742EA20080A471 /* LZCostomPresentAnimation.swift */; };
 		882A81CE23462F4200A97ADC /* ExtensionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 882A81CD23462F4200A97ADC /* ExtensionView.swift */; };
 		883A46BB23520224004A9DDC /* UIViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 883A46B723520224004A9DDC /* UIViewControllerExtension.swift */; };
@@ -103,6 +103,7 @@
 
 /* Begin PBXFileReference section */
 		237F0DF970AA48B3BF36B833 /* Pods-WhatsGod.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WhatsGod.debug.xcconfig"; path = "Target Support Files/Pods-WhatsGod/Pods-WhatsGod.debug.xcconfig"; sourceTree = "<group>"; };
+		2D0A165F23C3506C008E0FD7 /* LZPassViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LZPassViewController.swift; sourceTree = "<group>"; };
 		2D18396D23C0CBD900A97DB6 /* ExtensionTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionTableView.swift; sourceTree = "<group>"; };
 		2D18396F23C0CCA800A97DB6 /* ExtensionCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionCollection.swift; sourceTree = "<group>"; };
 		2D3ABBD723BE03A1002A5B49 /* SCVideoMainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCVideoMainViewController.m; sourceTree = "<group>"; };
@@ -157,7 +158,6 @@
 		8826C7CD23545BBF00C40B6A /* LZVideoFolderModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LZVideoFolderModel.swift; sourceTree = "<group>"; };
 		8829AEBA237E8104001E1040 /* LZDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LZDocument.swift; sourceTree = "<group>"; };
 		8829AEBC237E813E001E1040 /* IcouldManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IcouldManager.swift; sourceTree = "<group>"; };
-		8829AEBE23802AAD001E1040 /* Lock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Lock.swift; sourceTree = "<group>"; };
 		882A029923742EA20080A471 /* LZCostomPresentAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LZCostomPresentAnimation.swift; sourceTree = "<group>"; };
 		882A81CD23462F4200A97ADC /* ExtensionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionView.swift; sourceTree = "<group>"; };
 		883A46B723520224004A9DDC /* UIViewControllerExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewControllerExtension.swift; sourceTree = "<group>"; };
@@ -445,7 +445,6 @@
 		88613A0A2336397E0089C402 /* Tools */ = {
 			isa = PBXGroup;
 			children = (
-				8829AEBE23802AAD001E1040 /* Lock.swift */,
 				88222FF42363015E00FBFD58 /* OProgressView.swift */,
 				882A81CC23462EE800A97ADC /* Extension */,
 				88BD9B3A233B9B840098B8FB /* DB */,
@@ -455,6 +454,7 @@
 				8824370C23759627000D6055 /* LZPercentProgressView.swift */,
 				8829AEBA237E8104001E1040 /* LZDocument.swift */,
 				8829AEBC237E813E001E1040 /* IcouldManager.swift */,
+				2D0A165F23C3506C008E0FD7 /* LZPassViewController.swift */,
 			);
 			path = Tools;
 			sourceTree = "<group>";
@@ -783,6 +783,7 @@
 				883A46BE23520224004A9DDC /* UICollectionViewControllerExtension.swift in Sources */,
 				8825CD7523670359007AB209 /* ContentLabel.swift in Sources */,
 				88222FFB23632D4600FBFD58 /* LZExtensionColor.swift in Sources */,
+				2D0A166023C3506C008E0FD7 /* LZPassViewController.swift in Sources */,
 				883A46BB23520224004A9DDC /* UIViewControllerExtension.swift in Sources */,
 				882A029A23742EA20080A471 /* LZCostomPresentAnimation.swift in Sources */,
 				2D3ABBF923BE0474002A5B49 /* CustomSlider.m in Sources */,
@@ -804,7 +805,6 @@
 				88613A1A233647A70089C402 /* LZAlbumViewController.swift in Sources */,
 				88BD9B3C233B9BB40098B8FB /* LZRealmTool.swift in Sources */,
 				8844ADFF2379973B00DAD127 /* ExtensionImage.swift in Sources */,
-				8829AEBF23802AAD001E1040 /* Lock.swift in Sources */,
 				8829AEBD237E813E001E1040 /* IcouldManager.swift in Sources */,
 				8829AEBB237E8104001E1040 /* LZDocument.swift in Sources */,
 				2D18397023C0CCA800A97DB6 /* ExtensionCollection.swift in Sources */,

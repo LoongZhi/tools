@@ -28,12 +28,7 @@ class LZBaseViewController: UIViewController,NVActivityIndicatorViewable {
     }()
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        if AppLock.password.isStringNull() {
-            AppLock.set(controller: self)
-        }else if (UserDefaults.standard.object(forKey: "VCPassword") as! Bool == true){
-            AppLock.verify(controller: self)
-            UserDefaults.standard.set(false, forKey: "VCPassword")
-        }
+       
     }
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,7 +37,9 @@ class LZBaseViewController: UIViewController,NVActivityIndicatorViewable {
         create()
         readyView()
         
-       
+        let sb = UIStoryboard.init(name: "Main", bundle: nil)
+        let vc = sb.instantiateViewController(withIdentifier: "LZPassViewController");
+        self.present(vc, animated: true, completion: nil)
     }
     
     func create() -> Void {

@@ -1,6 +1,8 @@
 PODS:
   - Chrysan (1.5.0)
   - ComplimentaryGradientView (0.3.0)
+  - CRBoxInputView (1.1.5):
+    - Masonry
   - CropViewController (2.5.1)
   - CryptoSwift (1.0.0)
   - DKCamera (1.6.4)
@@ -55,7 +57,6 @@ PODS:
   - FLAnimatedImage (1.0.12)
   - FWPopupView (4.0.8):
     - SnapKit
-  - GesturePassword (2.1.0)
   - Hue (5.0.0)
   - IBAnimatable (6.0.0)
   - IQKeyboardManagerSwift (6.4.2)
@@ -311,10 +312,10 @@ PODS:
 DEPENDENCIES:
   - Chrysan
   - ComplimentaryGradientView
+  - CRBoxInputView (= 1.1.5)
   - CryptoSwift
   - DKImagePickerController
   - FWPopupView
-  - GesturePassword
   - Hue
   - IBAnimatable
   - IQKeyboardManagerSwift
@@ -334,6 +335,7 @@ SPEC REPOS:
   trunk:
     - Chrysan
     - ComplimentaryGradientView
+    - CRBoxInputView
     - CropViewController
     - CryptoSwift
     - DKCamera
@@ -341,7 +343,6 @@ SPEC REPOS:
     - DKPhotoGallery
     - FLAnimatedImage
     - FWPopupView
-    - GesturePassword
     - Hue
     - IBAnimatable
     - IQKeyboardManagerSwift
@@ -367,6 +368,7 @@ SPEC REPOS:
 SPEC CHECKSUMS:
   Chrysan: 6bf6682adb2db76f7f5c103930a8c6670f54eebe
   ComplimentaryGradientView: d874186ea4c37bd08ebd1f2d229698416cacaa39
+  CRBoxInputView: 40aeedca17d33f7464cc3c3b7d75019ae5a9533b
   CropViewController: 10ba7af75e302f2db7eb913f8aa1156f95cfe88e
   CryptoSwift: d81eeaa59dc5a8d03720fe919a6fd07b51f7439f
   DKCamera: 61fa47629a39354e5111bca1fe96695de020dcb9
@@ -374,7 +376,6 @@ SPEC CHECKSUMS:
   DKPhotoGallery: 0290d32343574f06eaa4c26f8f2f8a1035e916be
   FLAnimatedImage: 4a0b56255d9b05f18b6dd7ee06871be5d3b89e31
   FWPopupView: 8357f7ab0185e1dcaaf888fbc8ee81ab8dccab72
-  GesturePassword: 96b70b70906075136cd6eac2c3b54d9e1fe14137
   Hue: c129cb67be7d093a82bbbc30ce8a96757bf6f37a
   IBAnimatable: d49f9fee0c401b5b08d31b77256b77fb067e0e92
   IQKeyboardManagerSwift: 79a3ec200dfb41cb66a89b8575417b5378107c5d
@@ -397,6 +398,6 @@ SPEC CHECKSUMS:
   SnapKit: 0de968a9fec17499afa29683b05d0c775b6d1c29
   SSZipArchive: fa16b8cc4cdeceb698e5e5d9f67e9558532fbf23
 
-PODFILE CHECKSUM: 2d9553998aee935b021c069645be5ae8af33a455
+PODFILE CHECKSUM: 87e849c4bce1cd73a271ee57cb3e65f8e3586ab4
 
 COCOAPODS: 1.8.4

@@ -298,7 +298,7 @@ class LZVideoDetailViewController: LZBaseViewController,UICollectionViewDelegate
                 if self.dataSource.count == 0 {
                     self.allBtn.isSelected = false
                 }
-                self.collectionView .reloadDataSmoothly()
+                self.collectionView.reloadDataSmoothly()
                 self.stopAnimating()
             }
     }

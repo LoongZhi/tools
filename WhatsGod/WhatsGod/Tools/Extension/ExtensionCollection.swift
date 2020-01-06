@@ -11,7 +11,9 @@ extension UICollectionView {
   func reloadDataSmoothly() {
 
     UIView.performWithoutAnimation {
-        reloadData()
+        CATransaction.setDisableActions(true)
+        self.reloadData()
+        CATransaction.commit()
     }
   }
 }

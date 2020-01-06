@@ -56,9 +56,9 @@ target 'WhatsGod' do
    pod 'SJVideoPlayer'
    pod 'SJRouter'
    
-   pod 'GesturePassword'
-   
    pod 'MobileVLCKit'
    
 #   pod 'Google-Mobile-Ads-SDK'
+
+   pod 'CRBoxInputView', '1.1.5'
 end
