@@ -97,7 +97,7 @@ class LZSettingsViewController: LZBaseViewController,UITableViewDataSource,UITab
     
     override func readyView() {
         
-        self.dataSource.append(contentsOf: [["zhanghaoanquan",LanguageStrins(string: "Account number settings")],
+        self.dataSource.append(contentsOf: [["zhanghaoanquan",LanguageStrins(string: "Privacy protection")],
         ["beifens",LanguageStrins(string: "Share application")],
         ["yuyan",LanguageStrins(string: "Language settings")],
         ["beifen",LanguageStrins(string: "Document backup")],
@@ -110,7 +110,16 @@ class LZSettingsViewController: LZBaseViewController,UITableViewDataSource,UITab
         super.viewWillAppear(animated)
         self.setAoutLayot()
     }
-
+    @objc func swEvent(sw:UISwitch){
+     
+        let sb = UIStoryboard.init(name: "Main", bundle: nil)
+        let vc:LZPassViewController = sb.instantiateViewController(withIdentifier: "LZPassViewController") as! LZPassViewController
+        vc.onSw = sw.isOn
+        vc.isblock = { (isbool) -> Void in
+            sw.isOn = isbool
+        }
+        self.present(vc, animated: true, completion: nil)
+    }
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
       
     }
@@ -121,17 +130,32 @@ class LZSettingsViewController: LZBaseViewController,UITableViewDataSource,UITab
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let reuseIdentifier = "LZSettingsCell"
         let cell:LZSettingsCell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier,for: indexPath) as! LZSettingsCell
-        
+        cell.rightImage.isHidden = false
+        cell.sw.isHidden = true
+        if indexPath.row == 0 {
+            cell.rightImage.isHidden = true
+            cell.sw.isHidden = false
+            cell.sw.isOn = (UserDefaults.standard.object(forKey: VCPassword) != nil)
+            cell.sw.addTarget(self, action: #selector(swEvent(sw:)), for: .valueChanged)
+        }
         let arr:Array = self.dataSource[indexPath.row] as! Array<String>
-        cell.layoutUI(arr: arr)
+        cell.layoutUI(arr: arr,index:indexPath)
 
         return cell
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+        switch indexPath.row {
+        case 1:
+            break
+        case 2:
+            let vc = LZLanguageViewController(nibName: "LZLanguageViewController", bundle: nil)
+            self.navigationController?.pushViewController(vc, animated: true)
+            break
+        default: break
+            
+        }
         
-        let vc = LZAccountViewController(nibName: "LZAccountViewController", bundle: nil)
-        self.navigationController?.pushViewController(vc, animated: true)
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 55

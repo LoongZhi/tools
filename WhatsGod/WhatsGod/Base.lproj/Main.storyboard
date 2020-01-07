@@ -148,15 +148,15 @@
                                                     <constraint firstAttribute="width" constant="160" id="qRI-G9-MW8"/>
                                                 </constraints>
                                             </view>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="请输入锁定口令" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dfh-LK-HzL">
-                                                <rect key="frame" x="134" y="16" width="107.33333333333331" height="18"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="请输入锁定口令" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dfh-LK-HzL">
+                                                <rect key="frame" x="10" y="16" width="355" height="18"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="口令不匹配，请重新输入" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EqK-po-caE">
-                                                <rect key="frame" x="114.66666666666669" y="94" width="146" height="15.666666666666671"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="口令不匹配，请重新输入" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EqK-po-caE">
+                                                <rect key="frame" x="10" y="94" width="355" height="18"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
@@ -166,6 +166,10 @@
                                             <constraint firstItem="EqK-po-caE" firstAttribute="centerX" secondItem="Uwp-Vd-84a" secondAttribute="centerX" id="5Hr-KE-8I9"/>
                                             <constraint firstItem="EqK-po-caE" firstAttribute="top" secondItem="sKT-F6-Ntr" secondAttribute="bottom" constant="10" id="Bh4-SR-gtB"/>
                                             <constraint firstItem="sKT-F6-Ntr" firstAttribute="centerX" secondItem="Uwp-Vd-84a" secondAttribute="centerX" id="CPZ-i3-PnJ"/>
+                                            <constraint firstItem="EqK-po-caE" firstAttribute="leading" secondItem="Uwp-Vd-84a" secondAttribute="leading" constant="10" id="Wa8-Fy-AeU"/>
+                                            <constraint firstAttribute="trailing" secondItem="EqK-po-caE" secondAttribute="trailing" constant="10" id="af9-56-iCl"/>
+                                            <constraint firstItem="dfh-LK-HzL" firstAttribute="leading" secondItem="Uwp-Vd-84a" secondAttribute="leading" constant="10" id="biD-Qu-xmi"/>
+                                            <constraint firstAttribute="trailing" secondItem="dfh-LK-HzL" secondAttribute="trailing" constant="10" id="gVy-oc-blY"/>
                                             <constraint firstItem="sKT-F6-Ntr" firstAttribute="centerY" secondItem="Uwp-Vd-84a" secondAttribute="centerY" id="i8x-WA-hGs"/>
                                             <constraint firstItem="sKT-F6-Ntr" firstAttribute="top" secondItem="dfh-LK-HzL" secondAttribute="bottom" constant="10" id="joQ-eM-Oxt"/>
                                             <constraint firstAttribute="height" constant="128" id="rSh-MX-q9C"/>
@@ -174,15 +178,15 @@
                                     </view>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="Uwp-Vd-84a" secondAttribute="trailing" multiplier="2:1" id="6Mg-IQ-MVr"/>
-                                    <constraint firstItem="Uwp-Vd-84a" firstAttribute="leading" secondItem="lLw-wv-kyy" secondAttribute="leading" multiplier="2:1" id="Ghx-XV-vm8"/>
+                                    <constraint firstAttribute="trailing" secondItem="Uwp-Vd-84a" secondAttribute="trailing" id="6Mg-IQ-MVr"/>
+                                    <constraint firstItem="Uwp-Vd-84a" firstAttribute="leading" secondItem="lLw-wv-kyy" secondAttribute="leading" id="Ghx-XV-vm8"/>
                                     <constraint firstItem="Uwp-Vd-84a" firstAttribute="top" secondItem="lLw-wv-kyy" secondAttribute="top" id="kXC-IY-Umq"/>
                                     <constraint firstAttribute="bottom" secondItem="Uwp-Vd-84a" secondAttribute="bottom" id="kaW-6V-yaJ"/>
                                     <constraint firstItem="Uwp-Vd-84a" firstAttribute="width" secondItem="lLw-wv-kyy" secondAttribute="width" id="qCI-0t-0vk"/>
                                     <constraint firstAttribute="height" constant="128" id="rqs-gt-oER"/>
                                 </constraints>
                             </scrollView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="设置锁定口令" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hGy-u7-RCt">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="设置锁定口令" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hGy-u7-RCt">
                                 <rect key="frame" x="20" y="84" width="355" height="36"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="30"/>
                                 <nil key="textColor"/>
@@ -194,7 +198,8 @@
                                     <constraint firstAttribute="height" constant="30" id="Ro9-Ti-Ocx"/>
                                     <constraint firstAttribute="width" constant="50" id="v4i-Ph-jYt"/>
                                 </constraints>
-                                <state key="normal" title="取消"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <state key="normal" title="完成"/>
                                 <connections>
                                     <action selector="canBtn:" destination="zh9-Uv-fUE" eventType="touchUpInside" id="VhL-27-xX2"/>
                                 </connections>
@@ -214,6 +219,7 @@
                         <viewLayoutGuide key="safeArea" id="cgP-Qx-Wmk"/>
                     </view>
                     <connections>
+                        <outlet property="canBtn" destination="bAL-QE-dUj" id="b0Q-ej-hFu"/>
                         <outlet property="passTextField" destination="nPP-Zm-beo" id="OMJ-kV-VKY"/>
                         <outlet property="passView" destination="sKT-F6-Ntr" id="ROT-g3-HCa"/>
                         <outlet property="scrollContentView" destination="Uwp-Vd-84a" id="zQj-v0-spy"/>

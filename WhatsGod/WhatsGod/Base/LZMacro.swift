@@ -126,9 +126,13 @@ func downsample(imageAt imageURL: URL, to pointSize: CGSize, scale: CGFloat) -> 
          let downsampledImage = CGImageSourceCreateThumbnailAtIndex(imageSource, 0, downsampleOptions)!
          return UIImage(cgImage: downsampledImage)
    }
+
+let VCPassword = "VCPassword"
+let languageMark = "languageMark"
 //语言本地化
 public func LanguageStrins(string:String) ->String{
-    return NSLocalizedString(string, comment: "")
+    LZCustomLanguage.share.lan = UserDefaults.standard.object(forKey: languageMark) as! String
+    return LZCustomLanguage.share.showText(key: string)
 }
 //loding 大小
 let lodingSize = CGSize.init(width: 60, height: 60)

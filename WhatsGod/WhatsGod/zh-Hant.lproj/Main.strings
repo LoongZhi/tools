@@ -1,0 +1,24 @@
+
+/* Class = "UITabBarItem"; title = "Home"; ObjectID = "5KW-eW-QsZ"; */
+"5KW-eW-QsZ.title" = "Home";
+
+/* Class = "UITabBarItem"; title = "Home"; ObjectID = "8s8-Ck-oNG"; */
+"8s8-Ck-oNG.title" = "Home";
+
+/* Class = "UITabBarItem"; title = "Item"; ObjectID = "DeD-s7-zqQ"; */
+"DeD-s7-zqQ.title" = "Item";
+
+/* Class = "UILabel"; text = "口令不匹配，请重新输入"; ObjectID = "EqK-po-caE"; */
+"EqK-po-caE.text" = "口令不匹配，请重新输入";
+
+/* Class = "UITabBarItem"; title = "Item"; ObjectID = "K0X-hi-eaB"; */
+"K0X-hi-eaB.title" = "Item";
+
+/* Class = "UIButton"; normalTitle = "完成"; ObjectID = "bAL-QE-dUj"; */
+"bAL-QE-dUj.normalTitle" = "完成";
+
+/* Class = "UILabel"; text = "请输入锁定口令"; ObjectID = "dfh-LK-HzL"; */
+"dfh-LK-HzL.text" = "请输入锁定口令";
+
+/* Class = "UILabel"; text = "设置锁定口令"; ObjectID = "hGy-u7-RCt"; */
+"hGy-u7-RCt.text" = "设置锁定口令";

@@ -24,6 +24,11 @@ class LZSettingsCell: UITableViewCell {
            image.image = Img(url: "xiayige")
            return image
       }()
+    lazy var sw:UISwitch = {
+        let view = UISwitch.init()
+        view.onTintColor = COLOR_4990ED
+        return view
+    }()
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         loadUI()
@@ -36,7 +41,7 @@ class LZSettingsCell: UITableViewCell {
         self.contentView.addSubview(self.iconImage)
         self.contentView.addSubview(self.nameLabel)
         self.contentView.addSubview(self.rightImage)
-        
+        self.contentView.addSubview(self.sw)
         self.iconImage.snp.makeConstraints { (make) in
          
             make.centerY.equalToSuperview()
@@ -56,10 +61,17 @@ class LZSettingsCell: UITableViewCell {
             make.width.equalTo(15)
             make.height.equalTo(20)
         }
+        
+        self.sw.snp.makeConstraints { (make) in
+            make.centerY.equalToSuperview()
+            make.right.equalTo(-10)
+        }
+        
     }
 
-    func layoutUI(arr:Array<String>) {
+    func layoutUI(arr:Array<String>,index:IndexPath) {
         
+       
         self.iconImage.image = Img(url: arr.first ?? "")
         self.nameLabel.text = arr.last ?? ""
         

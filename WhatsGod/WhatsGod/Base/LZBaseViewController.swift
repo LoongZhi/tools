@@ -37,9 +37,7 @@ class LZBaseViewController: UIViewController,NVActivityIndicatorViewable {
         create()
         readyView()
         
-        let sb = UIStoryboard.init(name: "Main", bundle: nil)
-        let vc = sb.instantiateViewController(withIdentifier: "LZPassViewController");
-        self.present(vc, animated: true, completion: nil)
+        
     }
     
     func create() -> Void {

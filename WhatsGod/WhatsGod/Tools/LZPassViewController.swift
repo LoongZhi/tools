@@ -9,6 +9,7 @@
 import UIKit
 
 let count = 4
+typealias isBlock = (_ isbool :Bool) ->()
 class LZPassViewController: UIViewController,UITextFieldDelegate,UIScrollViewDelegate {
 
     @IBOutlet weak var scrollContentView: UIView!
@@ -18,6 +19,10 @@ class LZPassViewController: UIViewController,UITextFieldDelegate,UIScrollViewDel
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var tipLabel: UILabel!
     @IBOutlet weak var tipLabel2: UILabel!
+    @IBOutlet weak var canBtn: UIButton!
+    var isblock: isBlock!
+    var onSw: Bool?
+    let isPass:Bool =  (UserDefaults.standard.object(forKey: VCPassword) != nil)
     var viewArr:NSMutableArray = {
         return NSMutableArray.init()
     }()
@@ -50,23 +55,71 @@ class LZPassViewController: UIViewController,UITextFieldDelegate,UIScrollViewDel
         self.scrollView.isPagingEnabled = true
         self.scrollView.delegate = self
         
-    }
-    func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
-        self.scrollContentView.frame.origin = CGPoint(x: SCREEN_WIDTH, y: 0)
-    }
-    @IBAction func canBtn(_ sender: Any) {
         
+        self.tipLabel2.text = ""
+        self.canBtn.setTitle(LanguageStrins(string: "Done"), for: .normal)
+        if self.isPass {
+            self.canBtn.isHidden = true
+            self.titleLabel.text = LanguageStrins(string: "Enter lock password")
+            self.tipLabel.text = LanguageStrins(string: "Please enter your lock password")
+        }else{
+            self.canBtn.isHidden = false
+            self.titleLabel.text = LanguageStrins(string: "Set lock password")
+            self.tipLabel.text = LanguageStrins(string: "Please enter the lock password")
+        }
+    }
+    
+    @IBAction func canBtn(_ sender: Any) {
+        self.passTextField.resignFirstResponder()
+        UserDefaults.standard.set(self.passTextField.text, forKey: VCPassword)
+        if isblock != nil {
+            isblock(true)
+        }
+        UIView.animate(withDuration: 2, animations: {
+            self.view.alpha = 0;
+        }) { (isbool) in
+            
+        }
         self.dismiss(animated: true, completion: nil)
     }
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        
+         
+        let  text = textField.text! + string
+        if !self.isPass {
+            self.tipLabel2.text = "Password:" + text
+        }
         if string == "\n" {
             return false
         }
         if string.count == 0 {
             return true
         }
+       
+        if text.count == 4 {
+            if self.isPass {
+                let number:String = UserDefaults.standard.object(forKey: VCPassword) as! String
+                if text == number {
+                    if isblock != nil {
+                        isblock(self.onSw!)
+                        if !self.onSw!{
+                            UserDefaults.standard.set(nil, forKey: VCPassword)
+                        }
+                    }
+                     self.passTextField.resignFirstResponder()
+                    UIView.animate(withDuration: 2, animations: {
+                        self.view.alpha = 0;
+                    }) { (isbool) in
+                        
+                    }
+                    self.dismiss(animated: true, completion: nil)
+                }else{
+                    self.tipLabel2.text = LanguageStrins(string: "Passwords do not match, please re-enter")
+                }
+            }
+            
+        }
         if textField.text!.count >= count {
+    
             return false
         }
         
@@ -85,6 +138,7 @@ class LZPassViewController: UIViewController,UITextFieldDelegate,UIScrollViewDel
             
             return
         }
+        
         for i in 0...textField.text!.count - 1 {
             let view:UIView = self.viewArr[i] as! UIView
             view.frame.size = CGSize.init(width: 15, height: 15)
