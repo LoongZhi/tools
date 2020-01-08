@@ -5,7 +5,7 @@
   Created by imac on 9/21/19.
   Copyright © 2019 L. All rights reserved.
 */
-"Album" = "相册";
+"Album" = "Фотоальбом";
 "Video" = "Видео";
 "Book" = "Файл";
 "Settings" = "Настройки";
@@ -67,7 +67,7 @@
 "Share failed" = "Поделиться не удалось";
 "Password error." = "Ошибка пароля.";
 "Please enter the private folder password." = "Пожалуйста, введите пароль для папки.";
-"Please enter the correct password" = "Пожалуйста, введите правильный пароль;
+"Please enter the correct password" = "Пожалуйста, введите правильный пароль";
 "Enter lock password" = "Введите пароль блокировки";
 "Please enter your lock password" = "Пожалуйста, введите ваш пароль блокировки";
 "Set lock password" = "Установить пароль блокировки";
@@ -76,4 +76,4 @@
 "Please enter the password" = "Пожалуйста, введите пароль";
 "Export" = "Export";
 "Folder manager is empty" = "Менеджер папок пуст";
-"Create a folder to manage your photos ~" = "Создать папку для управления фотографиями ~"
+"Create a folder to manage your photos ~" = "Создать папку для управления фотографиями ~";

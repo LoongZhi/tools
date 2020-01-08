@@ -11,6 +11,7 @@ import UIKit
 public  var tempAlbumPath = LZFileManager.tempDestPath()! + LanguageStrins(string: "/AllPhotoFiles.zip")
 public  var tempVideoPath = LZFileManager.tempDestPath()! + LanguageStrins(string: "/AllVideoFiles.zip")
 public  var tempOfficePath = LZFileManager.tempDestPath()! + LanguageStrins(string: "/AllOfficeFiles.zip")
+public  var tempAllDataPath = LZFileManager.tempDestPath()! + LanguageStrins(string: "/AllData.zip")
 
 public let rootFolder = NSHomeDirectory() + "/Documents/"
 public var rootFileManager = FileManager.default

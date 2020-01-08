@@ -5,12 +5,12 @@
   Created by imac on 9/21/19.
   Copyright © 2019 L. All rights reserved.
 */
-"Album" = "相册";
+"Album" = "ألبوم الصور";
 "Video" = "فيديو";
 "Book" = "ملف";
 "Settings" = "الإعدادات";
 "New" = "جديد";
-"New Folders" = "مجلدات جديدة"
+"New Folders" = "مجلدات جديدة";
 "New folders are stored in photographs" = "يتم تخزين مجلدات جديدة في الصور";
 "OK" = "تأكيد";
 "Edit" = "تحرير";
@@ -76,4 +76,4 @@
 "Please enter the password" = "الرجاء إدخال كلمة المرور";
 "Export" = "تصدير";
 "Folder manager is empty" = "مدير المجلدات فارغ";
-"Create a folder to manage your photos ~" = "إنشاء مجلد لإدارة صورك ~"
+"Create a folder to manage your photos ~" = "إنشاء مجلد لإدارة صورك ~";

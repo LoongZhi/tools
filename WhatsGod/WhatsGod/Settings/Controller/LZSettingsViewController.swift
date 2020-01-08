@@ -151,6 +151,9 @@ class LZSettingsViewController: LZBaseViewController,UITableViewDataSource,UITab
             let vc = LZLanguageViewController(nibName: "LZLanguageViewController", bundle: nil)
             self.navigationController?.pushViewController(vc, animated: true)
             break
+        case 3:
+            self.exportFile()
+            break
         default: break
             
         }
@@ -163,7 +166,52 @@ class LZSettingsViewController: LZBaseViewController,UITableViewDataSource,UITab
 }
 
 extension LZSettingsViewController{
-    
+    func exportFile(){
+         
+            weak var wekeSelf = self
+          
+          
+             let queue = DispatchQueue(label: "queueName", attributes: .concurrent)
+            
+                queue.async {
+                    
+                    SSZipArchive.createZipFile(atPath: tempAllDataPath, withContentsOfDirectory: rootFolder, keepParentDirectory: false, withPassword: nil, andProgressHandler:{(t1:UInt?,t2:UInt?) -> Void in
+                            DispatchQueue.main.async {
+                                LZPercentProgressView.shared().startProgress(avaiNumber: CGFloat(t1!), totalNumber: CGFloat(t2!))
+                            }
+                        }
+                        
+                    )
+                }
+
+            DispatchGroup.init().notify(qos: .default, flags: .barrier, queue: queue) {
+                DispatchQueue.main.async {
+                    if (rootFileManager.fileExists(atPath: rootFolder)) {
+                        let items = [URL.init(fileURLWithPath: rootFolder) as Any] as [Any]
+                         let activityVC = UIActivityViewController(
+                             activityItems: items,
+                             applicationActivities: nil)
+                        activityVC.completionWithItemsHandler =  { activity, success, items, error in
+                            
+                            DispatchQueue.main.async {
+                                if success {
+                                    wekeSelf!.chrysan.show(.plain, message:LanguageStrins(string: "Share success"), hideDelay: HIDE_DELAY)
+                                } else{
+                                    wekeSelf!.chrysan.show(.plain,message:LanguageStrins(string: "Share failed"),hideDelay: HIDE_DELAY)
+                                }
+                            }
+                         }
+                        wekeSelf!.present(activityVC, animated: true, completion: { () -> Void in})
+                    }else{
+                        print("压缩失败")
+                        wekeSelf!.chrysan.show(.plain, message:LanguageStrins(string: "Compression failed"), hideDelay: HIDE_DELAY)
+                    }
+                    LZPercentProgressView.shared().stopProgress()
+                }
+            }
+            
+           
+        }
     func  setAoutLayot(){
         
         self.tableView.tableHeaderView = self.tapView
