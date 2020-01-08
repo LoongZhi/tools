@@ -16,7 +16,7 @@
 "Edit" = "编辑";
 "Tips" = "提示";
 "Whether you delete the folder" = "是否删除文件夹";
-"Completed" = "已完成";
+"Completed" = "完成";
 "Add" = "添加";
 "Please enter the filename" = "请输入文件名";
 "Cancel" = "取消";
@@ -37,7 +37,7 @@
 "Please create a folder first." = "请先创建一个文件夹。";
 "Such files are not supported." = "不支持此类文件。";
 "Used" = "已用";
-"Disk space." = "磁盘空间。";
+"Disk space" = "磁盘空间";
 "Other" = "其他";
 "Done" = "完成";
 "Privacy protection" = "隐私保护";
@@ -73,3 +73,7 @@
 "Set lock password" = "设置锁定口令密码";
 "Please enter the lock password" = "请输入锁定口令密码";
 "Passwords do not match, please re-enter" = "密码不匹配，请重新输入";
+"Please enter the password" = "请输入密码";
+"Export" = "导出";
+"Folder manager is empty" = "文件夹管理器为空";
+"Create a folder to manage your photos ~" = "请创建文件夹管理自己的照片吧～"

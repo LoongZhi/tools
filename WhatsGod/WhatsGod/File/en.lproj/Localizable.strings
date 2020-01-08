@@ -38,7 +38,7 @@
 "Please create a folder first." = "Please create a folder first.";
 "Such files are not supported." = "Such files are not supported.";
 "Used" = "Used";
-"Disk space." = "Disk space.";
+"Disk space" = "Disk space";
 "Other" = "Other";
 "Done" = "Done";
 "Privacy protection" = "Privacy protection";
@@ -74,3 +74,7 @@
 "Set lock password" = "Set lock password";
 "Please enter the lock password" = "Please enter the lock password";
 "Passwords do not match, please re-enter" = "Passwords do not match, please re-enter";
+"Please enter the password" = "Please enter the password";
+"Export" = "Export";
+"Folder manager is empty" = "Folder manager is empty";
+"Create a folder to manage your photos ~" = "Create a folder to manage your photos ~"

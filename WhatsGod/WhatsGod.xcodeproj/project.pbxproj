@@ -10,6 +10,7 @@
 		2D0A166023C3506C008E0FD7 /* LZPassViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D0A165F23C3506C008E0FD7 /* LZPassViewController.swift */; };
 		2D18396E23C0CBD900A97DB6 /* ExtensionTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D18396D23C0CBD900A97DB6 /* ExtensionTableView.swift */; };
 		2D18397023C0CCA800A97DB6 /* ExtensionCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D18396F23C0CCA800A97DB6 /* ExtensionCollection.swift */; };
+		2D1ACF7D23C5B37F00C46607 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2D1ACF7F23C5B37F00C46607 /* InfoPlist.strings */; };
 		2D3A3ED923C4A8DD003D258C /* LZLanguageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D3A3ED723C4A8DD003D258C /* LZLanguageCell.swift */; };
 		2D3A3EDA23C4A8DD003D258C /* LZLanguageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2D3A3ED823C4A8DD003D258C /* LZLanguageCell.xib */; };
 		2D3A3EEE23C4BEBD003D258C /* LZCustomLanguage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D3A3EED23C4BEBD003D258C /* LZCustomLanguage.swift */; };
@@ -109,6 +110,13 @@
 		2D0A165F23C3506C008E0FD7 /* LZPassViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LZPassViewController.swift; sourceTree = "<group>"; };
 		2D18396D23C0CBD900A97DB6 /* ExtensionTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionTableView.swift; sourceTree = "<group>"; };
 		2D18396F23C0CCA800A97DB6 /* ExtensionCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionCollection.swift; sourceTree = "<group>"; };
+		2D1ACF7E23C5B37F00C46607 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		2D1ACF8023C5B39500C46607 /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		2D1ACF8123C5B39800C46607 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
+		2D1ACF8223C5B39900C46607 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		2D1ACF8323C5B39A00C46607 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		2D1ACF8423C5B39B00C46607 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		2D1ACF8523C5B39B00C46607 /* ru-BY */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "ru-BY"; path = "ru-BY.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		2D3A3ED723C4A8DD003D258C /* LZLanguageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LZLanguageCell.swift; sourceTree = "<group>"; };
 		2D3A3ED823C4A8DD003D258C /* LZLanguageCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LZLanguageCell.xib; sourceTree = "<group>"; };
 		2D3A3EDE23C4B0D7003D258C /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Main.strings; sourceTree = "<group>"; };
@@ -547,6 +555,7 @@
 			isa = PBXGroup;
 			children = (
 				88613A2A23364C570089C402 /* Localizable.strings */,
+				2D1ACF7F23C5B37F00C46607 /* InfoPlist.strings */,
 			);
 			path = File;
 			sourceTree = "<group>";
@@ -718,6 +727,7 @@
 				2D3ABBF023BE0474002A5B49 /* ic_bf_zt.png in Resources */,
 				8841C016236850790009FBAB /* LZLanguageViewController.xib in Resources */,
 				88261C9B23320A22005CE69D /* Main.storyboard in Resources */,
+				2D1ACF7D23C5B37F00C46607 /* InfoPlist.strings in Resources */,
 				2D3ABBEE23BE0474002A5B49 /* ic_jt_bf@2x.png in Resources */,
 				2D3ABBEF23BE0474002A5B49 /* ic_sp_xz@2x.png in Resources */,
 				2D3ABBF123BE0474002A5B49 /* ic_kt_bf@2x.png in Resources */,
@@ -885,6 +895,20 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		2D1ACF7F23C5B37F00C46607 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				2D1ACF7E23C5B37F00C46607 /* en */,
+				2D1ACF8023C5B39500C46607 /* ar */,
+				2D1ACF8123C5B39800C46607 /* zh-Hans */,
+				2D1ACF8223C5B39900C46607 /* fr */,
+				2D1ACF8323C5B39A00C46607 /* ja */,
+				2D1ACF8423C5B39B00C46607 /* ko */,
+				2D1ACF8523C5B39B00C46607 /* ru-BY */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
 		88261C9923320A22005CE69D /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (

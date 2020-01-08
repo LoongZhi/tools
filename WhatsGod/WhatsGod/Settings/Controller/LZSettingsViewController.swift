@@ -101,8 +101,7 @@ class LZSettingsViewController: LZBaseViewController,UITableViewDataSource,UITab
         ["beifens",LanguageStrins(string: "Share application")],
         ["yuyan",LanguageStrins(string: "Language settings")],
         ["beifen",LanguageStrins(string: "Document backup")],
-        ["qinglihuanchun",LanguageStrins(string: "Clean up the cache")],
-        ["guanyuwomen",LanguageStrins(string: "About us")]])
+        ["qinglihuanchun",LanguageStrins(string: "Clean up the cache")]])
         
     }
    
@@ -207,7 +206,7 @@ extension LZSettingsViewController{
        
          })
         
-        self.textLabel1.text = LanguageStrins(string: "Disk space.")
+        self.textLabel1.text = LanguageStrins(string: "Disk space")
         self.textLabel2.text = "\(Int(total - avai))GB / " + "\(Int(total))GB"
      
         self.textLabel6.text = LanguageStrins(string: "Album")

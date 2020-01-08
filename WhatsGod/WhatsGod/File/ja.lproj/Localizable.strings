@@ -16,7 +16,7 @@
 "Edit" = "編集";
 "Tips" = "ヒント";
 "Whether you delete the folder" = "フォルダーを削除するかどうか";
-"Completed" = "完了しました";
+"Completed" = "完了";
 "Add" = "追加する";
 "Please enter the filename" = "ファイル名を入力してください";
 "Cancel" = "キャンセルする";
@@ -37,7 +37,7 @@
 "Please create a folder first." = "最初にフォルダーを作成してください。";
 "Such files are not supported." = "そのようなファイルはサポートされていません。";
 "Used" = "中古";
-"Disk space." = "ディスク容量。";
+"Disk space" = "ディスク容量";
 "Other" = "その他";
 "Done" = "完了";
 "Privacy protection" = "プライバシー保護";
@@ -73,3 +73,7 @@
 "Set lock password" = "ロックパスワードパスワードを設定する";
 "Please enter the lock password" = "ロックパスワードパスワードを入力してください";
 "Passwords do not match, please re-enter" = "パスワードが一致しません。再入力してください";
+"Please enter the password" = "パスワードを入力してください";
+"Export" = "輸出する";
+"Folder manager is empty" = "フォルダーマネージャーが空です";
+"Create a folder to manage your photos ~" = "写真を管理するフォルダーを作成します〜"

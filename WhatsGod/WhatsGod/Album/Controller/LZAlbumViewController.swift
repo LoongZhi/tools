@@ -41,6 +41,14 @@ class LZAlbumViewController: LZBaseViewController,UICollectionViewDelegate,UICol
         collection.delegate = self
         collection.backgroundColor = UIColor.white
         collection.isPagingEnabled = true
+        let emptyView = LYEmptyView.emptyActionView(withImageStr: "test", titleStr: LanguageStrins(string: "Folder manager is empty"), detailStr: LanguageStrins(string: "Create a folder to manage your photos ~"), btnTitleStr: LanguageStrins(string: "New")) {
+            self.newFolder()
+        };
+        emptyView!.actionBtnBackGroundColor = COLOR_4990ED
+        emptyView!.actionBtnTitleColor = .white
+        emptyView!.actionBtnCornerRadius = 5
+        emptyView!.contentViewY = lzNavigationHeight + 50
+        collection.ly_emptyView = emptyView
         let longPress = UILongPressGestureRecognizer(target: self, action: #selector(self.longPressGesture(_:)))
         collection.addGestureRecognizer(longPress)
         return collection;
@@ -108,45 +116,7 @@ class LZAlbumViewController: LZBaseViewController,UICollectionViewDelegate,UICol
             
             switch (index) {
             case 0:
-       
-                       let alertController = UIAlertController(title: LanguageStrins(string: "New Folders"),message:LanguageStrins(string: "Please enter the filename"),preferredStyle: .alert)
-
-                          
-                       alertController.addTextField {
-                               (textField: UITextField!) -> Void in
-                               textField.placeholder = LanguageStrins(string: "Please enter the filename")
-                       }
-                let cancelAction = UIAlertAction(title: LanguageStrins(string: "Cancel"),style: .cancel,handler: nil)
-                          alertController.addAction(cancelAction)
-
-                      
-                          let okAction = UIAlertAction(title: LanguageStrins(string: "OK"),style: UIAlertAction.Style.default) {
-                              (action: UIAlertAction!) -> Void in
-                            let acc:UITextField =
-                                (alertController.textFields?.first)!
-                                  as UITextField
-                                if acc.text!.isStringNull() {
-                                        
-                                    self!.chrysan.show(.plain, message:LanguageStrins(string: "Please enter the filename"), hideDelay: HIDE_DELAY)
-                                                                                                           
-                                    return
-                                                        
-                                }
-                                                    
-                                let albumModel = LZAlbumModel()
-                                albumModel.finderName = acc.text!
-                                albumModel.index = realm.objects(LZAlbumImageModel.self).count
-                                albumModel.createDate = Date().timeIntervalSince1970
-                                albumModel.path = LZFileManager.createAlbumsSubFolder(SubPath: acc.text! + String(format: "%.0f", albumModel.createDate))
-                               
-                                try! realm.write {
-                                  
-                                  realm.add(albumModel)
-                                    self!.getDataSource()
-                                }
-                            }
-                          alertController.addAction(okAction)
-                       self!.present(alertController,animated: true,completion: nil)
+                self!.newFolder()
                 break;
             case 1:
                 self!.exportFile()
@@ -164,7 +134,44 @@ class LZAlbumViewController: LZBaseViewController,UICollectionViewDelegate,UICol
         }, property: vProperty)
     }
     
-    
+    func newFolder(){
+        let alertController = UIAlertController(title: LanguageStrins(string: "New Folders"),message:LanguageStrins(string: "Please enter the filename"),preferredStyle: .alert)
+        alertController.addTextField {
+                       (textField: UITextField!) -> Void in
+                       textField.placeholder = LanguageStrins(string: "Please enter the filename")
+               }
+        let cancelAction = UIAlertAction(title: LanguageStrins(string: "Cancel"),style: .cancel,handler: nil)
+                  alertController.addAction(cancelAction)
+
+              
+                  let okAction = UIAlertAction(title: LanguageStrins(string: "OK"),style: UIAlertAction.Style.default) {
+                      (action: UIAlertAction!) -> Void in
+                    let acc:UITextField =
+                        (alertController.textFields?.first)!
+                          as UITextField
+                        if acc.text!.isStringNull() {
+                                
+                            self.chrysan.show(.plain, message:LanguageStrins(string: "Please enter the filename"), hideDelay: HIDE_DELAY)
+                                                                                                   
+                            return
+                                                
+                        }
+                                            
+                        let albumModel = LZAlbumModel()
+                        albumModel.finderName = acc.text!
+                        albumModel.index = realm.objects(LZAlbumImageModel.self).count
+                        albumModel.createDate = Date().timeIntervalSince1970
+                        albumModel.path = LZFileManager.createAlbumsSubFolder(SubPath: acc.text! + String(format: "%.0f", albumModel.createDate))
+                       
+                        try! realm.write {
+                          
+                          realm.add(albumModel)
+                            self.getDataSource()
+                        }
+                    }
+                  alertController.addAction(okAction)
+               self.present(alertController,animated: true,completion: nil)
+    }
     private func getDataSource(){
         
         if self.dataSource.count != 0 {
