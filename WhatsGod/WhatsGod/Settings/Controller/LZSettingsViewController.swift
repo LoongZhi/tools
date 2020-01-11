@@ -169,7 +169,7 @@ class LZSettingsViewController: LZBaseViewController,UITableViewDataSource,UITab
 extension LZSettingsViewController{
     func shareApp(){
         weak var wekeSelf = self
-        let urlString = "itms-apps://itunes.apple.com/app/id444934666"
+        let urlString = URL.init(string: "https://apps.apple.com/us/app/appname/id444934666?action=write-review")
         //弹出消息框
         let alertController = UIAlertController(title: "觉得好用的话，给我个评价吧！",
                                                 message: nil, preferredStyle: .alert)
