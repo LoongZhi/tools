@@ -8,6 +8,7 @@
 
 import UIKit
 import FWPopupView
+import GoogleMobileAds
 class LZAlbumViewController: LZBaseViewController,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,SSZipArchiveDelegate {
    
     
@@ -36,12 +37,15 @@ class LZAlbumViewController: LZBaseViewController,UICollectionViewDelegate,UICol
         layout.minimumLineSpacing = 10
         layout.minimumInteritemSpacing = 0
         layout.sectionInset = UIEdgeInsets.init(top: 0, left: 0, bottom: 0, right: 0)
+        layout.headerReferenceSize = CGSize(width: SCREEN_WIDTH, height: 50)
         let collection = UICollectionView.init(frame: self.view.bounds, collectionViewLayout: layout)
         collection.dataSource = self
         collection.delegate = self
         collection.backgroundColor = UIColor.white
         collection.isPagingEnabled = true
-        let emptyView = LYEmptyView.emptyActionView(withImageStr: "test", titleStr: LanguageStrins(string: "Folder manager is empty"), detailStr: LanguageStrins(string: "Create a folder to manage your photos ~"), btnTitleStr: LanguageStrins(string: "New")) {
+        loadAD()
+        collection.addSubview(bannerView)
+        let emptyView = LYEmptyView.emptyActionView(withImageStr: "k01", titleStr: LanguageStrins(string: "Folder manager is empty"), detailStr: LanguageStrins(string: "Create a folder to manage your photos ~"), btnTitleStr: LanguageStrins(string: "New")) {
             self.newFolder()
         };
         emptyView!.actionBtnBackGroundColor = COLOR_4990ED
@@ -82,6 +86,8 @@ class LZAlbumViewController: LZBaseViewController,UICollectionViewDelegate,UICol
             }
              
         }
+        
+       
     }
     @objc override func readyView(){
         
@@ -132,6 +138,8 @@ class LZAlbumViewController: LZBaseViewController,UICollectionViewDelegate,UICol
                 break;
             }
         }, property: vProperty)
+        
+       
     }
     
     func newFolder(){
@@ -338,7 +346,7 @@ class LZAlbumViewController: LZBaseViewController,UICollectionViewDelegate,UICol
     func collectionView(_ collectionView: UICollectionView, canMoveItemAt indexPath: IndexPath) -> Bool {
         return true
     }
-
+  
      //MARK: - 长按动作
     @objc func longPressGesture(_ tap: UILongPressGestureRecognizer) {
            

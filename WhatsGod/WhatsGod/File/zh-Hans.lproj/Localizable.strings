@@ -77,3 +77,9 @@
 "Export" = "导出";
 "Folder manager is empty" = "文件夹管理器为空";
 "Create a folder to manage your photos ~" = "请创建文件夹管理自己的照片吧～";
+"No more photos" = "暂无更多照片";
+"Please add your own photo ~" = "请添加自己的照片吧〜";
+"No more videos" = "暂无更多视频";
+"Please add your own video ~" = "请添加自己的视频〜";
+"No more files" = "暂无更多文件";
+"Please add your own file ~" = "请添加自己的文件〜";

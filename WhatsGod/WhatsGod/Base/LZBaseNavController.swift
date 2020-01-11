@@ -8,8 +8,10 @@
 
 import UIKit
 let navFont:CGFloat = 18.0
-class LZBaseNavController: UINavigationController,UINavigationControllerDelegate {
 
+class LZBaseNavController: UINavigationController,UINavigationControllerDelegate {
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -22,6 +24,8 @@ class LZBaseNavController: UINavigationController,UINavigationControllerDelegate
         self.extendedLayoutIncludesOpaqueBars = true
         self.edgesForExtendedLayout = []
         // Do any additional setup after loading the view.
+        
+        
     }
     
 

@@ -35,7 +35,18 @@ class LZVideoDetailViewController: LZBaseViewController,UICollectionViewDelegate
         layout.minimumLineSpacing = 0
         layout.minimumInteritemSpacing = 0
         layout.sectionInset = UIEdgeInsets.init(top: 0, left: 0, bottom: 0, right: 0)
+        layout.headerReferenceSize = CGSize(width: SCREEN_WIDTH, height: 50)
         let collection = UICollectionView.init(frame: self.view.bounds, collectionViewLayout: layout)
+        loadAD()
+        collection.addSubview(bannerView)
+        let emptyView = LYEmptyView.emptyActionView(withImageStr: "k03", titleStr: LanguageStrins(string: "No more videos"), detailStr: LanguageStrins(string: "Please add your own video ~"), btnTitleStr: LanguageStrins(string: "Add")) {
+            self.addVideo()
+        };
+        emptyView!.actionBtnBackGroundColor = COLOR_4990ED
+        emptyView!.actionBtnTitleColor = .white
+        emptyView!.actionBtnCornerRadius = 5
+        emptyView!.contentViewY = lzNavigationHeight + 50
+        collection.ly_emptyView = emptyView
         collection.dataSource = self
         collection.delegate = self
         collection.backgroundColor = UIColor.white
@@ -156,7 +167,7 @@ class LZVideoDetailViewController: LZBaseViewController,UICollectionViewDelegate
 
         self.collectionView.snp.makeConstraints { (make) in
             make.top.right.left.equalTo(0)
-            make.bottom.equalTo(self.bottomView.snp.top).offset(0)
+            make.bottom.equalTo(-lzBottomSafeHeight)
         }
         
         self.getDataSource()
@@ -182,83 +193,7 @@ class LZVideoDetailViewController: LZBaseViewController,UICollectionViewDelegate
 
             switch (index) {
             case 0:
-                let paths = self!.folderModel?.path
-                self!.pickerController.didSelectAssets = { (assets) in
-                    
-                    self!.startAnimating(lodingSize,type: loadingType, color: COLOR_4990ED)
-                     let queue = DispatchQueue(label: "queueName", attributes: .concurrent)
-                    for (index,itme) in assets.enumerated() {
-                        let model:DKAsset = itme
-                       
-                        PHCachingImageManager.default().requestAVAsset(forVideo: model.originalAsset!, options: nil) { (asset:AVAsset?, minx:AVAudioMix?, info:[AnyHashable : Any]?) in
-                            
-                             queue.async {
-                                    let url:String = model.originalAsset?.value(forKey: "filename") as! String
-                                    let type = url.returnFileType(fileUrl: url)
-                                    
-                                let path = "\(paths!)/Video\(String(format: "%d.%@",Date().timeIntervalSince1970,type))"
-                                    let ImagePath = "\(paths!)/Thumb\(String(format: "%d.jpg",Date().timeIntervalSince1970))"
-                                    if asset == nil{
-                                        self!.stopAnimating()
-                                        return
-                                    }
-                                    let urlAsset:AVURLAsset = asset as! AVURLAsset
-                                let strUrl = urlAsset.url
-                                print(strUrl)
-//                                let data:NSData = try! NSData(contentsOf: strUrl as URL)
-
-                                guard let jsonData = try? Data.init(contentsOf: strUrl, options: Data.ReadingOptions.alwaysMapped) else {
-                                        self!.stopAnimating()
-                                         return
-                                    }
-
-                                    if LZFileManager.writeVideoFile(filePath: path, data:Data(jsonData)){
-                                        
-                                       
-                                        let imgData:Data = getVideoFengMian(url: urlAsset.url).jpegData(compressionQuality: 1)!
-                                            if LZFileManager.writeVideoFile(filePath: ImagePath, data:imgData){
-                                                print("写入成功")
-                                            }else{
-                                                print("写入失败")
-                                            }
-                                            let videoModel = LZVideoModel.init()
-                                                videoModel.isHidden = self!.isHidden
-                                                videoModel.path = path
-                                                videoModel.type = type
-                                                videoModel.name = url
-                                                videoModel.imagePath = ImagePath
-                                                videoModel.timerscale = Int(urlAsset.duration.seconds)
-                                                videoModel.timer = String.init().transToHourMinSecs(time:videoModel.timerscale)
-                                                DispatchQueue.main.async {
-                                                    try! realm.write {
-
-                                                            self!.folderModel?.images.append(videoModel)
-
-                                                    }
-                                                }
-                                        
-                                        }
-
-                            }
-                              DispatchGroup.init().notify(qos: .default, flags: .barrier, queue: queue) {
-                                DispatchQueue.main.async {
-                                        if index == assets.count - 1{
-                                            self!.getDataSource()
-                                        }
-                                        
-                                    }
-                                    
-                                }
-
-                            }
-                       
-                    
-                    }
-                    if assets.count == 0 {
-                        self!.stopAnimating()
-                    }
-                }
-                self!.present(self!.pickerController, animated: true, completion: nil)
+                self!.addVideo()
                 break;
             case 1:
                 let itme = UIBarButtonItem.init(title: LanguageStrins(string: "Completed"), style: .done, target: self, action: #selector(self!.leftItmeEvent))
@@ -281,6 +216,74 @@ class LZVideoDetailViewController: LZBaseViewController,UICollectionViewDelegate
         }
     }
     
+    func addVideo(){
+        let paths = self.folderModel?.path
+        self.pickerController.didSelectAssets = { (assets) in
+        self.startAnimating(lodingSize,type: loadingType, color: COLOR_4990ED)
+        let queue = DispatchQueue(label: "queueName", attributes: .concurrent)
+        for (index,itme) in assets.enumerated() {
+            let model:DKAsset = itme
+            PHCachingImageManager.default().requestAVAsset(forVideo: model.originalAsset!, options: nil) {[weak self] (asset:AVAsset?, minx:AVAudioMix?, info:[AnyHashable : Any]?) in
+                                                   
+            queue.async {
+                let url:String = model.originalAsset?.value(forKey: "filename") as! String
+                let type = url.returnFileType(fileUrl: url)
+                let path = "\(paths!)/Video\(String(format: "%d.%@",Date().timeIntervalSince1970,type))"
+                let ImagePath = "\(paths!)/Thumb\(String(format: "%d.jpg",Date().timeIntervalSince1970))"
+                if asset == nil{
+                    self!.stopAnimating()
+                    return
+                }
+                let urlAsset:AVURLAsset = asset as! AVURLAsset
+                let strUrl = urlAsset.url
+                print(strUrl)
+                //                                let data:NSData = try! NSData(contentsOf: strUrl as URL)
+                guard let jsonData = try? Data.init(contentsOf: strUrl, options: Data.ReadingOptions.alwaysMapped) else {
+                    self!.stopAnimating()
+                    return
+                                              
+                }
+                if LZFileManager.writeVideoFile(filePath: path, data:Data(jsonData)){
+                    let imgData:Data = getVideoFengMian(url: urlAsset.url).jpegData(compressionQuality: 1)!
+                    if LZFileManager.writeVideoFile(filePath: ImagePath, data:imgData){
+                        print("写入成功")
+                    }else{
+                        print("写入失败")
+                                                    
+                    }
+                    let videoModel = LZVideoModel.init()
+                    videoModel.isHidden = self!.isHidden
+                    videoModel.path = path
+                    videoModel.type = type
+                    videoModel.name = url
+                    videoModel.imagePath = ImagePath
+                    videoModel.timerscale = Int(urlAsset.duration.seconds)
+                    videoModel.timer = String.init().transToHourMinSecs(time:videoModel.timerscale)
+                    DispatchQueue.main.async {
+                        try! realm.write {
+                            self!.folderModel?.images.append(videoModel)
+                        }
+                                                          
+                    }
+                }
+                }
+                DispatchGroup.init().notify(qos: .default, flags: .barrier, queue: queue) {
+                    DispatchQueue.main.async {
+                        if index == assets.count - 1{
+                            self!.getDataSource()
+                        }
+                    }
+                }
+            }
+                        
+            }
+            if assets.count == 0 {
+                self.stopAnimating()
+            }
+        }
+                        
+        self.present(self.pickerController, animated: true, completion: nil)
+    }
     private func getDataSource(){
         
        

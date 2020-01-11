@@ -146,6 +146,7 @@ class LZSettingsViewController: LZBaseViewController,UITableViewDataSource,UITab
         tableView.deselectRow(at: indexPath, animated: true)
         switch indexPath.row {
         case 1:
+            self.shareApp()
             break
         case 2:
             let vc = LZLanguageViewController(nibName: "LZLanguageViewController", bundle: nil)
@@ -166,6 +167,36 @@ class LZSettingsViewController: LZBaseViewController,UITableViewDataSource,UITab
 }
 
 extension LZSettingsViewController{
+    func shareApp(){
+        weak var wekeSelf = self
+        let urlString = "itms-apps://itunes.apple.com/app/id444934666"
+        //弹出消息框
+        let alertController = UIAlertController(title: "觉得好用的话，给我个评价吧！",
+                                                message: nil, preferredStyle: .alert)
+        let cancelAction = UIAlertAction(title: "暂不评价", style: .cancel, handler: nil)
+        let okAction = UIAlertAction(title: "好的", style: .default,
+                                     handler: {
+                                        action in
+            let items = [urlString] as [Any]
+             let activityVC = UIActivityViewController(
+                 activityItems: items,
+                 applicationActivities: nil)
+            activityVC.completionWithItemsHandler =  { activity, success, items, error in
+                
+                DispatchQueue.main.async {
+                    if success {
+                        wekeSelf!.chrysan.show(.plain, message:LanguageStrins(string: "Share success"), hideDelay: HIDE_DELAY)
+                    } else{
+                        wekeSelf!.chrysan.show(.plain,message:LanguageStrins(string: "Share failed"),hideDelay: HIDE_DELAY)
+                    }
+                }
+             }
+            wekeSelf!.present(activityVC, animated: true, completion: { () -> Void in})
+        })
+        alertController.addAction(cancelAction)
+        alertController.addAction(okAction)
+        self.present(alertController, animated: true, completion: nil)
+    }
     func exportFile(){
          
             weak var wekeSelf = self

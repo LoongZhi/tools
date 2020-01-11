@@ -13,6 +13,7 @@ extension UICollectionView {
     UIView.performWithoutAnimation {
 //        CATransaction.setDisableActions(true)
         reloadData()
+        self.layoutIfNeeded()
 //        CATransaction.commit()
     }
   }

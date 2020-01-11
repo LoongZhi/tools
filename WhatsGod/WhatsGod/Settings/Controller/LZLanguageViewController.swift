@@ -9,8 +9,7 @@
 import UIKit
 
 class LZLanguageViewController: LZBaseViewController,UITableViewDataSource,UITableViewDelegate {
-    
-    
+        
 
     let languageArr:Array = [LanguageStrins(string: "English"),LanguageStrins(string: "Chinese"),LanguageStrins(string: "Japanese"),LanguageStrins(string: "French"),LanguageStrins(string: "Korean"),LanguageStrins(string: "Russian"),LanguageStrins(string: "Arabic")]
     let languageNumber:Array = ["en","zh-Hans","ja","fr","ko","ru-BY","ar"]

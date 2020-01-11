@@ -3,7 +3,7 @@
   WhatsGod
 
   Created by imac on 9/21/19.
-  Copyright © 2019 L. All rights reserved.
+  Copyright © 2019 L. All rights reserved. 韩语
 */
 "Album" = "사진첩";
 "Video" = "비디오";
@@ -77,4 +77,5 @@
 "Export" = "수출";
 "Folder manager is empty" = "폴더 관리자가 비어 있습니다";
 "Create a folder to manage your photos ~" = "사진을 관리 할 폴더 만들기 ~";
-
+"No more photos" = "더 이상 사진이 없습니다";
+"Please add your own photo ~" = "나만의 사진을 추가 해주세요 ~";

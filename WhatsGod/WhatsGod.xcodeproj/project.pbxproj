@@ -29,6 +29,8 @@
 		2D3ABBF923BE0474002A5B49 /* CustomSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D3ABBEB23BE0474002A5B49 /* CustomSlider.m */; };
 		2D3ABBFA23BE0474002A5B49 /* VLCPlayerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D3ABBEC23BE0474002A5B49 /* VLCPlayerView.m */; };
 		2D3ABBFB23BE0474002A5B49 /* VLCPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D3ABBED23BE0474002A5B49 /* VLCPlayer.m */; };
+		2D795E0623C7407A00F8A96D /* LZLoadAdMobController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D795E0423C7407A00F8A96D /* LZLoadAdMobController.swift */; };
+		2D795E0723C7407A00F8A96D /* LZLoadAdMobController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2D795E0523C7407A00F8A96D /* LZLoadAdMobController.xib */; };
 		7ADB2B96D8098E500A5FFC40 /* Pods_WhatsGod.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF2C973FF3A6D4A1DC2AA312 /* Pods_WhatsGod.framework */; };
 		881433FA2348AFCF00A11E2C /* LZSettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 881433F92348AFCF00A11E2C /* LZSettingsCell.swift */; };
 		8817EA54235AEC74007395DD /* LZOfficeFolderModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8817EA53235AEC74007395DD /* LZOfficeFolderModel.swift */; };
@@ -155,6 +157,8 @@
 		2D3ABBEB23BE0474002A5B49 /* CustomSlider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomSlider.m; sourceTree = "<group>"; };
 		2D3ABBEC23BE0474002A5B49 /* VLCPlayerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLCPlayerView.m; sourceTree = "<group>"; };
 		2D3ABBED23BE0474002A5B49 /* VLCPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLCPlayer.m; sourceTree = "<group>"; };
+		2D795E0423C7407A00F8A96D /* LZLoadAdMobController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LZLoadAdMobController.swift; sourceTree = "<group>"; };
+		2D795E0523C7407A00F8A96D /* LZLoadAdMobController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LZLoadAdMobController.xib; sourceTree = "<group>"; };
 		881433F92348AFCF00A11E2C /* LZSettingsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LZSettingsCell.swift; sourceTree = "<group>"; };
 		8817EA53235AEC74007395DD /* LZOfficeFolderModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LZOfficeFolderModel.swift; sourceTree = "<group>"; };
 		8817EA55235AEEFA007395DD /* LZOfficeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LZOfficeViewController.swift; sourceTree = "<group>"; };
@@ -281,6 +285,15 @@
 			path = VLCPlayer;
 			sourceTree = "<group>";
 		};
+		2D795E0323C73FDD00F8A96D /* ADMob */ = {
+			isa = PBXGroup;
+			children = (
+				2D795E0423C7407A00F8A96D /* LZLoadAdMobController.swift */,
+				2D795E0523C7407A00F8A96D /* LZLoadAdMobController.xib */,
+			);
+			path = ADMob;
+			sourceTree = "<group>";
+		};
 		881433F82348AFA700A11E2C /* View */ = {
 			isa = PBXGroup;
 			children = (
@@ -332,6 +345,7 @@
 		88261C9423320A22005CE69D /* WhatsGod */ = {
 			isa = PBXGroup;
 			children = (
+				2D795E0323C73FDD00F8A96D /* ADMob */,
 				883AB394233C94B7007E0D4B /* ObjectC */,
 				88BD9B3D233B9C160098B8FB /* DBFIleData */,
 				88613A2523364C030089C402 /* File */,
@@ -720,6 +734,7 @@
 			files = (
 				88613A2823364C570089C402 /* Localizable.strings in Resources */,
 				2D3ABBF723BE0474002A5B49 /* ic_sp_bf@2x.png in Resources */,
+				2D795E0723C7407A00F8A96D /* LZLoadAdMobController.xib in Resources */,
 				88261CA023320A23005CE69D /* LaunchScreen.storyboard in Resources */,
 				8841C01A236850980009FBAB /* LZAboutViewController.xib in Resources */,
 				2D3ABBF423BE0474002A5B49 /* ic_bf_ks.png in Resources */,
@@ -857,6 +872,7 @@
 				88613A10233639990089C402 /* BubbleTabBar.swift in Sources */,
 				88613A1D233647E10089C402 /* LZVideoViewController.swift in Sources */,
 				88613A2D233651E90089C402 /* LZMacro.swift in Sources */,
+				2D795E0623C7407A00F8A96D /* LZLoadAdMobController.swift in Sources */,
 				8822C32C233F908400E09741 /* LZAlbumDetailsCell.swift in Sources */,
 				88222FF52363015E00FBFD58 /* OProgressView.swift in Sources */,
 				88261CC623320D18005CE69D /* LZBaseViewController.swift in Sources */,

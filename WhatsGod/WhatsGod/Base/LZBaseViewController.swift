@@ -11,10 +11,11 @@ import LYEmptyView
 import IQKeyboardManagerSwift
 import Chrysan
 import NVActivityIndicatorView
-class LZBaseViewController: UIViewController,NVActivityIndicatorViewable {
+import GoogleMobileAds
+class LZBaseViewController: UIViewController,NVActivityIndicatorViewable,GADBannerViewDelegate {
   
     
-
+    var bannerView: GADBannerView = GADBannerView.init(adSize: GADPortraitAnchoredAdaptiveBannerAdSizeWithWidth(SCREEN_WIDTH))
     public var dataSource = [Any]()
     lazy public var tableView:UITableView = {
         let view = UITableView.init()
@@ -36,10 +37,18 @@ class LZBaseViewController: UIViewController,NVActivityIndicatorViewable {
         // Do any additional setup after loading the view.
         create()
         readyView()
+        bannerView.backgroundColor = COLOR_F8F8FF
         
+       
+//        self.navigationController?.navigationItem.titleView = bannerView
         
     }
-    
+    public func loadAD(){
+       bannerView.adUnitID = "ca-app-pub-3940256099942544/2934735716"
+       bannerView.rootViewController = self
+       bannerView.delegate = self
+       bannerView.load(GADRequest())
+    }
     func create() -> Void {
         self.view.backgroundColor = UIColor.white
 //        NotificationCenter.default.addObserver(self, selector: #selector(transormView(not:)), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)

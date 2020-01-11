@@ -13,7 +13,7 @@ public  var tempVideoPath = LZFileManager.tempDestPath()! + LanguageStrins(strin
 public  var tempOfficePath = LZFileManager.tempDestPath()! + LanguageStrins(string: "/AllOfficeFiles.zip")
 public  var tempAllDataPath = LZFileManager.tempDestPath()! + LanguageStrins(string: "/AllData.zip")
 
-public let rootFolder = NSHomeDirectory() + "/Documents/"
+public let rootFolder = NSHomeDirectory() + "/Documents/APPDATA/"
 public var rootFileManager = FileManager.default
 public   let albumsFolder = rootFolder + "AlbumsFolder/"
 

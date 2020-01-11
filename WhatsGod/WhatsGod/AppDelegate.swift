@@ -11,6 +11,7 @@ import RealmSwift
 import IQKeyboardManagerSwift
 import FWPopupView
 import Chrysan
+import GoogleMobileAds
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate,UIDocumentInteractionControllerDelegate {
 
@@ -19,6 +20,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UIDocumentInteractionContr
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
+        self.googleAD()
+        
         if UserDefaults.standard.object(forKey: languageMark) == nil {
             UserDefaults.standard.set("en", forKey: languageMark)
         }
@@ -26,7 +29,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UIDocumentInteractionContr
         self.window?.backgroundColor = UIColor.white
         self.window?.makeKeyAndVisible()
 
-        let tabBarController = LZBaseTabBarController()
+       
+        
+//         let vc = LZLoadAdMobController.init(nibName: "LZLoadAdMobController", bundle: nil)
+//        let Nav = LZBaseNavController.init(rootViewController: vc)
+       let tabBarController = LZBaseTabBarController()
         self.window?.rootViewController = tabBarController;
         
         IQKeyboardManager.shared.enable = true
@@ -62,6 +69,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UIDocumentInteractionContr
         
         self.checkPermissions()
     }
+    
+    func googleAD(){
+         GADMobileAds.sharedInstance().start(completionHandler: nil)
+     
+        
+    }
+
     func checkPermissions(){
         if (UserDefaults.standard.object(forKey: VCPassword) != nil) {
             let sb = UIStoryboard.init(name: "Main", bundle: nil)

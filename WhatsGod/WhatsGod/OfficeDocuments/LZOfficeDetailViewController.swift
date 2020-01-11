@@ -34,7 +34,18 @@ class LZOfficeDetailViewController: LZBaseViewController,UICollectionViewDelegat
         layout.minimumLineSpacing = 10
         layout.minimumInteritemSpacing = 0
         layout.sectionInset = UIEdgeInsets.init(top: 0, left: 0, bottom: 0, right: 0)
+        layout.headerReferenceSize = CGSize(width: SCREEN_WIDTH, height: 50)
         let collection = UICollectionView.init(frame: self.view.bounds, collectionViewLayout: layout)
+        loadAD()
+        collection.addSubview(bannerView)
+        let emptyView = LYEmptyView.emptyActionView(withImageStr: "k02", titleStr: LanguageStrins(string: "No more files"), detailStr: LanguageStrins(string: "Please add your own file ~"), btnTitleStr: LanguageStrins(string: "Add")) {
+            self.selectUploadFileFromICouldDrive()
+        };
+        emptyView!.actionBtnBackGroundColor = COLOR_4990ED
+        emptyView!.actionBtnTitleColor = .white
+        emptyView!.actionBtnCornerRadius = 5
+        emptyView!.contentViewY = lzNavigationHeight + 50
+        collection.ly_emptyView = emptyView
         collection.dataSource = self
         collection.delegate = self
         collection.backgroundColor = UIColor.white
@@ -143,7 +154,7 @@ class LZOfficeDetailViewController: LZBaseViewController,UICollectionViewDelegat
 
         self.collectionView.snp.makeConstraints { (make) in
             make.top.right.left.equalTo(0)
-            make.bottom.equalTo(self.bottomView.snp.top).offset(0)
+            make.bottom.equalTo(-lzBottomSafeHeight)
         }
         
         self.getDataSource()
@@ -192,7 +203,7 @@ class LZOfficeDetailViewController: LZBaseViewController,UICollectionViewDelegat
             }
         }
     }
-    
+  
     private func getDataSource(){
         
         if self.dataSource.count != 0 {

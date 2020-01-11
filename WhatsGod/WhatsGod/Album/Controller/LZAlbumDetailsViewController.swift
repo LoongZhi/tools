@@ -27,13 +27,24 @@ class LZAlbumDetailsViewController: LZBaseViewController,UICollectionViewDelegat
     var paths = [String]()
     public var folderModel:LZAlbumModel? = nil
     private var imageDataArr = NSArray()
-    private lazy var collectionView:UICollectionView = {
+    private lazy  var collectionView:UICollectionView = {
         let layout = UICollectionViewFlowLayout.init()
         layout.itemSize = CGSize(width:SCREEN_WIDTH / 4,height:SCREEN_WIDTH / 4)
         layout.minimumLineSpacing = 0
         layout.minimumInteritemSpacing = 0
         layout.sectionInset = UIEdgeInsets.init(top: 0, left: 0, bottom: 0, right: 0)
         let collection = UICollectionView.init(frame: self.view.bounds, collectionViewLayout: layout)
+        layout.headerReferenceSize = CGSize(width: SCREEN_WIDTH, height: 50)
+        loadAD()
+        collection.addSubview(bannerView)
+        let emptyView = LYEmptyView.emptyActionView(withImageStr: "k02", titleStr: LanguageStrins(string: "No more photos"), detailStr: LanguageStrins(string: "Please add your own photo ~"), btnTitleStr: LanguageStrins(string: "Add")) {
+            self.addImage()
+        };
+        emptyView!.actionBtnBackGroundColor = COLOR_4990ED
+        emptyView!.actionBtnTitleColor = .white
+        emptyView!.actionBtnCornerRadius = 5
+        emptyView!.contentViewY = lzNavigationHeight + 50
+        collection.ly_emptyView = emptyView
         collection.dataSource = self
         collection.delegate = self
         collection.backgroundColor = UIColor.white
@@ -97,13 +108,13 @@ class LZAlbumDetailsViewController: LZBaseViewController,UICollectionViewDelegat
         self.view.addSubview(self.bottomView)
         
           self.bottomView.snp.makeConstraints { (make) in
-              make.right.left.equalTo(0)
-              make.height.equalTo(49)
-              make.bottom.equalTo(-lzBottomSafeHeight)
+               make.right.left.equalTo(0)
+                make.height.equalTo(49)
+                make.bottom.equalTo(-lzBottomSafeHeight)
           }
          
           self.bottomView.topBorder(width: 0.3, borderColor: UIColor.gray)
-          
+        self.bottomView.backgroundColor = .white
           self.bottomView.addSubview(self.allBtn)
           self.allBtn.snp.makeConstraints { (make) in
               make.left.equalTo(15)
@@ -146,7 +157,7 @@ class LZAlbumDetailsViewController: LZBaseViewController,UICollectionViewDelegat
 
         self.collectionView.snp.makeConstraints { (make) in
             make.top.right.left.equalTo(0)
-            make.bottom.equalTo(self.bottomView.snp.top).offset(0)
+            make.bottom.equalTo(-lzBottomSafeHeight)
         }
         
         self.getDataSource()
@@ -173,61 +184,7 @@ class LZAlbumDetailsViewController: LZBaseViewController,UICollectionViewDelegat
             
             switch (index) {
             case 0:
-                self!.pickerController.didSelectAssets = { (assets) in
-                    self!.startAnimating(lodingSize,type: loadingType, color: COLOR_4990ED)
-   
-                    let queue = DispatchQueue(label: "queueName", attributes: .concurrent)
-                    for (index,itme) in assets.enumerated() {
-                        let model:DKAsset = itme
-                        PHCachingImageManager.default().requestImage(for: model.originalAsset!, targetSize: PHImageManagerMaximumSize, contentMode: .default, options: nil) { (result: UIImage?, dictionry: Dictionary?) in
-                            let pathUrl = self!.folderModel!.path
-                            queue.async {
-                                let url:String = model.originalAsset?.value(forKey: "filename") as! String
-                                let type = url.returnFileType(fileUrl: url)
-                                let path = "\(pathUrl)/\(url)"
-                                let thumbnailPath = "\(pathUrl)/Thumbnail\(String(format: "%d.%@",Date().timeIntervalSince1970,type))"
-                                if dictionry!["PHImageFileURLKey"] == nil{
-                                    return
-                                }
-                                let img = downsample(imageAt: dictionry!["PHImageFileURLKey"] as! URL, to: CGSize(width: SCREEN_WIDTH, height: SCREEN_HEIGHT), scale: 1)
-
-                                let thumbnailImage = downsample(imageAt: dictionry!["PHImageFileURLKey"] as! URL, to: CGSize(width: SCREEN_WIDTH / 4, height: SCREEN_WIDTH / 4), scale: 3)
-                                if (LZFileManager.writeImageFile(filePath: path, data:(img.jpegData(compressionQuality: 1))!) && LZFileManager.writeImageFile(filePath: thumbnailPath, data:(thumbnailImage.jpegData(compressionQuality: 1)!))){
-                                    DispatchQueue.main.async {
-                                        let imageModel = LZAlbumImageModel.init()
-                                        imageModel.isHidden = self!.isHidden
-                                        imageModel.path = path
-                                        imageModel.type = type
-                                        imageModel.thumbnailPath = thumbnailPath
-                                        try! realm.write {
-                                            self!.folderModel?.images.append(imageModel)
-                                            
-                                        }
-                                    }
-                                    
-                                }
-                            }
-                            DispatchGroup.init().notify(qos: .default, flags: .barrier, queue: queue) {
-                                DispatchQueue.main.async {
-                                    if index == assets.count - 1{
-                                        self!.getDataSource()
-                                    }
-                                    
-                                }
-                                
-                            }
-                            
-                        }
-
-                    }
-                    
-                     
-                        if assets.count == 0 {
-                        self?.stopAnimating()
-                     }
-                    
-                }
-                self!.present(self!.pickerController, animated: true, completion: nil)
+                self!.addImage()
                 break;
             case 1:
                 let itme = UIBarButtonItem.init(title: LanguageStrins(string: "Completed"), style: .done, target: self, action: #selector(self!.leftItmeEvent))
@@ -249,7 +206,62 @@ class LZAlbumDetailsViewController: LZBaseViewController,UICollectionViewDelegat
             }
         }
     }
-    
+    func addImage(){
+        self.pickerController.didSelectAssets = { [weak self] (assets) in
+            self!.startAnimating(lodingSize,type: loadingType, color: COLOR_4990ED)
+            let queue = DispatchQueue(label: "queueName", attributes: .concurrent)
+            for (index,itme) in assets.enumerated() {
+                    let model:DKAsset = itme
+                    PHCachingImageManager.default().requestImage(for: model.originalAsset!, targetSize: PHImageManagerMaximumSize, contentMode: .default, options: nil) { (result: UIImage?, dictionry: Dictionary?) in
+                        let pathUrl = self!.folderModel!.path
+                        queue.async {
+                            let url:String = model.originalAsset?.value(forKey: "filename") as! String
+                            let type = url.returnFileType(fileUrl: url)
+                            let path = "\(pathUrl)/\(url)"
+                            let thumbnailPath = "\(pathUrl)/Thumbnail\(String(format: "%d.%@",Date().timeIntervalSince1970,type))"
+                            if dictionry!["PHImageFileURLKey"] == nil{
+                                return
+                            }
+                            let img = downsample(imageAt: dictionry!["PHImageFileURLKey"] as! URL, to: CGSize(width: SCREEN_WIDTH, height: SCREEN_HEIGHT), scale: 1)
+
+                            let thumbnailImage = downsample(imageAt: dictionry!["PHImageFileURLKey"] as! URL, to: CGSize(width: SCREEN_WIDTH / 4, height: SCREEN_WIDTH / 4), scale: 3)
+                            if (LZFileManager.writeImageFile(filePath: path, data:(img.jpegData(compressionQuality: 1))!) && LZFileManager.writeImageFile(filePath: thumbnailPath, data:(thumbnailImage.jpegData(compressionQuality: 1)!))){
+                                DispatchQueue.main.async {
+                                    let imageModel = LZAlbumImageModel.init()
+                                    imageModel.isHidden = self!.isHidden
+                                    imageModel.path = path
+                                    imageModel.type = type
+                                    imageModel.thumbnailPath = thumbnailPath
+                                    try! realm.write {
+                                        self!.folderModel?.images.append(imageModel)
+                                        
+                                    }
+                                }
+                                
+                            }
+                        }
+                        DispatchGroup.init().notify(qos: .default, flags: .barrier, queue: queue) {
+                            DispatchQueue.main.async {
+                                if index == assets.count - 1{
+                                    self!.getDataSource()
+                                }
+                                
+                            }
+                            
+                        }
+                        
+                    }
+
+                }
+                
+                 
+                    if assets.count == 0 {
+                    self?.stopAnimating()
+                 }
+                
+            }
+        self.present(self.pickerController, animated: true, completion: nil)
+    }
     private func getDataSource(){
         
         if self.dataSource.count != 0 {
@@ -304,7 +316,8 @@ class LZAlbumDetailsViewController: LZBaseViewController,UICollectionViewDelegat
        }
     private func setHidden(hidden:Bool){
          
-           self.bottomView.isHidden = hidden
+        
+           
            if self.dataSource.count == 0 {
                return
            }
@@ -319,12 +332,15 @@ class LZAlbumDetailsViewController: LZBaseViewController,UICollectionViewDelegat
            }
             
           
-           self.collectionView.reloadDataSmoothly()
-       }
+          
+        self.bottomView.isHidden = hidden
+         self.collectionView.reloadDataSmoothly()
+
+    }
     // 相机权限
        func isRightCamera() -> Bool {
 
-                   let authStatus = AVCaptureDevice.authorizationStatus(for: AVMediaType.video)
+            let authStatus = AVCaptureDevice.authorizationStatus(for: AVMediaType.video)
 
            return authStatus != .restricted && authStatus != .denied
 

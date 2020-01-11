@@ -37,7 +37,18 @@ class LZOfficeViewController: LZBaseViewController,UICollectionViewDelegate,UICo
         layout.minimumLineSpacing = 10
         layout.minimumInteritemSpacing = 0
         layout.sectionInset = UIEdgeInsets.init(top: 0, left: 0, bottom: 0, right: 0)
+        layout.headerReferenceSize = CGSize(width: SCREEN_WIDTH, height: 50)
         let collection = UICollectionView.init(frame: self.view.bounds, collectionViewLayout: layout)
+        loadAD()
+        collection.addSubview(bannerView)
+        let emptyView = LYEmptyView.emptyActionView(withImageStr: "k01", titleStr: LanguageStrins(string: "Folder manager is empty"), detailStr: LanguageStrins(string: "Create a folder to manage your photos ~"), btnTitleStr: LanguageStrins(string: "New")) {
+            self.newFolder()
+        };
+        emptyView!.actionBtnBackGroundColor = COLOR_4990ED
+        emptyView!.actionBtnTitleColor = .white
+        emptyView!.actionBtnCornerRadius = 5
+        emptyView!.contentViewY = lzNavigationHeight + 50
+        collection.ly_emptyView = emptyView
         collection.dataSource = self
         collection.delegate = self
         collection.backgroundColor = UIColor.white
@@ -110,44 +121,7 @@ class LZOfficeViewController: LZBaseViewController,UICollectionViewDelegate,UICo
             
             switch (index) {
             case 0:
-       
-                       let alertController = UIAlertController(title: LanguageStrins(string: "New Folders"),message:LanguageStrins(string: "Please enter the filename"),preferredStyle: .alert)
-
-                           // 輸入框
-                       alertController.addTextField {
-                               (textField: UITextField!) -> Void in
-                               textField.placeholder = LanguageStrins(string: "Please enter the filename")
-                       }
-                let cancelAction = UIAlertAction(title: LanguageStrins(string: "Cancel"),style: .cancel,handler: nil)
-                          alertController.addAction(cancelAction)
-
-                      
-                          let okAction = UIAlertAction(title: LanguageStrins(string: "OK"),style: UIAlertAction.Style.default) {
-                              (action: UIAlertAction!) -> Void in
-                            let acc:UITextField =
-                                (alertController.textFields?.first)!
-                                  as UITextField
-                                if acc.text!.isStringNull() {
-                                    
-                                    self!.chrysan.show(.plain, message:LanguageStrins(string: "Please enter the filename"), hideDelay: HIDE_DELAY)
-                                                                                                           
-                                    return
-                                                        
-                                }
-                                                    
-                                let officeModel = LZOfficeFolderModel()
-                                officeModel.finderName = acc.text!
-                                officeModel.createDate = Date().timeIntervalSince1970
-                                officeModel.index = realm.objects(LZOfficeFolderModel.self).count
-                                officeModel.path = LZFileManager.createOfficeSubFolder(SubPath: acc.text! + String(format: "%.0f", officeModel.createDate))
-                               
-                                try! realm.write {
-                                  realm.add(officeModel)
-                                    self!.getDataSource()
-                                }
-                            }
-                          alertController.addAction(okAction)
-                       self!.present(alertController,animated: true,completion: nil)
+                self!.newFolder()
                 break;
             case 1:
                 self!.exportFile()
@@ -163,6 +137,45 @@ class LZOfficeViewController: LZBaseViewController,UICollectionViewDelegate,UICo
                 break;
             }
         }, property: vProperty)
+    }
+    func newFolder(){
+        let alertController = UIAlertController(title: LanguageStrins(string: "New Folders"),message:LanguageStrins(string: "Please enter the filename"),preferredStyle: .alert)
+
+                   // 輸入框
+               alertController.addTextField {
+                       (textField: UITextField!) -> Void in
+                       textField.placeholder = LanguageStrins(string: "Please enter the filename")
+               }
+        let cancelAction = UIAlertAction(title: LanguageStrins(string: "Cancel"),style: .cancel,handler: nil)
+                  alertController.addAction(cancelAction)
+
+              
+                  let okAction = UIAlertAction(title: LanguageStrins(string: "OK"),style: UIAlertAction.Style.default) {[weak self]
+                      (action: UIAlertAction!) -> Void in
+                    let acc:UITextField =
+                        (alertController.textFields?.first)!
+                          as UITextField
+                        if acc.text!.isStringNull() {
+                            
+                            self!.chrysan.show(.plain, message:LanguageStrins(string: "Please enter the filename"), hideDelay: HIDE_DELAY)
+                                                                                                   
+                            return
+                                                
+                        }
+                                            
+                        let officeModel = LZOfficeFolderModel()
+                        officeModel.finderName = acc.text!
+                        officeModel.createDate = Date().timeIntervalSince1970
+                        officeModel.index = realm.objects(LZOfficeFolderModel.self).count
+                        officeModel.path = LZFileManager.createOfficeSubFolder(SubPath: acc.text! + String(format: "%.0f", officeModel.createDate))
+                       
+                        try! realm.write {
+                          realm.add(officeModel)
+                            self!.getDataSource()
+                        }
+                    }
+                  alertController.addAction(okAction)
+               self.present(alertController,animated: true,completion: nil)
     }
     
     private func getDataSource(){
