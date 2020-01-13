@@ -10,6 +10,7 @@ import UIKit
 
 let count = 4
 typealias isBlock = (_ isbool :Bool) ->()
+typealias isBlockPass = (_ isbool :Bool) ->()
 class LZPassViewController: UIViewController,UITextFieldDelegate,UIScrollViewDelegate {
 
     @IBOutlet weak var scrollContentView: UIView!
@@ -21,6 +22,7 @@ class LZPassViewController: UIViewController,UITextFieldDelegate,UIScrollViewDel
     @IBOutlet weak var tipLabel2: UILabel!
     @IBOutlet weak var canBtn: UIButton!
     var isblock: isBlock!
+     var isblockPass: isBlockPass!
     var onSw: Bool?
     let isPass:Bool =  (UserDefaults.standard.object(forKey: VCPassword) != nil)
     var viewArr:NSMutableArray = {
@@ -99,6 +101,9 @@ class LZPassViewController: UIViewController,UITextFieldDelegate,UIScrollViewDel
             if self.isPass {
                 let number:String = UserDefaults.standard.object(forKey: VCPassword) as! String
                 if text == number {
+                    if isblockPass != nil {
+                        isblockPass(true)
+                    }
                     if isblock != nil {
                         isblock(self.onSw!)
                         if !self.onSw!{

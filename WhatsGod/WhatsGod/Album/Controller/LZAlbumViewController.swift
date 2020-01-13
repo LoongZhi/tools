@@ -264,10 +264,17 @@ class LZAlbumViewController: LZBaseViewController,UICollectionViewDelegate,UICol
         cell.loadData(model: self.dataSource[indexPath.row] as! LZAlbumModel)
         cell.delBtn.tag = indexPath.row
         cell.delBtn.addTarget(self, action: #selector(delBtn(btn:)), for: .touchUpInside)
-        
+         self.perform(#selector(runloopAnimCell(cell:)), with: cell, afterDelay: 0.0, inModes: [.common])
         return cell
     }
-    
+    @objc func runloopAnimCell(cell:LZAlbumCollectionViewCell){
+        if !self.isHidden {
+            cell.layer.add(cell.anim, forKey: "SpringboardShake")
+        }else {
+            cell.layer.removeAllAnimations()
+            
+        }
+    }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
         let model = self.dataSource[indexPath.row] as! LZAlbumModel

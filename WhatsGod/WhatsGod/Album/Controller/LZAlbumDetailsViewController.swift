@@ -317,7 +317,7 @@ class LZAlbumDetailsViewController: LZBaseViewController,UICollectionViewDelegat
     private func setHidden(hidden:Bool){
          
         
-           
+            self.bottomView.isHidden = hidden
            if self.dataSource.count == 0 {
                return
            }
@@ -330,10 +330,7 @@ class LZAlbumDetailsViewController: LZBaseViewController,UICollectionViewDelegat
                }
                
            }
-            
-          
-          
-        self.bottomView.isHidden = hidden
+
          self.collectionView.reloadDataSmoothly()
 
     }

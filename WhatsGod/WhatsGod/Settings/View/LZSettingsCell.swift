@@ -24,6 +24,12 @@ class LZSettingsCell: UITableViewCell {
            image.image = Img(url: "xiayige")
            return image
       }()
+    lazy var rightLabel:UILabel = {
+        let label = UILabel.init()
+        label.textColor = COLOR_B8B8B8
+        label.font = UIFont.systemFont(ofSize: 13)
+        return label
+    }()
     lazy var sw:UISwitch = {
         let view = UISwitch.init()
         view.onTintColor = COLOR_4990ED
@@ -42,6 +48,7 @@ class LZSettingsCell: UITableViewCell {
         self.contentView.addSubview(self.nameLabel)
         self.contentView.addSubview(self.rightImage)
         self.contentView.addSubview(self.sw)
+        self.contentView.addSubview(self.rightLabel)
         self.iconImage.snp.makeConstraints { (make) in
          
             make.centerY.equalToSuperview()
@@ -65,6 +72,10 @@ class LZSettingsCell: UITableViewCell {
         self.sw.snp.makeConstraints { (make) in
             make.centerY.equalToSuperview()
             make.right.equalTo(-10)
+        }
+        self.rightLabel.snp.makeConstraints { (make) in
+            make.centerY.equalToSuperview()
+            make.right.equalTo(-30)
         }
         
     }

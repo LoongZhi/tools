@@ -101,7 +101,7 @@ class LZSettingsViewController: LZBaseViewController,UITableViewDataSource,UITab
         ["beifens",LanguageStrins(string: "Share application")],
         ["yuyan",LanguageStrins(string: "Language settings")],
         ["beifen",LanguageStrins(string: "Document backup")],
-        ["qinglihuanchun",LanguageStrins(string: "Clean up the cache")]])
+        ["qinglihuanchun",LanguageStrins(string: "Clean up the cache")] ])
         
     }
    
@@ -137,6 +137,10 @@ class LZSettingsViewController: LZBaseViewController,UITableViewDataSource,UITab
             cell.sw.isOn = (UserDefaults.standard.object(forKey: VCPassword) != nil)
             cell.sw.addTarget(self, action: #selector(swEvent(sw:)), for: .valueChanged)
         }
+        cell.rightLabel.text = ""
+        if indexPath.row == 4 {
+            cell.rightLabel.text = "\(fileSizeOfCache())MB"
+        }
         let arr:Array = self.dataSource[indexPath.row] as! Array<String>
         cell.layoutUI(arr: arr,index:indexPath)
 
@@ -153,7 +157,41 @@ class LZSettingsViewController: LZBaseViewController,UITableViewDataSource,UITab
             self.navigationController?.pushViewController(vc, animated: true)
             break
         case 3:
-            self.exportFile()
+            
+            //弹出消息框
+            let alertController = UIAlertController(title: LanguageStrins(string: "Do you want to export all files?"),
+                                                    message: nil, preferredStyle: .alert)
+            let cancelAction = UIAlertAction(title: LanguageStrins(string: "Cancel"), style: .cancel, handler: nil)
+            let okAction = UIAlertAction(title: LanguageStrins(string: "OK"), style: .default,
+                                         handler: {
+                                            action in
+               checkPermissions(resource:{isbool in
+                    if isbool{
+                        self.exportFile()
+                    }
+               })
+            })
+            alertController.addAction(cancelAction)
+            alertController.addAction(okAction)
+            self.present(alertController, animated: true, completion: nil)
+            break
+        case 4:
+            let alertController = UIAlertController(title: LanguageStrins(string: "Do you clear the application cache?"),
+                                                    message: nil, preferredStyle: .alert)
+            let cancelAction = UIAlertAction(title: LanguageStrins(string: "Cancel"), style: .cancel, handler: nil)
+            let okAction = UIAlertAction(title: LanguageStrins(string: "OK"), style: .default,
+                                         handler: {
+                                            action in
+               checkPermissions(resource:{isbool in
+                    if isbool{
+                        clearCache()
+                        tableView.reloadDataSmoothly()
+                    }
+               })
+            })
+            alertController.addAction(cancelAction)
+            alertController.addAction(okAction)
+            self.present(alertController, animated: true, completion: nil)
             break
         default: break
             
@@ -169,12 +207,12 @@ class LZSettingsViewController: LZBaseViewController,UITableViewDataSource,UITab
 extension LZSettingsViewController{
     func shareApp(){
         weak var wekeSelf = self
-        let urlString = URL.init(string: "https://apps.apple.com/us/app/appname/id444934666?action=write-review")
+        let urlString = URL.init(string: "https://apps.apple.com/us/app/appname/id1494285037?action=write-review")
         //弹出消息框
-        let alertController = UIAlertController(title: "觉得好用的话，给我个评价吧！",
+        let alertController = UIAlertController(title: LanguageStrins(string: "If it feels easy to use, share it with friends!"),
                                                 message: nil, preferredStyle: .alert)
-        let cancelAction = UIAlertAction(title: "暂不评价", style: .cancel, handler: nil)
-        let okAction = UIAlertAction(title: "好的", style: .default,
+        let cancelAction = UIAlertAction(title: LanguageStrins(string: "Cancel"), style: .cancel, handler: nil)
+        let okAction = UIAlertAction(title: LanguageStrins(string: "OK"), style: .default,
                                      handler: {
                                         action in
             let items = [urlString] as [Any]

@@ -217,7 +217,6 @@ class LZVideoViewController: LZBaseViewController,UICollectionViewDelegate,UICol
             }
             
         }
-        
         self.collectionView.reloadDataSmoothly()
     }
     

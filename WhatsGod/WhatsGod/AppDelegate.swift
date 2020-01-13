@@ -40,7 +40,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UIDocumentInteractionContr
         // Override point for customization after application launch.
         configRealm()
         
-       
+
         return true
     }
 
@@ -67,7 +67,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UIDocumentInteractionContr
         LZFileManager.createVideoFolder()
         LZFileManager.createOfficeFolder()
         
-        self.checkPermissions()
+        checkPermissions(resource:{isbool in
+            
+        })
     }
     
     func googleAD(){
@@ -76,14 +78,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UIDocumentInteractionContr
         
     }
 
-    func checkPermissions(){
-        if (UserDefaults.standard.object(forKey: VCPassword) != nil) {
-            let sb = UIStoryboard.init(name: "Main", bundle: nil)
-            let vc = sb.instantiateViewController(withIdentifier: "LZPassViewController")
-            let tabbar:UITabBarController = self.window?.rootViewController! as! UITabBarController
-            tabbar.selectedViewController!.present(vc, animated: true, completion: nil)
-        }
-    }
+   
+        
+//    }
     func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
        
         if url.absoluteString.isStringNull(){
@@ -195,7 +192,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UIDocumentInteractionContr
 
     func applicationWillEnterForeground(_ application: UIApplication) {
         // Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
-       self.checkPermissions()
+        checkPermissions(resource: {isbool in
+            
+        })
     }
 
     func applicationDidBecomeActive(_ application: UIApplication) {

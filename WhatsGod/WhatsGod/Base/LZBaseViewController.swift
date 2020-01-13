@@ -56,6 +56,7 @@ class LZBaseViewController: UIViewController,NVActivityIndicatorViewable,GADBann
     @objc func readyView(){
         
     }
+    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         for  view in self.view.subviews {
             view.resignFirstResponder()

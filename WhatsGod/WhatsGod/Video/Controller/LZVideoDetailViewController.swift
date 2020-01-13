@@ -434,7 +434,8 @@ class LZVideoDetailViewController: LZBaseViewController,UICollectionViewDelegate
     @objc func delTouch(){
         
         
-        let alert = FWAlertView.alert(title: LanguageStrins(string: "Tips"), detail: LanguageStrins(string: "Remove photos?"), confirmBlock: { (view, num, str) in
+        let alert = FWAlertView.alert(title: LanguageStrins(string: "Tips"), detail: LanguageStrins(string: "Remove photos?"), confirmBlock: {
+            (view, num, str) in
             
             var isbool = true
             
