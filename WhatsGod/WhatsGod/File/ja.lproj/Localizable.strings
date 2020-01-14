@@ -79,3 +79,11 @@
 "Create a folder to manage your photos ~" = "写真を管理するフォルダーを作成します〜";
 "No more photos" = "これ以上の写真はありません";
 "Please add your own photo ~" = "自分の写真を追加してください〜";
+"No more videos" = "これ以上の動画はありません";
+"Please add your own video ~" = "独自のビデオを追加してください〜";
+"No more files" = "これ以上ファイルはありません";
+"Please add your own file ~" = "独自のファイルを追加してください〜";
+"If it feels easy to use, share it with friends!" = "使いやすいと感じたら、友達と共有しましょう！";
+"Do you want to export all files?" = "すべてのファイルをエクスポートしますか？";
+"Do you clear the application cache?" = "アプリケーションキャッシュをクリアしますか？";
+"delete" = "削除する";

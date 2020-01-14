@@ -125,7 +125,26 @@ class LZAlbumViewController: LZBaseViewController,UICollectionViewDelegate,UICol
                 self!.newFolder()
                 break;
             case 1:
-                self!.exportFile()
+                let alertController = UIAlertController(title: LanguageStrins(string: "Do you want to export files?"),
+                                                                   message: nil, preferredStyle: .alert)
+                let cancelAction = UIAlertAction(title: LanguageStrins(string: "Cancel"), style: .cancel, handler: nil)
+                let okAction = UIAlertAction(title: LanguageStrins(string: "OK"), style: .default,
+                                             handler: {
+                                                action in
+                    if UserDefaults.standard.object(forKey: VCPassword) == nil {
+                        self!.exportFile()
+                        return
+                    }
+                   checkPermissions(resource:{isbool in
+                        if isbool{
+                            self!.exportFile()
+                        }
+                   })
+                })
+                alertController.addAction(cancelAction)
+                alertController.addAction(okAction)
+                self!.present(alertController, animated: true, completion: nil)
+                
                 break;
             case 2:
                 

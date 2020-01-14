@@ -11,8 +11,9 @@ import UIKit
 class LZLanguageViewController: LZBaseViewController,UITableViewDataSource,UITableViewDelegate {
         
 
-    let languageArr:Array = [LanguageStrins(string: "English"),LanguageStrins(string: "Chinese"),LanguageStrins(string: "Japanese"),LanguageStrins(string: "French"),LanguageStrins(string: "Korean"),LanguageStrins(string: "Russian"),LanguageStrins(string: "Arabic")]
-    let languageNumber:Array = ["en","zh-Hans","ja","fr","ko","ru-BY","ar"]
+    let languageArr:Array = [LanguageStrins(string: "English"),LanguageStrins(string: "Chinese"),LanguageStrins(string: "Japanese"),LanguageStrins(string: "French"),LanguageStrins(string: "Korean"),LanguageStrins(string: "Russian"),LanguageStrins(string: "Arabic"),LanguageStrins(string: "Spanish"),LanguageStrins(string: "Hindi")]
+    let lanuageDeArr:Array = [LanguageStrins(string: "english"),LanguageStrins(string: "中文"),LanguageStrins(string: "日本語"),LanguageStrins(string: "Français"),LanguageStrins(string: "한국어"),LanguageStrins(string: "русский"),LanguageStrins(string: "عربى"),LanguageStrins(string: "Español"),LanguageStrins(string: "नहीं")]
+    let languageNumber:Array = ["en","zh-Hans","ja","fr","ko","ru-BY","ar","es","hi"]
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -35,7 +36,14 @@ class LZLanguageViewController: LZBaseViewController,UITableViewDataSource,UITab
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let reuseIdentifier = "LZLanguageCell"
         let cell:LZLanguageCell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier,for: indexPath) as! LZLanguageCell
+        
+        if (UserDefaults.standard.object(forKey: languageMark) as! String) == languageNumber[indexPath.row]{
+            cell.icon.isHidden = false
+        }else{
+            cell.icon.isHidden = true
+        }
         cell.nameLabel.text = languageArr[indexPath.row]
+        cell.desLabel.text = "(\(lanuageDeArr[indexPath.row]))"
         return cell
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -46,6 +54,6 @@ class LZLanguageViewController: LZBaseViewController,UITableViewDataSource,UITab
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         
-        return 50
+        return 60
     }
 }

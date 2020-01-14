@@ -38,7 +38,7 @@ class LZOfficeDetailViewController: LZBaseViewController,UICollectionViewDelegat
         let collection = UICollectionView.init(frame: self.view.bounds, collectionViewLayout: layout)
         loadAD()
         collection.addSubview(bannerView)
-        let emptyView = LYEmptyView.emptyActionView(withImageStr: "k02", titleStr: LanguageStrins(string: "No more files"), detailStr: LanguageStrins(string: "Please add your own file ~"), btnTitleStr: LanguageStrins(string: "Add")) {
+        let emptyView = LYEmptyView.emptyActionView(withImageStr: "k04", titleStr: LanguageStrins(string: "No more files"), detailStr: LanguageStrins(string: "Please add your own file ~"), btnTitleStr: LanguageStrins(string: "Add")) {
             self.selectUploadFileFromICouldDrive()
         };
         emptyView!.actionBtnBackGroundColor = COLOR_4990ED
@@ -333,15 +333,26 @@ class LZOfficeDetailViewController: LZBaseViewController,UICollectionViewDelegat
     }
     @objc func exploitTouch(){
       
-       
-        let alert = FWAlertView.alert(title: LanguageStrins(string: "Tips"), detail: LanguageStrins(string: "Export the photos to the album"), confirmBlock: { (view, num, str) in
-            
-            self.exportFile()
-
-        }) { (view, num, str) in
-                   
-        }
-        alert.show()
+       let alertController = UIAlertController(title: LanguageStrins(string: "Export file?"),
+                                                                         message: nil, preferredStyle: .alert)
+       let cancelAction = UIAlertAction(title: LanguageStrins(string: "Cancel"), style: .cancel, handler: nil)
+       let okAction = UIAlertAction(title: LanguageStrins(string: "OK"), style: .default,
+                                    handler: {
+                                       action in
+           if UserDefaults.standard.object(forKey: VCPassword) == nil {
+               self.exportFile()
+               return
+           }
+          checkPermissions(resource:{isbool in
+               if isbool{
+                   self.exportFile()
+               }
+          })
+       })
+       alertController.addAction(cancelAction)
+       alertController.addAction(okAction)
+       self.present(alertController, animated: true, completion: nil)
+     
        
     }
     @objc private func image(image : UIImage, didFinishSavingWithError error : NSError?, contextInfo : AnyObject) {

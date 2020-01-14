@@ -158,6 +158,7 @@ class LZSettingsViewController: LZBaseViewController,UITableViewDataSource,UITab
             break
         case 3:
             
+        
             //弹出消息框
             let alertController = UIAlertController(title: LanguageStrins(string: "Do you want to export all files?"),
                                                     message: nil, preferredStyle: .alert)
@@ -165,6 +166,10 @@ class LZSettingsViewController: LZBaseViewController,UITableViewDataSource,UITab
             let okAction = UIAlertAction(title: LanguageStrins(string: "OK"), style: .default,
                                          handler: {
                                             action in
+                if UserDefaults.standard.object(forKey: VCPassword) == nil {
+                    self.exportFile()
+                    return
+                }
                checkPermissions(resource:{isbool in
                     if isbool{
                         self.exportFile()
@@ -176,12 +181,18 @@ class LZSettingsViewController: LZBaseViewController,UITableViewDataSource,UITab
             self.present(alertController, animated: true, completion: nil)
             break
         case 4:
+            
             let alertController = UIAlertController(title: LanguageStrins(string: "Do you clear the application cache?"),
                                                     message: nil, preferredStyle: .alert)
             let cancelAction = UIAlertAction(title: LanguageStrins(string: "Cancel"), style: .cancel, handler: nil)
             let okAction = UIAlertAction(title: LanguageStrins(string: "OK"), style: .default,
                                          handler: {
                                             action in
+                if UserDefaults.standard.object(forKey: VCPassword) == nil {
+                    clearCache()
+                    tableView.reloadDataSmoothly()
+                    return
+                }
                checkPermissions(resource:{isbool in
                     if isbool{
                         clearCache()

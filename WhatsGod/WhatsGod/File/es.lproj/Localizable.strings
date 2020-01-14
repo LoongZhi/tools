@@ -1,0 +1,91 @@
+/* 
+  Localizable.strings
+  WhatsGod
+
+  Created by imac on 9/21/19.
+  Copyright © 2019 L. All rights reserved.西班牙语
+*/
+
+"Album" = "Álbum";
+"Video" = "Video";
+"Book" = "Libro";
+"Settings" = "Configuraciones";
+"New" = "Nuevo";
+"New Folders" = "Nuevas carpetas";
+"New folders are stored in photographs" = "Las nuevas carpetas se almacenan en fotografías";
+"OK" = "OK";
+"Edit" = "Editar";
+"Tips" = "Consejos";
+"Whether you delete the folder" = "Si elimina la carpeta";
+"Completed" = "Completado";
+"Add" = "Agregar";
+"Please enter the filename" = "Ingrese el nombre del archivo";
+"Cancel" = "Cancelar";
+"Exploit" =  "Exploit";
+"Please select the photograph to be deleted" = "Seleccione la fotografía que se va a eliminar";
+"Remove photos?" = "¿Eliminar fotos?";
+"Please select the photograph you need to export" = "Seleccione la fotografía que necesita exportar";
+"Export the photos to the album" = "Exportar las fotos al álbum";
+"Save success" = "Guardar éxito";
+"Save failed" = "Guardar error";
+"Delete success." = "Eliminar éxito";
+"Delete failure." = "Eliminar error";
+"Receive" = "Recibir";
+"Preview" = "Vista previa";
+"Please select the options below" = "Seleccione las opciones a continuación";
+"Return" = "Retorno";
+"Please select the folder." = "Seleccione la carpeta";
+"Please create a folder first." = "Por favor cree una carpeta primero.";
+"Such files are not supported." =  "Tales archivos no son compatibles";
+"Used" = "Usado";
+"Disk space" = "Espacio en disco";
+"Other" = "Otro";
+"Done" = "Listo";
+"Privacy protection" = "Protección de privacidad";
+"Share application" = "Compartir aplicación";
+"Document backup" = "Copia de seguridad del documento";
+"Language settings" = "Configuración de idioma";
+"Clean up the cache" = "Limpiar el caché";
+"About us" = "Acerca de nosotros";
+"Set the password" = "Establecer la contraseña";
+"Modify the folder name" = "Modificar el nombre de la carpeta";
+"The correct password was entered" = "Se ingresó la contraseña correcta";
+"Please enter a six - digit password" = "Ingrese una contraseña de seis dígitos";
+"Add a password" = "Agregar una contraseña";
+"Modify the password" = "Modificar la contraseña";
+"Confirm the password" = "Confirme la contraseña";
+"Please enter your password" = "Ingrese su contraseña";
+"The password was modified successfully" = "La contraseña se modificó correctamente";
+"Add a password successful" = "Agregar una contraseña exitosa";
+"/AllPhotoFiles.zip" = "/AllPhotoFiles.zip";
+"Please select the compressed file" = "Seleccione el archivo comprimido";
+"Compression failed" = "Error de compresión";
+"The folder is empty" = "La carpeta está vacía";
+"Please import the file!" = "¡Importa el archivo!";
+"Save" =  "Guardar";
+"Share" = "Compartir";
+"Share success"  = "Compartir éxito";
+"Share failed" = "Error en la acción";
+"Password error." = "Error de contraseña";
+"Please enter the private folder password." = "Ingrese la contraseña de la carpeta privada";
+"Please enter the correct password" = "Ingrese la contraseña correcta";
+"Enter lock password" = "Ingresar contraseña de bloqueo";
+"Please enter your lock password" = "Ingrese su contraseña de bloqueo";
+"Set lock password" = "Establecer contraseña de bloqueo";
+"Please enter the lock password" = "Ingrese la contraseña de bloqueo";
+"Passwords do not match, please re-enter" = "Las contraseñas no coinciden, vuelva a ingresar";
+"Please enter the password" = "Ingrese la contraseña";
+"Export" = "Exportar";
+"Folder manager is empty" = "El administrador de carpetas está vacío";
+"Create a folder to manage your photos ~" =  "Crear una carpeta para administrar sus fotos ~";
+"No more photos" = "No más fotos";
+"Please add your own photo ~" = "Agregue su propia foto ~";
+"No more videos" = "No más videos";
+"Please add your own video ~" = "Agregue su propio video ~";
+"No more files" = "No más archivos";
+"Please add your own file ~" = "Agregue su propio archivo ~";
+"If it feels easy to use, share it with friends!" = "Si se siente fácil de usar, ¡compártelo con amigos!";
+"Do you want to export all files?" = "¿Desea exportar todos los archivos?";
+"Do you clear the application cache?" = "¿Borra el caché de la aplicación?";
+"delete" = "delete";
+

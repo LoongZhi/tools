@@ -1,0 +1,90 @@
+/* 
+  Localizable.strings
+  WhatsGod
+
+  Created by imac on 9/21/19.
+  Copyright © 2019 L. All rights reserved. 印地语
+*/
+
+"Album" = "एल्बम";
+"Video" = "वीडियो";
+"Book" = "पुस्तक";
+"Settings" = "सेटिंग्स";
+"New" = "नया";
+"New Folders" = "न्यू फोल्डर्स";
+"New folders are stored in photographs" = "नए फ़ोल्डर तस्वीरों में संग्रहीत किए जाते हैं";
+"OK" = "ओके";
+"Edit" = "संपादित करें";
+"Tips" = "टिप्स";
+"Whether you delete the folder" = "क्या आप फ़ोल्डर को हटाते हैं";
+"Completed" = "पूर्ण";
+"Add" = "जोड़ें";
+"Please enter the filename" = "कृपया फ़ाइल नाम दर्ज करें";
+"Cancel" = "रद्द करें";
+"Exploit" = "शोषण";
+"Please select the photograph to be deleted" =  "कृपया हटाए जाने वाले फोटोग्राफ का चयन करें";
+"Remove photos?" = "फ़ोटो हटाएं?";
+"Please select the photograph you need to export" = "कृपया वह फ़ोटो चुनें जिसे आपको निर्यात करने की आवश्यकता है";
+"Export the photos to the album" = "एल्बम को फ़ोटो निर्यात करें";
+"Save success" = "सफलता बचाओ";
+"Save failed" = "फेल सेव";
+"Delete success." = "सफलता हटाएं।";
+"Delete failure." = "विफलता को हटाएं।";
+"Receive" = "प्राप्त करें";
+"Preview" = "पूर्वावलोकन";
+"Please select the options below" = "कृपया नीचे दिए गए विकल्पों का चयन करें";
+"Return" = "वापसी";
+"Please select the folder." = "कृपया फ़ोल्डर का चयन करें।";
+"Please create a folder first." =  "कृपया पहले एक फ़ोल्डर बनाएँ;";
+"Such files are not supported." = "ऐसी फाइलें समर्थित नहीं हैं।";
+"Used" = "प्रयुक्त";
+"Disk space" = "डिस्क स्थान";
+"Other" = "अन्य";
+"Done" = "पूर्ण";
+"Privacy protection" = "गोपनीयता संरक्षण";
+"Share application" = "शेयर आवेदन";
+"Document backup" =  "दस्तावेज़ बैकअप";
+"Language settings" =  "भाषा सेटिंग्स";
+"Clean up the cache" = "कैश साफ़ करें";
+"About us" = "हमारे बारे में";
+"Set the password" = "पासवर्ड सेट करें";
+"Modify the folder name" = "फ़ोल्डर का नाम संशोधित करें";
+"The correct password was entered" = "सही पासवर्ड दर्ज किया गया था";
+"Please enter a six - digit password" = "कृपया एक छह अंकों का पासवर्ड दर्ज करें";
+"Add a password" =  "एक पासवर्ड जोड़ें";
+"Modify the password" = "पासवर्ड संशोधित करें";
+"Confirm the password" = "पासवर्ड की पुष्टि करें";
+"Please enter your password" = "कृपया अपना पासवर्ड दर्ज करें";
+"The password was modified successfully" = "पासवर्ड सफलतापूर्वक संशोधित किया गया था";
+"Add a password successful" = "एक पासवर्ड जोड़ें सफल";
+"/AllPhotoFiles.zip" = "/AllPhotoFiles.zip";
+"Please select the compressed file" = "कृपया संपीड़ित फ़ाइल का चयन करें";
+"Compression failed" = "संपीड़न विफल";
+"The folder is empty" = "फ़ोल्डर खाली है";
+"Please import the file!" = "कृपया फ़ाइल आयात करें!";
+"Save" = "सहेजें";
+"Share" = "शेयर";
+"Share success"  = "सफलता साझा करें";
+"Share failed" = "शेयर विफल";
+"Password error." = "पासवर्ड त्रुटि।";
+"Please enter the private folder password." = "कृपया निजी फ़ोल्डर पासवर्ड दर्ज करें।";
+"Please enter the correct password" = "कृपया सही पासवर्ड दर्ज करें";
+"Enter lock password" = "लॉक पासवर्ड दर्ज करें";
+"Please enter your lock password" = "कृपया अपना लॉक पासवर्ड दर्ज करें";
+"Set lock password" = "लॉक पासवर्ड सेट करें";
+"Please enter the lock password" = "कृपया लॉक पासवर्ड दर्ज करें";
+"Passwords do not match, please re-enter" = "पासवर्ड मेल नहीं खाते, कृपया पुनः दर्ज करें";
+"Please enter the password" = "कृपया पासवर्ड दर्ज करें";
+"Export" =  "निर्यात";
+"Folder manager is empty" = "फ़ोल्डर प्रबंधक खाली है";
+"Create a folder to manage your photos ~" = "अपनी फ़ोटो प्रबंधित करने के लिए एक फ़ोल्डर बनाएं ~";
+"No more photos" = "अधिक फ़ोटो नहीं";
+"Please add your own photo ~" =  "कृपया अपना स्वयं का फ़ोटो जोड़ें ~";
+"No more videos" = "अधिक वीडियो नहीं";
+"Please add your own video ~" = "कृपया अपना स्वयं का वीडियो जोड़ें ~";
+"No more files" = "नो फाइल्स फाइल्स";
+"Please add your own file ~" = "कृपया अपनी खुद की फ़ाइल जोड़ें ~";
+"If it feels easy to use, share it with friends!" = "यदि इसका उपयोग करना आसान लगता है, तो इसे दोस्तों के साथ साझा करें!";
+"Do you want to export all files?" = "क्या आप सभी फाइलें निर्यात करना चाहते हैं?";
+"Do you clear the application cache?" =  "क्या आप एप्लिकेशन कैश को साफ करते हैं?";
+"delete" = "हटाएं";

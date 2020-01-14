@@ -14,7 +14,7 @@
 "New folders are stored in photographs" = "Новые папки хранятся на фотографиях";
 "OK" = "Подтвердить";
 "Edit" = "Edit";
-"Tips" = "提示";
+"Tips" = "Tips";
 "Whether you delete the folder" = "Удалить ли папку";
 "Completed" = "Завершено";
 "Add" = "Add";
@@ -79,3 +79,11 @@
 "Create a folder to manage your photos ~" = "Создать папку для управления фотографиями ~";
 "No more photos" = "Нет больше фотографий";
 "Please add your own photo ~" = "Пожалуйста, добавьте свою собственную фотографию ~";
+"No more videos" = "Больше нет видео";
+"Please add your own video ~" = "Пожалуйста, добавьте свое собственное видео ~";
+"No more files" = "Больше нет файлов";
+"Please add your own file ~" = "Пожалуйста, добавьте свой собственный файл ~";
+"If it feels easy to use, share it with friends!" = "Если вам удобно пользоваться, поделитесь им с друзьями!";
+"Do you want to export all files?" = "Хотите экспортировать все файлы?";
+"Do you clear the application cache?" = "Вы очищаете кеш приложения?";
+"delete" = "Удалить";

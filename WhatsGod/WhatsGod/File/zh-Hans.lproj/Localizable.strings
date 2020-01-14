@@ -86,3 +86,8 @@
 "If it feels easy to use, share it with friends!" = "如果感觉好用的话分享给朋友吧!";
 "Do you want to export all files?" = "是否要导出所有文件？";
 "Do you clear the application cache?" = "是否清理应用缓存？";
+"delete" = "删除";
+"all" = "全部";
+"Do you want to export files?" = "您要导出文件吗？";
+"Export file?" = "导出文件？";
+"Export video" = "导出视频？";

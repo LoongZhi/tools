@@ -39,7 +39,8 @@ class LZBaseViewController: UIViewController,NVActivityIndicatorViewable,GADBann
         readyView()
         bannerView.backgroundColor = COLOR_F8F8FF
         
-       
+       let item = UIBarButtonItem(title: "", style: .plain, target: self, action: nil)
+        self.navigationItem.backBarButtonItem = item
 //        self.navigationController?.navigationItem.titleView = bannerView
         
     }

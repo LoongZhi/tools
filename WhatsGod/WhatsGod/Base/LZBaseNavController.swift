@@ -23,6 +23,9 @@ class LZBaseNavController: UINavigationController,UINavigationControllerDelegate
        
         self.extendedLayoutIncludesOpaqueBars = true
         self.edgesForExtendedLayout = []
+        
+    
+        
         // Do any additional setup after loading the view.
         
         
