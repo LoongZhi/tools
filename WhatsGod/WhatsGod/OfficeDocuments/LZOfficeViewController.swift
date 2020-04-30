@@ -155,6 +155,8 @@ class LZOfficeViewController: LZBaseViewController,UICollectionViewDelegate,UICo
                 break;
             }
         }, property: vProperty)
+        
+        self.navigationItem.title = LanguageStrins(string: "Collection File")
     }
     func newFolder(){
         let alertController = UIAlertController(title: LanguageStrins(string: "New Folders"),message:LanguageStrins(string: "Please enter the filename"),preferredStyle: .alert)

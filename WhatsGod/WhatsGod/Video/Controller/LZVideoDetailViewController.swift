@@ -426,9 +426,11 @@ class LZVideoDetailViewController: LZBaseViewController,UICollectionViewDelegate
     }
     @objc func playerBtn(btn:UIButton){
         let indexPath = IndexPath.init(row: btn.tag - 10000, section: 0)
-        let cell = self.collectionView.cellForItem(at: indexPath) as! LZAlbumDetailsCell
         let model = self.dataSource[indexPath.row] as! LZVideoModel
         let vc = SCVideoMainViewController.init(url:videoFolder + model.path,videoName: model.name)
+        if #available(iOS 13.0, *) {
+            vc!.modalPresentationStyle = .fullScreen;
+        }
         self.present(vc!, animated: true, completion: nil)
     }
     @objc func delTouch(){

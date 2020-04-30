@@ -27,6 +27,7 @@ class LZBaseTabBarController: BubbleTabBarController {
         let VideoVC = LZVideoViewController()
         VideoVC.tabBarItem = UITabBarItem(title: LanguageStrins(string: "Video"), image: #imageLiteral(resourceName: "Video"), tag: 0)
         let videoNav = LZBaseNavController.init(rootViewController: VideoVC)
+        videoNav.navigationItem.title = LanguageStrins(string: "Video")
         
         let OfficeVC = LZOfficeViewController()
         OfficeVC.tabBarItem = UITabBarItem(title: LanguageStrins(string: "Book"), image: #imageLiteral(resourceName: "documents"), tag: 0)

@@ -180,14 +180,14 @@ typedef enum {
     // 当前标签
     self.currentTimeLabel = [[UILabel alloc] init];
     self.currentTimeLabel.textColor = titleColor;
-    self.currentTimeLabel.text = @"--:--";
+    self.currentTimeLabel.text = @"00:00";
     self.currentTimeLabel.textAlignment = NSTextAlignmentLeft;
     self.currentTimeLabel.font = [UIFont systemFontOfSize:titleFontSize];
     [self.bottomView addSubview:self.currentTimeLabel];
     // 结束标签
     self.endTimeLabel = [[UILabel alloc] init];
     self.endTimeLabel.textColor = titleColor;
-    self.endTimeLabel.text = @"--:--";
+    self.endTimeLabel.text = @"00:00";
     self.endTimeLabel.textAlignment = NSTextAlignmentRight;
     self.endTimeLabel.font = [UIFont systemFontOfSize:titleFontSize];
     [self.bottomView addSubview:self.endTimeLabel];

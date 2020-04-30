@@ -157,6 +157,7 @@ class LZVideoViewController: LZBaseViewController,UICollectionViewDelegate,UICol
                 break;
             }
         }, property: vProperty)
+        
     }
     func newFolder(){
        

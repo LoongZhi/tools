@@ -158,6 +158,7 @@ class LZAlbumViewController: LZBaseViewController,UICollectionViewDelegate,UICol
             }
         }, property: vProperty)
         
+        self.navigationItem.title = LanguageStrins(string: "Album")
        
     }
     

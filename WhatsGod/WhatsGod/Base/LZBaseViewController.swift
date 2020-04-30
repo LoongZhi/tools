@@ -43,6 +43,9 @@ class LZBaseViewController: UIViewController,NVActivityIndicatorViewable,GADBann
         self.navigationItem.backBarButtonItem = item
 //        self.navigationController?.navigationItem.titleView = bannerView
         
+        if #available(iOS 13.0, *) {
+            self.modalPresentationStyle = .fullScreen;
+        }
     }
     public func loadAD(){
        bannerView.adUnitID = "ca-app-pub-3940256099942544/2934735716"
